@@ -19,6 +19,7 @@
     "pl:run": "playwright test",
     "pl:open": "playwright test --ui",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky"
   }
 }
