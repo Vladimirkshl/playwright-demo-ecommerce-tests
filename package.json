@@ -1,23 +1,24 @@
-  {
-    "name": "playwright-demo-ecommerce-tests",
-    "version": "1.0.0",
-    "description": "Portfolio",
-    "devDependencies": {
-      "@eslint/js": "^10.0.1",
-      "@playwright/test": "^1.58.2",
-      "@stylistic/eslint-plugin": "^5.10.0",
-      "@types/eslint__js": "^8.42.3",
-      "@types/node": "^25.5.0",
-      "@typescript-eslint/eslint-plugin": "^8.57.0",
-      "@typescript-eslint/parser": "^8.57.0",
-      "dotenv": "^17.3.1",
-      "eslint": "^10.0.3",
-      "typescript": "^5.9.3"
-    },
-    "scripts": {
-      "pl:run": "playwright test",
-      "pl:open": "playwright test --ui",
-      "lint": "eslint .",
-      "lint:fix": "eslint . --fix"
-    }
+{
+  "name": "playwright-demo-ecommerce-tests",
+  "version": "1.0.0",
+  "description": "Portfolio",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.58.2",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/node": "^25.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.57.0",
+    "@typescript-eslint/parser": "^8.57.0",
+    "dotenv": "^17.3.1",
+    "eslint": "^10.0.3",
+    "husky": "^9.1.7",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "pl:run": "playwright test",
+    "pl:open": "playwright test --ui",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   }
+}
