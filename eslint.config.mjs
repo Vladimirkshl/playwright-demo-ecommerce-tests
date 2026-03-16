@@ -5,8 +5,17 @@ import stylistic from '@stylistic/eslint-plugin';
 export default [
   {
     files: ['**/*.ts', '**/*.js', '**/*.mjs'],
-    ignores: ['playwright-report/*', 'test-results/*'],
-
+    ignores: [
+      'playwright-report/**',
+      'test-results/**',
+      'node_modules/**',
+      'dist/**',
+      'build/**',
+      'coverage/**',
+      'allure-results/**',
+      'allure-report/**',
+      '.allure/**',
+    ],
     languageOptions: {
       parser: tsParser,
       parserOptions: {

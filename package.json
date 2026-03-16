@@ -10,6 +10,8 @@
     "@types/node": "^25.5.0",
     "@typescript-eslint/eslint-plugin": "^8.57.0",
     "@typescript-eslint/parser": "^8.57.0",
+    "allure-commandline": "^2.38.0",
+    "allure-playwright": "^3.6.0",
     "dotenv": "^17.3.1",
     "eslint": "^10.0.3",
     "husky": "^9.1.7",
@@ -20,6 +22,10 @@
     "pl:open": "playwright test --ui",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "allure:generate": "npx allure generate",
+    "allure:run-srv": "allure serve -h localhost",
+    "allure:clean": "rm -rf allure-results",
+    "allure": "allure serve -h localhost",
     "prepare": "husky"
   }
 }
