@@ -1,10 +1,16 @@
 .DS_Store
 *.env
+node_modules
+
+# reporters
+allure-results
+allure-report
+test-results
+test-results.json
+execution.json
+playwright-report
 
 # Playwright
-node_modules/
-/test-results/
-/playwright-report/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
