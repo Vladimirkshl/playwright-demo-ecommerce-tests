@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
-
 import { defineConfig, devices } from '@playwright/test';
+import { getPortalConfig, Portal } from '@constants/env';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -8,16 +8,55 @@ import { defineConfig, devices } from '@playwright/test';
 
 dotenv.config();
 
+const portalConfig = getPortalConfig(null);
+
+const desktopViewport = {
+  width: 2520,
+  height: 1480,
+};
+
+const chromeConfig = {
+  ...devices['Desktop Chrome'],
+  channel: 'chromium',
+  viewport: desktopViewport,
+};
+
+const webkitConfig = {
+  ...devices['Desktop Safari'],
+  viewport: desktopViewport,
+};
+
+const deps = {
+  dependencies: [process.env.CI ? 'setup' : 'create-entities-main'],
+  teardown: undefined,
+};
+
 export default defineConfig({
-  testDir: './tests',
+  testDir: portalConfig.testDir,
+
+  /* Global timeout for the whole test run is given 2 hours */
+  globalTimeout: 2 * 60 * 60 * 1000,
+
+  /* Each test is given 10 minutes */
+  timeout: 10 * 60 * 1000,
+
+  /* Each assertion is given 10 seconds */
+  expect: { timeout: 10 * 1000 },
+  
   /* Run tests in files in parallel */
   fullyParallel: true,
+
+  /* Parallel tests config */
+  workers: process.env.CI ? 10 : undefined,
+
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
+
+  /* Limit the number of failures on CI to save resources */
+  maxFailures: process.env.CI ? 30 : undefined,
+
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI && portalConfig.name === Portal.SOLOMONO ? 1 : 0,
   
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
@@ -36,54 +75,103 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: getPortalConfig(null).baseUrl,
+
+    /* Each action is given 10 seconds */
+    actionTimeout: 10 * 1000,
+
+    /* Each navigation is given 30 seconds */
+    navigationTimeout: 30 * 1000,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'off',
+
+    /* Screenshots on failure */
+    screenshot: {
+      mode: 'on-first-failure',
+      fullPage: true,
+    },
+
+    /* Set timezone */
+    timezoneId: 'UTC',
   },
 
   /* Configure projects for major browsers */
-  projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+  projects: (() => {
+    const baseProjects = [
+      {
+        name: 'setup',
+        testMatch: '**/global.setup.ts',
+      },
+      {
+        name: 'clean-db',
+        testMatch: '**/db.cleanup.ts',
+      },
+    ];
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    const solomonoProject =
+      portalConfig.name === Portal.SOLOMONO
+        ? [
+          {
+            name: 'create-products',
+            testMatch: '**/global.create-products.ts',
+            dependencies: [process.env.CI ? 'setup' : 'create-entities-main'],
+            retries: 1,
+          },
+          {
+            name: 'create-entities',
+            testMatch: '**/global.create-entities.ts',
+            dependencies: [process.env.CI ? 'setup' : 'create-products'],
+            retries: 1,
+          },
+          {
+            name: 'full-flow-chromium',
+            testMatch: '**/*.spec.full-flow.ts',
+            use: { ...chromeConfig, trace: 'retain-on-failure' as const },
+            ...deps,
+          },
+          {
+            name: 'single-chromium',
+            testMatch: '**/*.spec.single.ts',
+            use: { ...chromeConfig, trace: 'retain-on-failure' as const },
+            ...deps,
+          },
+          {
+            name: 'webkit',
+            use: { ...webkitConfig, trace: 'on-first-retry' as const },
+            ...deps,
+          },
+          {
+            name: 'single-webkit',
+            testMatch: '**/*.spec.single.ts',
+            use: { ...webkitConfig, trace: 'on-first-retry' as const },
+            ...deps,
+          },
+        ]
+        : [];
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    const commonProjects = [
+      {
+        name: 'create-entities-main',
+        testMatch: '**/global.create-entities-main.ts',
+        dependencies: ['setup'],
+        retries: 1,
+      },
+      {
+        name: 'chromium',
+        testMatch: '**/*.spec.ts',
+        use: { ...chromeConfig, trace: 'retain-on-failure' as const },
+        ...deps,
+      },
+      {
+        name: 'debug',
+        testDir: './tests',
+        testMatch: '**/debug.spec.ts',
+        use: { ...chromeConfig, trace: 'off' },
+        dependencies: ['setup'],
+      },
+    ];
 
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
-  ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+    return [...baseProjects, ...solomonoProject, ...commonProjects];
+  })(),
 });
