@@ -22,7 +22,10 @@ export function getPortalConfig(portal: Portal | null): IPortalConfig {
   return PORTAL_CONFIGS[portalKey];
 }
 
-const SOLOMONO_BASE_URL = `https://demo.solomono.net/${process.env.ENV || Environment.E2E}`;
+// TODO: Enable after add new env 
+/* const SOLOMONO_BASE_URL = `https://demo.solomono.net/${process.env.ENV || Environment.E2E}`; */
+
+const SOLOMONO_BASE_URL = 'https://demo.solomono.net/';
 
 const DEMO_BASE_URL = `https://demo.${process.env.ENV || Environment.E2E}.example.com`;
 
