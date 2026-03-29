@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+
 import { defineConfig, devices } from '@playwright/test';
 import { getPortalConfig, Portal } from '@constants/env';
 

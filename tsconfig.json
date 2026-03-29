@@ -3,6 +3,12 @@
     "lib": ["ES2021", "DOM"],
     "paths": {
       "@constants/*": ["./constants/*"],
+      "@elements/*": ["./elements/*"],
+      "@pages/*": ["./pages/*"],
+      "@playwrightConfig": ["./playwright.config.ts"],
+      "@test": ["./fixtures/base.fixture"],
+      "@fixtures/*": ["./fixtures/*"],
+      "@utils/*": ["./utils/*"], 
     },
     "allowSyntheticDefaultImports": true
   }
