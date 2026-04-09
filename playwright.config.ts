@@ -114,18 +114,6 @@ export default defineConfig({
       portalConfig.name === Portal.SOLOMONO
         ? [
           {
-            name: 'create-products',
-            testMatch: '**/global.create-products.ts',
-            dependencies: [process.env.CI ? 'setup' : 'create-entities-main'],
-            retries: 1,
-          },
-          {
-            name: 'create-entities',
-            testMatch: '**/global.create-entities.ts',
-            dependencies: [process.env.CI ? 'setup' : 'create-products'],
-            retries: 1,
-          },
-          {
             name: 'full-flow-chromium',
             testMatch: '**/*.spec.full-flow.ts',
             use: { ...chromeConfig, trace: 'retain-on-failure' as const },

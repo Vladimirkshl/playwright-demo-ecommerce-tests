@@ -6,7 +6,7 @@ export enum Environment {
 
 export enum Portal {
   SOLOMONO = 'solomono',
-  DEMO = 'demo',
+  ADMIN = 'admin',
 }
 
 export interface IPortalConfig {
@@ -27,7 +27,7 @@ export function getPortalConfig(portal: Portal | null): IPortalConfig {
 
 const SOLOMONO_BASE_URL = 'https://demo.solomono.net/';
 
-const DEMO_BASE_URL = `https://demo.${process.env.ENV || Environment.E2E}.example.com`;
+const ADMIN_BASE_URL = `https://${process.env.ENV || Environment.E2E}.example.com/admin`;
 
 const PORTAL_CONFIGS: Record<Portal, IPortalConfig> = {
   [Portal.SOLOMONO]: {
@@ -37,11 +37,11 @@ const PORTAL_CONFIGS: Record<Portal, IPortalConfig> = {
     expectedLandingElement: '//h1[.="The fastest ecommerce platform"]',
     testDir: `./tests/${Portal.SOLOMONO}`,
   },
-  [Portal.DEMO]: {
-    name: Portal.DEMO,
-    baseUrl: DEMO_BASE_URL,
-    signinUrl: `${DEMO_BASE_URL}/sign-in`,
-    expectedLandingElement: '//h1[.,="Demo title"]',
-    testDir: `./tests/${Portal.DEMO}`,
+  [Portal.ADMIN]: {
+    name: Portal.ADMIN,
+    baseUrl: ADMIN_BASE_URL,
+    signinUrl: `${ADMIN_BASE_URL}/sign-in`,
+    expectedLandingElement: '//h1[.,="Admin title"]',
+    testDir: `./tests/${Portal.ADMIN}`,
   },
 };
