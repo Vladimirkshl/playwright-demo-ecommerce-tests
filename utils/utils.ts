@@ -5,6 +5,8 @@ export class Utils {
 
   /* TEXT */
 
+  static jsonStringify = (obj: object, spacing = 2): string => JSON.stringify(obj, null, spacing);
+
   static addIndexToXpath = (xpath: string, index: number): string => {
     const indexStr = index === -1 ? 'last()' : index.toString();
     return `(${xpath})[${indexStr}]`;

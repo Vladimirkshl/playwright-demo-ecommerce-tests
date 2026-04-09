@@ -1,6 +1,7 @@
 import { attachment, logStep, step } from 'allure-js-commons';
 import playwrightConfig from '@playwrightConfig';
 import { ContentType } from '@constants/common';
+import { Utils } from './utils';
 
 const SUBSTEP_PREFIX = '|- ';
 const ATTACHEMENT_PREFIX = `${SUBSTEP_PREFIX}Attachment > `;
@@ -26,6 +27,17 @@ export class Report {
   static async logStep(name: string, stdout = true) {
     if (stdout) this.stdoutSubStep(name);
     logStep(name);
+  }
+
+  static attachJson(name: string, obj: object) {
+    this.attachAsJson(name, Utils.jsonStringify(obj));
+  }
+
+  static attachAsJson(name: string, jsonString: string) {
+    this.stdoutAttachment('JSON', name);
+    attachment(`Attachment | ${name}`, jsonString, {
+      contentType: ContentType.APPLICATION_JSON,
+    });
   }
 
   static attachUri(uri: string) {

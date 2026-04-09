@@ -12,41 +12,41 @@ test('Solomono authentication', async ({ page }) => {
     !process.env.CI && FileSystemUtils.doesPathExist(authFilePath),
     'Skipping authentication (session is valid for 30 days)'
   );
-
+  
   await AuthUtils.authenticate(page, Portal.SOLOMONO);
 });
 
-// Example of common session
-/**
-test('Demo authentication', async ({ page }) => {
-  const authFilePath = AuthUtils.getAuthFilePath(Portal.DEMO);
+// Example of Admin Panel session
+/*
+test('Admin Panel authentication', async ({ page }) => {
+  const authFilePath = AuthUtils.getAuthFilePath(Portal.ADMIN);
   
   test.skip(
     !process.env.CI && FileSystemUtils.doesPathExist(authFilePath),
     'Skipping authentication (session is valid for 30 days)'
   );
 
-  await AuthUtils.authenticate(page, Portal.DEMO);
+  await AuthUtils.authenticate(page, Portal.ADMIN);
 });
-*/
+**/
 
-// Example of setting up BUILD_ID and API_TOKEN
+// Example of setting up BUILD_ID and SOLOMONO_API_TOKEN, ADMIN_API_TOKEN
 /*
-test('Setting up BUILD_ID, ADMIN_API_TOKEN', async ({}) => {
+test('Setting up BUILD_ID, SOLOMONO_API_TOKEN, ADMIN_API_TOKEN', async ({}) => {
   process.env.BUILD_ID ||= `${process.env.CI ? 'CI_' : ''}${Utils.getCurrentDateTime()}`;
   
-  const adminAuthSession = JSON.parse(
+  const solomonoAuthSession = JSON.parse(
     FileSystemUtils.readFile(AuthUtils.getAuthFilePath(Portal.SOLOMONO)) as string
+  );
+  process.env.SOLOMONO_API_TOKEN = solomonoAuthSession.origins[0].localStorage.find(
+    (item) => item.name === 'token'
+  ).value;
+
+  const adminAuthSession = JSON.parse(
+    FileSystemUtils.readFile(AuthUtils.getAuthFilePath(Portal.ADMIN)) as string
   );
   process.env.ADMIN_API_TOKEN = adminAuthSession.origins[0].localStorage.find(
     (item) => item.name === 'token'
   ).value;
-
-  const demoAdminAuthSession = JSON.parse(
-    FileSystemUtils.readFile(AuthUtils.getAuthFilePath(Portal.DEMO)) as string
-  );
-  process.env.DEMO_ADMIN_API_TOKEN = demoAdminAuthSession.origins[0].localStorage.find(
-    (item) => item.name === 'token'
-  ).value;
 });
-  **/
+**/

@@ -1,5 +1,6 @@
 import { getPortalConfig, IPortalConfig, Portal } from '@constants/env';
 import { expect, Page } from '@playwright/test';
+
 import path from 'path';
 
 export class AuthUtils {
@@ -15,8 +16,8 @@ export class AuthUtils {
       case Portal.SOLOMONO:
         await this.authenticateSolomono(page);
         break;
-      case Portal.DEMO: 
-        await this.authenticateDemo(page);
+      case Portal.ADMIN: 
+        await this.authenticateAdminPanel(page);
         break;
       default:
         throw new Error(`Unsupported portal: ${portal}`);
@@ -32,17 +33,17 @@ export class AuthUtils {
   private static async authenticateSolomono(page: Page): Promise<void> {
     await page.goto(this.portalConfig.signinUrl);
     await page.locator(this.signInButton).click();
-    await page.locator(this.emailInput).fill(process.env.ADMIN_AUTH_EMAIL);
-    await page.locator(this.passwordInput).fill(process.env.ADMIN_AUTH_PASSWORD);
+    await page.locator(this.emailInput).fill(process.env.SOLOMONO_AUTH_EMAIL!);
+    await page.locator(this.passwordInput).fill(process.env.SOLOMONO_AUTH_PASSWORD!);
     await page.locator(this.logInButton).click();
 
     await page.waitForURL(this.portalConfig.baseUrl);
     await expect(page.locator(this.portalConfig.expectedLandingElement)).toBeVisible();
   }
 
-  private static async authenticateDemo(page: Page): Promise<void> {
+  private static async authenticateAdminPanel(page: Page): Promise<void> {
     await page.goto(this.portalConfig.signinUrl);
-    // Steps to pass the authentication for the another project
+    // Steps to pass the authentication for the admin panel
   }
 
 }
