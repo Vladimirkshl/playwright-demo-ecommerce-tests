@@ -1,5 +1,9 @@
 export enum ContentType {
   APPLICATION_JSON = 'application/json',
+  APPLICATION_PROBLEM_JSON = 'application/problem+json',
+
+  TEXT_HTML = 'text/html',
+  TEXT_PLAIN = 'text/plain',
   TEXT_URI_LIST = 'text/uri-list',
 
   IMAGE_JPEG = 'image/jpeg',

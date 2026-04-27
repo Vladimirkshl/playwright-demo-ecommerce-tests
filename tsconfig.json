@@ -2,14 +2,16 @@
   "compilerOptions": {
     "lib": ["ES2021", "DOM"],
     "paths": {
+      "@api/*": ["./api/*"],
       "@constants/*": ["./constants/*"],
       "@elements/*": ["./elements/*"],
       "@pages/*": ["./pages/*"],
       "@playwrightConfig": ["./playwright.config.ts"],
       "@test": ["./fixtures/base.fixture"],
       "@fixtures/*": ["./fixtures/*"],
-      "@utils/*": ["./utils/*"], 
+      "@utils/*": ["./utils/*"],
     },
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": false,
   }
 }

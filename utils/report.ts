@@ -2,11 +2,17 @@ import { attachment, logStep, step } from 'allure-js-commons';
 import playwrightConfig from '@playwrightConfig';
 import { ContentType } from '@constants/common';
 import { Utils } from './utils';
+import { APIResponse } from '@playwright/test';
+import { ApiUtils } from './api-utils';
 
 const SUBSTEP_PREFIX = '|- ';
 const ATTACHEMENT_PREFIX = `${SUBSTEP_PREFIX}Attachment > `;
 
 export class Report {
+  static async attachResponse(response: APIResponse, name?: string) {
+    Report.attachJson(name || 'API Response', await ApiUtils.getResponseFormatted(response));
+  }
+
   private static stdout(message: string) {
     console.log(message);
   }
