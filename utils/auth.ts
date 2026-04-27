@@ -33,8 +33,8 @@ export class AuthUtils {
   private static async authenticateSolomono(page: Page): Promise<void> {
     await page.goto(this.portalConfig.signinUrl);
     await page.locator(this.signInButton).click();
-    await page.locator(this.emailInput).fill(process.env.SOLOMONO_AUTH_EMAIL!);
-    await page.locator(this.passwordInput).fill(process.env.SOLOMONO_AUTH_PASSWORD!);
+    await page.locator(this.emailInput).fill(process.env.SOLOMONO_AUTH_EMAIL);
+    await page.locator(this.passwordInput).fill(process.env.SOLOMONO_AUTH_PASSWORD);
     await page.locator(this.logInButton).click();
 
     await page.waitForURL(this.portalConfig.baseUrl);

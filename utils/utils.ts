@@ -22,4 +22,17 @@ export class Utils {
   
   static getCurrentDateTime = () => this.formateDate(new Date());
 
+  /* COLLECTIONS */
+
+  static mergeObjects = (object: object, rest: object) => {
+    return {
+      ...object,
+      ...rest,
+    };
+  };
+
+  static async pause(seconds = 1) {
+    return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+  }
+
 }
