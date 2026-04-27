@@ -44,6 +44,22 @@ export abstract class ApiBase {
     return this.sendRequest(HttpMethod.GET, request);
   }
 
+  async POST(request: RequestData) {
+    return this.sendRequest(HttpMethod.POST, request);
+  }
+
+  async PATCH(request: RequestData) {
+    return this.sendRequest(HttpMethod.PATCH, request);
+  }
+
+  async PUT(request: RequestData) {
+    return this.sendRequest(HttpMethod.PUT, request);
+  }
+
+  async DELETE(request: RequestData) {
+    return this.sendRequest(HttpMethod.DELETE, request);
+  }
+
   private async sendRequest(method: HttpMethod, request: RequestData) {
     const requestContext = request.contextType === RequestContextType.SOLOMONO_USER
       ? ApiBase.getSolomonoUserRequestContext()
