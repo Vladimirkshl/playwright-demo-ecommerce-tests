@@ -10,6 +10,7 @@ export interface IProduct extends IProductName, IProductStatus,
   IShipping {}
 
 export interface IProduct {
+  characteristics: IProductCharacteristics;
   api: {
     id: string;
   }
@@ -29,7 +30,7 @@ interface IProductGeneralInfo {
   image: IFile; 
   label?: Label;
   totalRating: number;
-  reviews: IReview[];
+  reviews?: IReview[];
 }
 
 interface IPrice {
@@ -37,10 +38,14 @@ interface IPrice {
   discount?: number;
 }
 
-interface IProductCharacteristics {
+type IProductCharacteristics = ILaptopCharacteristics;
+
+interface ILaptopCharacteristics {
+  productType: ProductType.LAPTOP;
   color?: IColor[];
   ram?: IRam[];
   battery?: string;
+  brand?: Brand;
   weight?: string;
   graphicAdapter?: string;
   network?: string;
@@ -97,9 +102,18 @@ export enum Category {
   ACCESSORIES = 'Accessories',
 }
 
+export enum ProductType {
+  LAPTOP = 'laptop',
+}
+
 export enum ProductStatus {
   IN_STOCK = 'In stock',
   OUT_OF_STOCK = 'Out of stock',
+}
+
+export enum Brand {
+  LENOVO = 'Lenovo',
+  ACER = 'Acer',
 }
 
 export enum Label {
