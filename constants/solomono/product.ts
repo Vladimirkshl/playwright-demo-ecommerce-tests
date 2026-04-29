@@ -65,13 +65,20 @@ interface IQty {
   qty: number;
 }
 
-interface IReview {
+export interface IReview {
+  reviewAttachment: IReviewFile;
   id: string;
   name: string;
   comment: string;
   rating: number;
-  file: IFile;
+  file?: IFile;
   date: IDateTime;
+}
+
+export interface IReviewFile {
+  fileId: string;
+  fileName: string;
+  path: string;
 }
 
 interface IShipping {
