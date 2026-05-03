@@ -58,7 +58,7 @@ export class ProductApi extends ApiBase {
       },
     });
     
-    review.id = response.id;
+    review.api.id = response.id;
   }
 
   private async attachFiles(product: IProduct) {
@@ -66,7 +66,7 @@ export class ProductApi extends ApiBase {
       await Report.subStep(`API: Attach file: ${review.file}`, async () => {
         const signedUrl = await this.getSignedUrl(review.file);
         await this.sendFileToS3(review.file, signedUrl.signedUrl);
-        review.reviewAttachment = await this.attachFile(review.id, review.file, signedUrl);
+        review.reviewAttachment = await this.attachFile(review.api.id, review.file, signedUrl);
       });
 
       Report.attachJson('Review attached file', review.file);
