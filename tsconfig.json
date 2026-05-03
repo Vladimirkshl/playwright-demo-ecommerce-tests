@@ -7,6 +7,7 @@
       "@elements/*": ["./elements/*"],
       "@pages/*": ["./pages/*"],
       "@playwrightConfig": ["./playwright.config.ts"],
+      "@fake/*": ["./fake/*"],
       "@test": ["./fixtures/base.fixture"],
       "@fixtures/*": ["./fixtures/*"],
       "@utils/*": ["./utils/*"],

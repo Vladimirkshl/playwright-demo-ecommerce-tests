@@ -3,8 +3,7 @@ import { IFile } from '@constants/files/files';
 
 export interface IProduct extends IProductName, IProductStatus,
   IPrice,
-  IProductGeneralInfo, 
-  IProductCharacteristics, 
+  IProductGeneralInfo,  
   IDescription,
   IQty,
   IShipping {}
@@ -29,12 +28,12 @@ interface IProductGeneralInfo {
   code: string;
   image: IFile; 
   label?: Label;
-  totalRating: number;
+  totalRating?: number;
   reviews?: IReview[];
 }
 
 interface IPrice {
-  price: number;
+  price: string;
   discount?: number;
 }
 
@@ -48,7 +47,7 @@ interface ILaptopCharacteristics {
   brand?: Brand;
   weight?: string;
   graphicAdapter?: string;
-  network?: string;
+  network: string;
   processor?: string;
   size: string;
   volumeDrive?: string;
@@ -66,13 +65,15 @@ interface IQty {
 }
 
 export interface IReview {
-  reviewAttachment: IReviewFile;
-  id: string;
+  reviewAttachment?: IReviewFile;
   name: string;
   comment: string;
   rating: number;
   file?: IFile;
-  date: IDateTime;
+  date?: IDateTime;
+  api?: {
+    id: string, 
+  }
 }
 
 export interface IReviewFile {
@@ -93,6 +94,7 @@ export interface IColor {
 }
 
 export interface IRam {
+  id: string;
   name: Ram;
   price: IPrice;
   qty: IQty;

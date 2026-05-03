@@ -29,3 +29,5 @@ export interface IDateTime extends IDateFormatted {
 export interface IDateFormatted {
   dateFormatted: string;
 }
+
+export const AUTO_TEST_PREFIX = `${process.env.BUILD_ID} AT`;
