@@ -5,6 +5,7 @@ import { Report } from '@utils/report';
 import { IProduct } from '@constants/solomono/product';
 import { MenuItem } from '@constants/solomono/menu';
 import { IItem } from '@constants/solomono/item';
+import { Utils } from '@utils/utils';
 
 const TEMP_PATH = `./TEMP_${process.env.ENV}`;
 
@@ -21,6 +22,23 @@ export class FileSystemUtils {
 
   static doesPathExist(path: string): boolean {
     return fs.existsSync(path);
+  }
+
+  static createFolder(folderPath: string): void {
+    if (!this.doesPathExist(folderPath)) {
+      fs.mkdirSync(folderPath, { recursive: true });
+    }
+  }
+
+  static writeFile(filePath: string, content: string): void {
+    fs.writeFileSync(filePath, content);
+  }
+
+  /* TEMP with many fixtures */
+
+  static writeFileTemp(path: string, items: TAllItems[]) {
+    this.createFolder(this.resolvePath(TEMP_PATH));
+    this.writeFile(this.resolvePath(path), Utils.jsonStringify(items));
   }
 
   static doesEntityPathExist(path: string): boolean {

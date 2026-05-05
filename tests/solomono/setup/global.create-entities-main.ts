@@ -8,7 +8,6 @@ test.describe('Global laptops', () => {
   
   test('create', async ({ laptopCreate }) => {
     const laptop = await laptopCreate();
-    // TODO: Proceed here
-    console.log(laptop);
+    FileSystemUtils.writeFileTemp(TEMP_ENTITY_PATH.LAPTOP, [laptop]);
   });
 });
