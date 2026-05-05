@@ -5,7 +5,7 @@ import { Report } from '@utils/report';
 import { IProduct } from '@constants/solomono/product';
 import { MenuItem } from '@constants/solomono/menu';
 import { IItem } from '@constants/solomono/item';
-import { Utils } from './utils';
+import { Utils } from '@utils/utils';
 
 const TEMP_PATH = `./TEMP_${process.env.ENV}`;
 
