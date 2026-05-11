@@ -1,12 +1,14 @@
 import { getPortalConfig, Portal } from '@constants/env';
+import { IProduct } from '@constants/solomono/product';
 import { SolomonoHome } from '@pages/solomono/home';
-
+import { SearchProduct } from '@pages/solomono/search-product';
 import { test as base } from '@playwright/test';
 import { AuthUtils } from '@utils/auth';
 
 interface SolomonoPageFixtures {
   solomonoHome: SolomonoHome;
   
+  searchPage: (product: IProduct) => Promise<SearchProduct>;
 }
 
 export const test = base.extend<SolomonoPageFixtures>({
@@ -24,4 +26,9 @@ export const test = base.extend<SolomonoPageFixtures>({
 
     await context.close();
   },
+
+  searchPage: async ({ solomonoHome }, use) => {
+    await use(async (product: IProduct) => await solomonoHome.getSearchProduct(product));
+  },
+ 
 });
