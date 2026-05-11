@@ -1,3 +1,9 @@
+export enum By {
+  LABEL,
+  ARIA_LABEL,
+  PLACEHOLDER,
+}
+
 export enum ContentType {
   APPLICATION_JSON = 'application/json',
   APPLICATION_PROBLEM_JSON = 'application/problem+json',
@@ -31,3 +37,7 @@ export interface IDateFormatted {
 }
 
 export const AUTO_TEST_PREFIX = `${process.env.BUILD_ID} AT`;
+
+export enum Placeholder {
+  QUICK_FIND = 'Quick find',
+}

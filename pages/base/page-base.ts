@@ -1,6 +1,9 @@
 import { Page } from '@playwright/test';
 import { PageUtils } from '@pages/base/page-utils';
 import { H1 } from '@elements/simple/header';
+import { By, Placeholder } from '@constants/common';
+import { Input } from '@elements/simple/input/input';
+import { Button } from '@elements/simple/button';
 
 export class PageBase {
 
@@ -10,11 +13,13 @@ export class PageBase {
 
   utils = () => new PageUtils(this.page);
   goTo = (uri: string) => this.utils().goTo(uri);
-  assertTitle = (titleOrRegExp: string | RegExp) => 
-    this.utils().assertTitle(titleOrRegExp);
+  assertTitle = (titleOrRegExp: string | RegExp) => this.utils().assertTitle(titleOrRegExp);
 
   /* ELEMENTS */
 
   h1 = (index?: number) => new H1(this.page, index);
 
+  button = (name: string, index?: number) => new Button(this.page, name, index);
+
+  searchInput = () => new Input(this.page, Placeholder.QUICK_FIND, By.PLACEHOLDER);
 }

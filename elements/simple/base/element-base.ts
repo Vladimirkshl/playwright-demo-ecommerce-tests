@@ -35,4 +35,19 @@ export abstract class ElementBase {
       });
     });
   }
+
+  /* ACTIONS */
+
+  async click() {
+    await Report.subStep(`Click [${this.name}]`, async () => {
+      await this.element().click();
+    });
+  }
+
+  async fillSequentially(text: string) {
+    await Report.subStep(`Fill sequentially [${this.name}]=[${text}]`, async () => {
+      await this.element().clear();
+      await this.element().pressSequentially(text, { delay: 25 });
+    });
+  }
 }
