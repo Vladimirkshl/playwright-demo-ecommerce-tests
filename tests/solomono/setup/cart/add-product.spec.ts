@@ -1,7 +1,6 @@
 import { test } from '@test';
 
-test('Add product to cart', async ({}) => {
-
-  /* TODO: Implement the laptopCreate fixture as object without API */
-
+test('Add product to cart', async ({ laptopFake }) => {
+  /* TODO: Remove console.log after adding test steps */
+  console.log(laptopFake);
 });

@@ -6,8 +6,8 @@ test.describe.configure({ mode: 'serial' });
 test.describe('Global laptops', () => {
   test.skip(FileSystemUtils.doesEntityPathExist(TEMP_ENTITY_PATH.LAPTOP));
   
-  test('create', async ({ laptopCreate }) => {
-    const laptop = await laptopCreate();
-    FileSystemUtils.writeFileTemp(TEMP_ENTITY_PATH.LAPTOP, [laptop]);
+  test('create', async ({ laptop }) => {
+    const laptopItem = await laptop();
+    FileSystemUtils.writeFileTemp(TEMP_ENTITY_PATH.LAPTOP, [laptopItem]);
   });
 });

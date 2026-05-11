@@ -1,0 +1,35 @@
+[
+  {
+  "name": "Laptop VK_LOCAL a7f3",
+  "status": "In stock",
+  "category": "Laptops",
+  "code": "4821",
+  "price": 1299.99,
+  "qty": 8,
+  "discount": 15,
+  "image": "https://fakecdn.com/images/logo.png",
+  "label": "NEW",
+  "reviews": [],
+  "description": "A high-performance laptop designed for developers, gamers, and productivity users.",
+  "shortDescription": "Powerful laptop with 16GB RAM and SSD storage.",
+  "shippingDescription": "Ships within 2-3 business days with free delivery.",
+    "characteristics": {
+      "productType": "LAPTOP",
+      "color": "Space Gray",
+      "ram": "16GB",
+      "battery": "Up to 10 hours battery life",
+      "brand": "APPLE",
+      "weight": "1.8 kg",
+      "graphicAdapter": "NVIDIA GeForce RTX 4060",
+      "network": "Wi-Fi 6, Bluetooth 5.3",
+      "processor": "Intel Core i7-13700H",
+      "size": "15.6 inch",
+      "volumeDrive": "1TB SSD",
+      "warranty": "24 months manufacturer warranty",
+      "os": "Windows 11 Pro"
+    },
+    "api": {
+      "id": ""
+    }
+  }
+]
