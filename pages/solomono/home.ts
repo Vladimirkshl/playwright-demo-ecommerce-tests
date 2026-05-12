@@ -15,7 +15,7 @@ export class SolomonoHome extends PageBase {
   }
 
   async getSearchProduct(product: IProduct): Promise<SearchProduct> {
-    await Report.subStep(`Search ${product}`, async () => {
+    await Report.subStep(`Search ${product.name}`, async () => {
       await this.searchInput().fillSequentially(product.name);
       await this.button(Placeholder.QUICK_FIND).click();
     });

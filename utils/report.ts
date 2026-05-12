@@ -5,6 +5,7 @@ import { Utils } from './utils';
 import { APIResponse } from '@playwright/test';
 import { ApiUtils } from './api-utils';
 
+const STEP_PREFIX = 'STEP ';
 const SUBSTEP_PREFIX = '|- ';
 const ATTACHEMENT_PREFIX = `${SUBSTEP_PREFIX}Attachment > `;
 
@@ -19,6 +20,12 @@ export class Report {
   
   private static stdoutAttachment(attachmentType: string, message: string) {
     this.stdout(`${ATTACHEMENT_PREFIX}${attachmentType} | ${message}`);
+  }
+
+  static async step<T>(name: string, body: () => Promise<T>): Promise<T> {
+    this.stdout('');
+    this.stdout(`${STEP_PREFIX}${name}`);
+    return step(name, body);
   }
 
   private static stdoutSubStep(message: string) {
