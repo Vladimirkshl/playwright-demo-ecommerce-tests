@@ -50,4 +50,16 @@ export abstract class ElementBase {
       await this.element().pressSequentially(text, { delay: 25 });
     });
   }
+
+  async hover() {
+    await Report.subStep(`Hover [${this.name}]`, async () => {
+      await this.element().hover();
+    });
+  }
+
+  async unhover() {
+    await Report.subStep(`Unhover [${this.name}]`, async () => {
+      await this.page.mouse.move(0, 0);
+    });
+  }
 }
