@@ -1,8 +1,8 @@
 import { IProduct } from '@constants/solomono/product';
-import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
+import { ProductCard } from '@pages/solomono/propduct-card';
 
-export class SearchProduct extends PageBase {
+export class SearchProduct extends ProductCard {
 
   /* ASSERT */
   
