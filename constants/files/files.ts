@@ -24,7 +24,7 @@ export enum MimeType {
   HEIC = 'image/heic',
 }
 
-enum FileName {
+export enum FileName {
   IMAGE_PNG = 'image.png',
   IMAGE_JPEG = 'image.jpeg',
   IMAGE_HEIC = 'image.heic',

@@ -1,5 +1,5 @@
-import { IDateTime } from '@constants/common';
-import { IFile } from '@constants/files/files';
+import { ContentType, IDateTime } from '@constants/common';
+import { FileName, IFile } from '@constants/files/files';
 
 export interface IProduct extends IProductName, IProductStatus,
   IPrice,
@@ -49,7 +49,7 @@ interface ILaptopCharacteristics {
   graphicAdapter?: string;
   network: string;
   processor?: string;
-  size: string;
+  size?: string;
   volumeDrive?: string;
   warranty: string;
   os?: string;
@@ -134,6 +134,7 @@ export enum Label {
 export enum Color {
   BLACK = 'Black',
   ORANGE = 'Orange',
+  STORM_GREY = 'Storm Grey',
 }
 
 export enum Ram {
@@ -141,3 +142,52 @@ export enum Ram {
   '16GB' = '16GB',
   '32GB' = '32GB',
 }
+
+// HACK: demoLaptop is harcoded data due to limitations on demo website
+export const DEMO_LAPTOP: IProduct = {
+  name: 'Lenovo Yoga 7 2 in 1 14IML9 (83DJ00CMRA) Storm Grey',
+  status: ProductStatus.IN_STOCK,
+  category: Category.LAPTOPS,
+  code: 'kod5',
+  price: '1173.15',
+  qty: 11,
+  image: {
+    name: 'logo',
+    fileName: FileName.IMAGE_JPEG,
+    path: `./constants/files/${FileName.IMAGE_JPEG}`,
+    contentType: ContentType.IMAGE_JPEG,
+  },
+  description: 'TODO: add actual description',
+  shortDescription: 'TODO: add actual short description',
+  shippingDescription: 'TODO: add actual shipping description',
+  characteristics: {
+    productType: ProductType.LAPTOP,
+    color: [
+      { 
+        id: '1', 
+        name: Color.STORM_GREY, 
+        price: { price: '1173.15' },
+        qty: { qty: 11 },
+      },
+    ],
+    ram: [
+      {
+        id: '1',
+        name: Ram['16GB'],
+        price: { price: '1173.15' },
+        qty: { qty: 11 },
+      },
+    ],
+    brand: Brand.LENOVO,
+    weight: '1.49 Kg',
+    graphicAdapter: 'Arc Graphics',
+    network: 'LAN / Wi-Fi / Bluetooth',
+    processor: 'Intel Core Ultra 5 125H',
+    volumeDrive: '500 GB',
+    warranty: '12 moths',
+    os: 'Windows',
+  },
+  api: {
+    id: '',
+  },
+};
