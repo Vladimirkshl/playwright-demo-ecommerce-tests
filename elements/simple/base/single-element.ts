@@ -17,4 +17,9 @@ export class SingleElement extends ElementBase {
     Report.logStep(this.xpathWithIndex, false);
     return this.page.locator(this.xpathWithIndex);
   }
+
+  ancestor(index = 1) {
+    return new SingleElement(this.page, `${this.name} ancestor`, `${this.xpath}/ancestor::*`, index);
+  }
+ 
 }
