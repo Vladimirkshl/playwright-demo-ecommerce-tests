@@ -6,7 +6,7 @@ import { Report } from '@utils/report';
 test('Add product to cart', async ({ searchPage }) => {
   const searchResult = await searchPage(DEMO_LAPTOP);
 
-  await Report.step(`Assert ${DEMO_LAPTOP.name} details on Search page`, async () => {
+  await Report.step(`Assert [${DEMO_LAPTOP.name}] details on Search page`, async () => {
     await searchResult.assertHeader(DEMO_LAPTOP);    
   });
 });
