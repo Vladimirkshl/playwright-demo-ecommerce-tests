@@ -11,4 +11,5 @@ export class SearchProduct extends ProductCard {
       await this.h1().assertText(product.name);
     });
   }
+
 }

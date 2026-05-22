@@ -1,4 +1,4 @@
-import { SingleElement } from '@elements/simple/base/single-element';
+import { SingleElement } from '@elements/base/single-element';
 import { Page } from '@playwright/test';
 
 export class H1 extends SingleElement {
