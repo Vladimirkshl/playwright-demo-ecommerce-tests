@@ -5,18 +5,22 @@ import { FakeSimple } from '@fake/fake-simple';
 import { Utils } from '@utils/utils';
 import { getFakeReview } from '@fake/admin/review';
 import { getFakeColor, getFakeRam } from '@fake/admin/characteristics';
+import { Currency } from '@constants/solomono/geo';
 
 export const getFakeLaptop = (): IProduct => {
   const uuid = FakeSimple.uuidShort();
   const name = `Laptop ${AUTO_TEST_PREFIX} ${uuid}`;
   const review = FakeSimple.boolean() ? getFakeReview() : [];
+  const price = FakeSimple.price();
 
   return {
     name: name,
     status: ProductStatus.IN_STOCK,
     category: Category.LAPTOPS,
     code: FakeSimple.numericString(4, 4, true),
-    price: FakeSimple.price(),
+    price: price,
+    currency: Currency.DOLLAR,
+    fullPrice: `${Currency.DOLLAR}${price}`,
     qty: FakeSimple.number(1, 21),
     discount: FakeSimple.number(5, 20),
     image: getLogo(),

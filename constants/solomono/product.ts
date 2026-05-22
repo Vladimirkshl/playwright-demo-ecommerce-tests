@@ -1,5 +1,6 @@
 import { ContentType, IDateTime } from '@constants/common';
 import { FileName, IFile } from '@constants/files/files';
+import { Currency } from '@constants/solomono/geo';
 
 export interface IProduct extends IProductName, IProductStatus,
   IPrice,
@@ -34,6 +35,8 @@ interface IProductGeneralInfo {
 
 interface IPrice {
   price: string;
+  currency: Currency;
+  fullPrice: string;
   discount?: number;
 }
 
@@ -146,10 +149,13 @@ export enum Ram {
 // HACK: demoLaptop is harcoded data due to limitations on demo website
 export const DEMO_LAPTOP: IProduct = {
   name: 'Lenovo Yoga 7 2 in 1 14IML9 (83DJ00CMRA) Storm Grey',
+  label: Label.NEW,
   status: ProductStatus.IN_STOCK,
   category: Category.LAPTOPS,
   code: 'kod5',
-  price: '1173.15',
+  price: '1247.15 ',
+  currency: Currency.DOLLAR, 
+  fullPrice: `${Currency.DOLLAR}1247.15 `,
   qty: 11,
   image: {
     name: 'logo',
@@ -166,7 +172,7 @@ export const DEMO_LAPTOP: IProduct = {
       { 
         id: '1', 
         name: Color.STORM_GREY, 
-        price: { price: '1173.15' },
+        price: { price: '$1247.15 ', currency: Currency.DOLLAR, fullPrice: `${Currency.DOLLAR}1247.15 ` },
         qty: { qty: 11 },
       },
     ],
@@ -174,7 +180,7 @@ export const DEMO_LAPTOP: IProduct = {
       {
         id: '1',
         name: Ram['16GB'],
-        price: { price: '1173.15' },
+        price: { price: '$1247.15 ', currency: Currency.DOLLAR, fullPrice: `${Currency.DOLLAR}1247.15 ` },
         qty: { qty: 11 },
       },
     ],

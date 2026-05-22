@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { SingleElement } from '@elements/simple/base/single-element';
+import { SingleElement } from '@elements/base/single-element';
 import { By } from '@constants/common';
 
 export class Input extends SingleElement {

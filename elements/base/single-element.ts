@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
 import { Utils } from '@utils/utils';
-import { ElementBase } from '@elements/simple/base/element-base';
+import { ElementBase } from '@elements/base/element-base';
 import { Report } from '@utils/report';
 
 export class SingleElement extends ElementBase {
@@ -18,8 +18,12 @@ export class SingleElement extends ElementBase {
     return this.page.locator(this.xpathWithIndex);
   }
 
-  ancestor(index = 1) {
-    return new SingleElement(this.page, `${this.name} ancestor`, `${this.xpath}/ancestor::*`, index);
+  innerElementWithoutParentIndex(name: string, xpath: string, index = 1) {
+    return new SingleElement(this.page, `${this.name} > ${name}`, `${this.xpath}${xpath}`, index);
+  }
+
+  ancestor(xpath = '*') {
+    return new SingleElement(this.page, `${this.name} ancestor`, `${this.xpath}/ancestor::${xpath}`);
   }
  
 }
