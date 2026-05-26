@@ -22,6 +22,10 @@ export class SingleElement extends ElementBase {
     return new SingleElement(this.page, `${this.name} > ${name}`, `${this.xpath}${xpath}`, index);
   }
 
+  parent(xpath = '*') {
+    return new SingleElement(this.page, `${this.name} parent`, `${this.xpath}/parent::${xpath}`);
+  }
+
   ancestor(xpath = '*') {
     return new SingleElement(this.page, `${this.name} ancestor`, `${this.xpath}/ancestor::${xpath}`);
   }

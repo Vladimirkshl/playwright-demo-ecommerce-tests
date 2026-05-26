@@ -62,4 +62,10 @@ export abstract class ElementBase {
       await this.page.mouse.move(0, 0);
     });
   }
+
+  async focus() {
+    await Report.subStep(`Focus [${this.name}]`, async () => {
+      await this.element().focus();
+    });
+  }
 }

@@ -92,6 +92,7 @@ interface IShipping {
 export interface IColor {
   id: string;
   name: Color;
+  cardColor: string;
   price: IPrice;
   qty: IQty;
 }
@@ -140,6 +141,12 @@ export enum Color {
   STORM_GREY = 'Storm Grey',
 }
 
+export const CardColor = {
+  [Color.BLACK]: `Color:${Color.BLACK}`,
+  [Color.ORANGE]: `Color:${Color.ORANGE}`,
+  [Color.STORM_GREY]: `Color:${Color.STORM_GREY}`,
+};
+
 export enum Ram {
   '8GB' = '8GB',
   '16GB' = '16GB',
@@ -172,6 +179,7 @@ export const DEMO_LAPTOP: IProduct = {
       { 
         id: '1', 
         name: Color.STORM_GREY, 
+        cardColor: CardColor[Color.STORM_GREY],
         price: { price: '$1247.15 ', currency: Currency.DOLLAR, fullPrice: `${Currency.DOLLAR}1247.15 ` },
         qty: { qty: 11 },
       },
