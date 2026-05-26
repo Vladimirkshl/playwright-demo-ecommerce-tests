@@ -12,6 +12,7 @@ export class ProductCard extends PageBase {
   private name = (name: string) => this.hyperLink(name);
   private price = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.fullPrice, `//span[contains(., "${product.fullPrice}")]`);
   private cardButton = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex('Buy', '//button');
+  private characteristic = (product: IProduct, name: string) => this.card(product.name).innerElementWithoutParentIndex(name, `//span[starts-with(., "${name}")]/parent::td`);
 
   /* ASSERT */
 
@@ -22,6 +23,21 @@ export class ProductCard extends PageBase {
       await this.name(product.name).assertIsVisible();
       await this.price(product).assertIsVisible();
       await this.cardButton(product).assertText('Buy');
+    });
+  }
+
+  async assertHovered(product: IProduct) {
+    await Report.subStep(`Assert hovered ${product.name} card`, async () => {
+      await this.card(product.name).hover();
+      await this.assert(product);
+      await this.assertColor(product);
+    });
+  }
+
+  private async assertColor(product: IProduct) {
+    await Report.subStep('Assert characteristic', async () => {
+      for (const characteristic of product.characteristics.color) 
+        await this.characteristic(product, 'Color').assertText(characteristic.cardColor);
     });
   }
 }

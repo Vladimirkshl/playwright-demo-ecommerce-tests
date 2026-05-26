@@ -13,5 +13,9 @@ test('Add product to cart', async ({ searchPage }) => {
   await Report.step(`Assert [${DEMO_LAPTOP.name}] product card on Search page`, async () => {
     await searchResult.assert(DEMO_LAPTOP);
   });
+
+  await Report.step(`Assert hovered [${DEMO_LAPTOP.name}] product card on Search page`, async () => {
+    await searchResult.assertHovered(DEMO_LAPTOP);
+  });
   
 });

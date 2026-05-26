@@ -6,6 +6,7 @@ import { Input } from '@elements/input/input';
 import { Button } from '@elements/simple/button';
 import { Hyperlink } from '@elements/simple/hyper-link';
 import { Div } from '@elements/simple/div';
+import { Span } from '@elements/simple/span';
 
 export class PageBase {
 
@@ -24,6 +25,7 @@ export class PageBase {
   div = (name: string) => new Div(this.page, name);
   hyperLink = (name: string, index?: number) => new Hyperlink(this.page, name, index);
   button = (name: string, index?: number) => new Button(this.page, name, index);
+  span = (name: string, index?: number) => new Span(this.page, name, index);
 
   searchInput = () => new Input(this.page, Placeholder.QUICK_FIND, By.PLACEHOLDER);
 }
