@@ -31,13 +31,38 @@ export class ProductCard extends PageBase {
       await this.card(product.name).hover();
       await this.assert(product);
       await this.assertColor(product);
+      await this.assertRam(product);
+      await this.assertWeigth(product);
+      await this.assertBrand(product);  
     });
   }
 
   private async assertColor(product: IProduct) {
     await Report.subStep('Assert characteristic', async () => {
       for (const characteristic of product.characteristics.color) 
-        await this.characteristic(product, 'Color').assertText(characteristic.cardColor);
+        await this.characteristic(product, 'Color').assertText(characteristic.cardName);
     });
   }
+
+  private async assertRam(product: IProduct) {
+    await Report.subStep('Assert characteristic', async () => {
+      for (const characteristic of product.characteristics.ram) 
+        await this.characteristic(product, 'RAM').assertText(characteristic.cardName);
+    });
+  }
+
+  private async assertWeigth(product: IProduct) {
+    await Report.subStep('Assert characteristic', async () => {
+      for (const characteristic of product.characteristics.weight) 
+        await this.characteristic(product, 'Weight').assertText(characteristic.cardName);
+    });
+  }
+
+  private async assertBrand(product: IProduct) {
+    await Report.subStep('Assert characteristic', async () => {
+      for (const characteristic of product.characteristics.brand) 
+        await this.characteristic(product, 'Brand').assertText(characteristic.cardName);
+    });
+  }
+  
 }

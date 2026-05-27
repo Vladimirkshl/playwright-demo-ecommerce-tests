@@ -1,10 +1,10 @@
 import { AUTO_TEST_PREFIX } from '@constants/common';
 import { getLogo } from '@constants/files/files';
-import { Brand, Category, IProduct, Label, ProductStatus, ProductType } from '@constants/solomono/product';
+import { Category, IProduct, Label, ProductStatus, ProductType } from '@constants/solomono/product';
 import { FakeSimple } from '@fake/fake-simple';
 import { Utils } from '@utils/utils';
 import { getFakeReview } from '@fake/admin/review';
-import { getFakeColor, getFakeRam } from '@fake/admin/characteristics';
+import { getFakeBrand, getFakeColor, getFakeRam, getFakeWeight } from '@fake/admin/characteristics';
 import { Currency } from '@constants/solomono/geo';
 
 export const getFakeLaptop = (): IProduct => {
@@ -34,8 +34,8 @@ export const getFakeLaptop = (): IProduct => {
       color: getFakeColor(),
       ram: getFakeRam(),
       battery: FakeSimple.sentence(),
-      brand: Utils.getRandomValue(Brand),
-      weight: FakeSimple.sentence(),
+      brand: getFakeBrand(),
+      weight: getFakeWeight(),
       graphicAdapter: FakeSimple.sentence(),
       network: FakeSimple.sentence(),
       processor: FakeSimple.sentence(),
