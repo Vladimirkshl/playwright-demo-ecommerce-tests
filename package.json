@@ -26,6 +26,7 @@
     "pl:open": "playwright test --ui",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "type-check": "tsc --noEmit",
     "allure:generate": "npx allure generate",
     "allure:run-srv": "allure serve -h localhost",
     "allure:clean": "rm -rf allure-results",

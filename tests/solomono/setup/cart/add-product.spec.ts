@@ -18,4 +18,7 @@ test('Add product to cart', async ({ searchPage }) => {
     await searchResult.assertHovered(DEMO_LAPTOP);
   });
   
+  await Report.subStep(`Add [${DEMO_LAPTOP.name}] product to cart`, async () => {
+    await searchResult.addProduct(DEMO_LAPTOP);
+  });
 });

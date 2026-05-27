@@ -7,6 +7,7 @@ import { Button } from '@elements/simple/button';
 import { Hyperlink } from '@elements/simple/hyper-link';
 import { Div } from '@elements/simple/div';
 import { Span } from '@elements/simple/span';
+import { Toastify } from '@elements/simple/toastify';
 
 export class PageBase {
 
@@ -19,6 +20,8 @@ export class PageBase {
   assertTitle = (titleOrRegExp: string | RegExp) => this.utils().assertTitle(titleOrRegExp);
 
   /* ELEMENTS */
+
+  toastify = () => new Toastify(this.page);
 
   h1 = (index?: number) => new H1(this.page, index);
 

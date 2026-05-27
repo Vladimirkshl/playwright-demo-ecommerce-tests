@@ -25,6 +25,12 @@ export abstract class ElementBase {
     });
   }
 
+  async assertIsHidden(timeoutInSeconds?: number) {
+    await Report.subStep(`Assert [${this.name}] is hidden`, async () => {
+      await expect.soft(this.element()).toBeHidden({ timeout: timeoutInSeconds * 1000 || config.expect.timeout });
+    });
+  }
+
   /* CONTENT */
 
   async assertText(text: number | string | string[] | RegExp, timeoutInSeconds?: number) {

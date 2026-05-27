@@ -11,7 +11,7 @@ export class ProductCard extends PageBase {
   private image = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.image.name, '//img');
   private name = (name: string) => this.hyperLink(name);
   private price = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.fullPrice, `//span[contains(., "${product.fullPrice}")]`);
-  private cardButton = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex('Buy', '//button');
+  private buyButton = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex('Buy', '//button');
   private characteristic = (product: IProduct, name: string) => this.card(product.name).innerElementWithoutParentIndex(name, `//span[starts-with(., "${name}")]/parent::td`);
 
   /* ASSERT */
@@ -22,7 +22,7 @@ export class ProductCard extends PageBase {
       await this.image(product).assertIsVisible();
       await this.name(product.name).assertIsVisible();
       await this.price(product).assertIsVisible();
-      await this.cardButton(product).assertText('Buy');
+      await this.buyButton(product).assertText('Buy');
     });
   }
 
@@ -63,6 +63,13 @@ export class ProductCard extends PageBase {
       for (const characteristic of product.characteristics.brand) 
         await this.characteristic(product, 'Brand').assertText(characteristic.cardName);
     });
+  }
+
+  /* ACTIONS */
+  
+  async addProduct(product: IProduct) {
+    await this.buyButton(product).click();
+    await this.toastify().assertTextIsHidden('Product was successfully added to your cart!');
   }
   
 }
