@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["ES2021", "DOM"],
+    "skipLibCheck": true,
     "paths": {
       "@api/*": ["./api/*"],
       "@constants/*": ["./constants/*"],
