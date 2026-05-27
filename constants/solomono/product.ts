@@ -47,8 +47,8 @@ interface ILaptopCharacteristics {
   color?: IColor[];
   ram?: IRam[];
   battery?: string;
-  brand?: Brand;
-  weight?: string;
+  brand?: IBrand[];
+  weight?: IWeight[];
   graphicAdapter?: string;
   network: string;
   processor?: string;
@@ -92,7 +92,7 @@ interface IShipping {
 export interface IColor {
   id: string;
   name: Color;
-  cardColor: string;
+  cardName: string;
   price: IPrice;
   qty: IQty;
 }
@@ -100,8 +100,19 @@ export interface IColor {
 export interface IRam {
   id: string;
   name: Ram;
+  cardName: string;
   price: IPrice;
   qty: IQty;
+} 
+
+export interface IWeight {
+  name: Weight;
+  cardName: string;
+}
+
+export interface IBrand {
+  name: Brand;
+  cardName: string;
 } 
 
 export enum Category {
@@ -129,6 +140,11 @@ export enum Brand {
   ACER = 'Acer',
 }
 
+export const CARD_BRAND = {
+  [Brand.LENOVO]: `Brand:${Brand.LENOVO}`,
+  [Brand.ACER]: `Brand:${Brand.ACER}`,
+};
+
 export enum Label {
   TOP = 'TOP',
   SPECIAL = 'Special',
@@ -141,7 +157,7 @@ export enum Color {
   STORM_GREY = 'Storm Grey',
 }
 
-export const CardColor = {
+export const CARD_COLOR = {
   [Color.BLACK]: `Color:${Color.BLACK}`,
   [Color.ORANGE]: `Color:${Color.ORANGE}`,
   [Color.STORM_GREY]: `Color:${Color.STORM_GREY}`,
@@ -152,6 +168,20 @@ export enum Ram {
   '16GB' = '16GB',
   '32GB' = '32GB',
 }
+
+export const CARD_RAM = {
+  [Ram['8GB']]: `RAM:${Ram['8GB']}`,
+  [Ram['16GB']]: `RAM:${Ram['16GB']}`,
+  [Ram['32GB']]: `RAM:${Ram['32GB']}`,
+};
+
+export enum Weight {
+  '1.49 Kg' = '1.49 Kg',
+}
+
+export const CARD_WEIGHT = {
+  [Weight['1.49 Kg']]: `Weight:${Weight['1.49 Kg']}`,
+};
 
 // HACK: demoLaptop is harcoded data due to limitations on demo website
 export const DEMO_LAPTOP: IProduct = {
@@ -179,7 +209,7 @@ export const DEMO_LAPTOP: IProduct = {
       { 
         id: '1', 
         name: Color.STORM_GREY, 
-        cardColor: CardColor[Color.STORM_GREY],
+        cardName: CARD_COLOR[Color.STORM_GREY],
         price: { price: '$1247.15 ', currency: Currency.DOLLAR, fullPrice: `${Currency.DOLLAR}1247.15 ` },
         qty: { qty: 11 },
       },
@@ -188,12 +218,17 @@ export const DEMO_LAPTOP: IProduct = {
       {
         id: '1',
         name: Ram['16GB'],
+        cardName: CARD_RAM['16GB'],
         price: { price: '$1247.15 ', currency: Currency.DOLLAR, fullPrice: `${Currency.DOLLAR}1247.15 ` },
         qty: { qty: 11 },
       },
     ],
-    brand: Brand.LENOVO,
-    weight: '1.49 Kg',
+    brand: [
+      { name: Brand.LENOVO, cardName: CARD_BRAND[Brand.LENOVO] },
+    ],
+    weight: [
+      { name: Weight['1.49 Kg'], cardName: CARD_WEIGHT['1.49 Kg'] },
+    ],
     graphicAdapter: 'Arc Graphics',
     network: 'LAN / Wi-Fi / Bluetooth',
     processor: 'Intel Core Ultra 5 125H',
