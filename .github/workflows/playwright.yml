@@ -5,7 +5,7 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   test:
@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright Browsers + Dependencies
-        run: microsoft/playwright-github-action@v1
+        uses: microsoft/playwright-github-action@v1
 
       - name: Run Playwright tests
         run: npx playwright test
