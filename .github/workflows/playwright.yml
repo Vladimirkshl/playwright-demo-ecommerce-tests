@@ -15,6 +15,9 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.56.0-noble
 
+    env:
+      PORTAL: solomono
+
     steps:
       - uses: actions/checkout@v5
 
@@ -24,12 +27,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Load .env
-        run: |
-          set -o allexport
-          source .env
-          set +o allexport
 
       - name: Run Playwright tests
         run: npx playwright test
