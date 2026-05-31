@@ -1,6 +1,7 @@
 import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
+import { ShoppingCart } from './shopping-cart';
 
 export class ProductCard extends PageBase {
   
@@ -68,8 +69,12 @@ export class ProductCard extends PageBase {
   /* ACTIONS */
   
   async addProduct(product: IProduct) {
-    await this.buyButton(product).click();
-    await this.toastify().assertTextIsHidden('Product was successfully added to your cart!');
+    await Report.subStep(`Add ${product.name} to cart`, async () => {
+      await this.buyButton(product).click();
+      await this.toastify().assertTextIsHidden('Product was successfully added to your cart!');
+    });
+
+    return new ShoppingCart(this.page);
   }
   
 }

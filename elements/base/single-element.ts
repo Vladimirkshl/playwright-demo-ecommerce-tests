@@ -22,6 +22,19 @@ export class SingleElement extends ElementBase {
     return new SingleElement(this.page, `${this.name} > ${name}`, `${this.xpath}${xpath}`, index);
   }
 
+  inDialog(): this {
+    const xpathWithinDialog = `//*[@class="modal-dialog"]${this.xpath}`;
+    const clonedInstance = Object.create(Object.getPrototypeOf(this));
+    
+    Object.assign(clonedInstance, this, {
+      name: `${this.name} in dialog`,
+      xpath: xpathWithinDialog,
+      xpathWithIndex: Utils.addIndexToXpath(xpathWithinDialog, this.index),
+    });
+
+    return clonedInstance;
+  }
+
   parent(xpath = '*') {
     return new SingleElement(this.page, `${this.name} parent`, `${this.xpath}/parent::${xpath}`);
   }
