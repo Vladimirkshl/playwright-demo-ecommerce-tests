@@ -25,6 +25,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Load .env
+        run: |
+          set -o allexport
+          source .env
+          set +o allexport
+
       - name: Run Playwright tests
         run: npx playwright test
 
