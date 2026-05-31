@@ -10,7 +10,7 @@ on:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v5
@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright Browsers + Dependencies
-        uses: microsoft/playwright-github-action@v1
+        run: npx playwright install --with-deps
 
       - name: Run Playwright tests
         run: npx playwright test
