@@ -16,7 +16,9 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.58.2-noble
 
     env:
-      PORTAL: solomono
+      PORTAL: ${{ secrets.PORTAL}}
+      SOLOMONO_AUTH_EMAIL: ${{ secrets.SOLOMONO_AUTH_EMAIL }}
+      SOLOMONO_AUTH_PASSWORD: ${{ secrets.SOLOMONO_AUTH_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v5
