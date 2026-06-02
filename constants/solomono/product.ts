@@ -193,7 +193,8 @@ export const DEMO_LAPTOP: IProduct = {
   price: '1247.15 ',
   currency: Currency.DOLLAR, 
   fullPrice: `${Currency.DOLLAR}1247.15 `,
-  qty: 11,
+  qty: 1,
+  // TODO: add product qty for buying
   image: {
     name: 'logo',
     fileName: FileName.IMAGE_JPEG,
