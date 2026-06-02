@@ -1,4 +1,5 @@
 import { DEMO_LAPTOP } from '@constants/solomono/product';
+import { ShoppingCart } from '@pages/solomono/shopping-cart';
 import { test } from '@test';
 import { Report } from '@utils/report';
 
@@ -16,5 +17,16 @@ test('Add product to cart', async ({ searchPage }) => {
 
   await Report.step(`Assert hovered [${DEMO_LAPTOP.name}] product card on Search page`, async () => {
     await searchResult.assertHovered(DEMO_LAPTOP);
+  });
+
+  let shoppingCart: ShoppingCart;
+  await Report.step(`Add [${DEMO_LAPTOP.name}] to shopping cart`, async () => {
+    shoppingCart = await searchResult.addProduct(DEMO_LAPTOP);
+    await shoppingCart.assert(DEMO_LAPTOP);
+  });
+
+  // HACK: remove product from cart using UI due to API limitation  
+  await Report.step(`Remove [${DEMO_LAPTOP.name}] from shopping cart`, async () => {
+    await shoppingCart.removeProduct(DEMO_LAPTOP);
   });
 });

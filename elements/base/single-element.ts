@@ -18,6 +18,10 @@ export class SingleElement extends ElementBase {
     return this.page.locator(this.xpathWithIndex);
   }
 
+  innerElement(name: string, xpath: string, index = 1) {
+    return new SingleElement(this.page, `${this.name} > ${name}`, `${this.xpathWithIndex}${xpath}`, index);
+  }
+
   innerElementWithoutParentIndex(name: string, xpath: string, index = 1) {
     return new SingleElement(this.page, `${this.name} > ${name}`, `${this.xpath}${xpath}`, index);
   }
@@ -33,6 +37,10 @@ export class SingleElement extends ElementBase {
     });
 
     return clonedInstance;
+  }
+
+  innerButton(name = '', index = 1) {
+    return this.innerElement(`Inner button [${name}]`, name ? `//button[.=${name}]` : '//button', index);
   }
 
   parent(xpath = '*') {

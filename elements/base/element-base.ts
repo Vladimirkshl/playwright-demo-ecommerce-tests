@@ -25,6 +25,12 @@ export abstract class ElementBase {
     });
   }
 
+  async assertToHaveValue(value: string) {
+    await Report.subStep(`Assert [${this.name}]=[${value}]`, async () => {
+      await expect(this.element()).toHaveValue(value);
+    });
+  }
+
   async assertIsHidden(timeoutInSeconds?: number) {
     await Report.subStep(`Assert [${this.name}] is hidden`, async () => {
       await expect.soft(this.element()).toBeHidden({ timeout: timeoutInSeconds * 1000 || config.expect.timeout });

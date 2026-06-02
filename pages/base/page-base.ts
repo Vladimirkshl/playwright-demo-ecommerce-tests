@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
 import { PageUtils } from '@pages/base/page-utils';
-import { H1 } from '@elements/simple/header';
+import { H1, Header } from '@elements/simple/header';
 import { By, Placeholder } from '@constants/common';
 import { Input } from '@elements/input/input';
 import { Button } from '@elements/simple/button';
@@ -23,6 +23,7 @@ export class PageBase {
 
   toastify = () => new Toastify(this.page);
 
+  header = (text: string) => new Header(this.page, text);
   h1 = (index?: number) => new H1(this.page, index);
 
   div = (name: string) => new Div(this.page, name);
