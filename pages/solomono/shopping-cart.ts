@@ -11,6 +11,8 @@ export class ShoppingCart extends PageBase {
   private price = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.fullPrice, `//div[contains(., "${product.fullPrice}")]`);
   private quantity = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.qty.toString(), '//input[contains(@class, "inputnumber")]');
   private delete = (product: IProduct) => this.card(product.name).innerButton('', 3);
+  private totalPrice = () => this.div('Total:').inDialog().innerElementWithoutParentIndex('b', '/b');
+  private checkoutButton = () => this.button('Close').inDialog().followingSibling('a[contains(text(), "Checkout")]');
 
   /* ASSERT */
   
@@ -19,9 +21,16 @@ export class ShoppingCart extends PageBase {
     await this.card(product.name).assertIsVisible();
     await this.image(product).assertIsVisible();
     await this.name(product.name).assertIsVisible();
+    await this.quantity(product).assertToHaveValue(product.qty.toString()); 
     await this.price(product).assertIsVisible();
-    await this.quantity(product).assertToHaveValue(product.qty.toString());
     await this.delete(product).assertIsVisible();
+    await this.assertTotalPrice(product);
+    await this.button('Close').inDialog().assertIsVisible();
+    await this.checkoutButton().assertIsVisible();
+  }
+
+  private async assertTotalPrice(product: IProduct) {
+    await this.totalPrice().assertText(product.fullPrice);
   }
 
   /* ACTIONS */
@@ -30,5 +39,4 @@ export class ShoppingCart extends PageBase {
     await this.delete(product).click();
     await this.header('Your Shopping Cart is empty!').inDialog().assertIsVisible();
   }
-
 }

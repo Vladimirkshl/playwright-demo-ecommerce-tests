@@ -43,6 +43,10 @@ export class SingleElement extends ElementBase {
     return this.innerElement(`Inner button [${name}]`, name ? `//button[.=${name}]` : '//button', index);
   }
 
+  followingSibling(xpath = '*') {
+    return new SingleElement(this.page, `${this.name} following-sibling`, `${this.xpath}/following-sibling::${xpath}`);
+  }
+
   parent(xpath = '*') {
     return new SingleElement(this.page, `${this.name} parent`, `${this.xpath}/parent::${xpath}`);
   }
