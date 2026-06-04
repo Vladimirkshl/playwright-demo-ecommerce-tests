@@ -56,6 +56,12 @@ export abstract class ElementBase {
     });
   }
 
+  async clickCorner(force = false) {
+    await Report.subStep(`Click top-left corner [${this.name}]`, async () => {
+      await this.element().click({ position: { x: 0, y: 0 }, force });
+    });
+  }
+
   async fillSequentially(text: string) {
     await Report.subStep(`Fill sequentially [${this.name}]=[${text}]`, async () => {
       await this.element().clear();

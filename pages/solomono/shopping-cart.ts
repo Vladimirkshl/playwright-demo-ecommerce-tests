@@ -1,5 +1,8 @@
 import { IProduct } from '@constants/solomono/product';
+import { Fake } from '@fake/admin/fake';
+import { FakeSimple } from '@fake/fake-simple';
 import { PageBase } from '@pages/base/page-base';
+import { Report } from '@utils/report';
 
 export class ShoppingCart extends PageBase {
   
@@ -39,4 +42,13 @@ export class ShoppingCart extends PageBase {
     await this.delete(product).click();
     await this.header('Your Shopping Cart is empty!').inDialog().assertIsVisible();
   }
+
+  //TODO: add closing modal using the Dialog element
+  /**
+  async close() {
+    await Report.subStep('Close shopping cart modal', async () => {
+      FakeSimple.boolean() ? button : any area
+    });
+  }
+  */
 }

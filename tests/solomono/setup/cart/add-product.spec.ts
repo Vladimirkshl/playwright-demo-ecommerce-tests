@@ -30,3 +30,23 @@ test('Add product to cart', async ({ searchPage }) => {
     await shoppingCart.removeProduct(DEMO_LAPTOP);
   });
 });
+
+test('Add product to cart > remove and add to cart', async ({ searchPage }) => {
+  // HACK: product is added to cart using UI due to API limitation
+  const searchResult = await searchPage(DEMO_LAPTOP);
+
+  await Report.step(`Assert [${DEMO_LAPTOP.name}] details on Search page`, async () => {
+    await searchResult.assertHeader(DEMO_LAPTOP);    
+  });
+
+  let shoppingCart: ShoppingCart;
+  await Report.subStep(`Add [${DEMO_LAPTOP.name}] to shopping cart`, async () => {
+    shoppingCart = await searchResult.addProduct(DEMO_LAPTOP);
+  });
+
+  await Report.subStep(`Remove [${DEMO_LAPTOP.name}] from shopping cart`, async () => {
+    await shoppingCart.removeProduct(DEMO_LAPTOP);
+  });
+
+  //TODO: add closing modal and adding product to cart steps 
+});
