@@ -22,6 +22,44 @@ test('Add product to cart', async ({ searchPage }) => {
   let shoppingCart: ShoppingCart;
   await Report.step(`Add [${DEMO_LAPTOP.name}] to shopping cart`, async () => {
     shoppingCart = await searchResult.addProduct(DEMO_LAPTOP);
+  });
+
+  await Report.step(`Assert [${DEMO_LAPTOP.name}] in shopping cart`, async () => {
+    await shoppingCart.assert(DEMO_LAPTOP);
+  });
+
+  // HACK: remove product from cart using UI due to API limitation  
+  await Report.step(`Remove [${DEMO_LAPTOP.name}] from shopping cart`, async () => {
+    await shoppingCart.removeProduct(DEMO_LAPTOP);
+  });
+});
+
+test('Add product to cart > remove and add to cart', async ({ searchPage }) => {
+  // HACK: product is added to cart using UI due to API limitation
+  const searchResult = await searchPage(DEMO_LAPTOP);
+
+  await Report.step(`Assert [${DEMO_LAPTOP.name}] details on Search page`, async () => {
+    await searchResult.assertHeader(DEMO_LAPTOP);    
+  });
+
+  let shoppingCart: ShoppingCart;
+  await Report.subStep(`Add [${DEMO_LAPTOP.name}] to shopping cart`, async () => {
+    shoppingCart = await searchResult.addProduct(DEMO_LAPTOP);
+  });
+
+  await Report.subStep(`Remove [${DEMO_LAPTOP.name}] from shopping cart`, async () => {
+    await shoppingCart.removeProduct(DEMO_LAPTOP);
+  });
+
+  await Report.subStep('Close shopping cart dialog', async () => {
+    await shoppingCart.close();
+  });
+
+  await Report.step(`Add [${DEMO_LAPTOP.name}] to shopping cart`, async () => {
+    await searchResult.addProduct(DEMO_LAPTOP);
+  });
+
+  await Report.step(`Assert [${DEMO_LAPTOP.name}] in shopping cart`, async () => {
     await shoppingCart.assert(DEMO_LAPTOP);
   });
 

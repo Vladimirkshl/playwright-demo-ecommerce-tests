@@ -1,5 +1,6 @@
 import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
+import { Report } from '@utils/report';
 
 export class ShoppingCart extends PageBase {
   
@@ -36,7 +37,15 @@ export class ShoppingCart extends PageBase {
   /* ACTIONS */
 
   async removeProduct(product: IProduct) {
-    await this.delete(product).click();
-    await this.header('Your Shopping Cart is empty!').inDialog().assertIsVisible();
+    await Report.subStep(`Remove [${product.name}] from shopping cart`, async () => {
+      await this.delete(product).click();
+      await this.header('Your Shopping Cart is empty!').inDialog().assertIsVisible();
+    });
+  }
+
+  async close() {
+    await Report.subStep('Close shopping cart dialog', async () => {
+      await this.dialog().close();
+    });
   }
 }
