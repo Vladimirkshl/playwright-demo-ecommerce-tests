@@ -24,6 +24,10 @@ export class FileSystemUtils {
     return fs.existsSync(path);
   }
 
+  static deleteFolder(folderPath: string): void {
+    fs.rmSync(folderPath, { recursive: true, force: true });
+  }
+
   static createFolder(folderPath: string): void {
     if (!this.doesPathExist(folderPath)) {
       fs.mkdirSync(folderPath, { recursive: true });
@@ -60,5 +64,9 @@ export class FileSystemUtils {
       this.resolvePath(filePath),
       encoding === null ? undefined : { encoding }
     );
-  }  
+  }
+  
+  static deleteTemp() {
+    this.deleteFolder(this.resolvePath(TEMP_PATH));
+  }
 }
