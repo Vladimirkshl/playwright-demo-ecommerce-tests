@@ -4,6 +4,7 @@
     "skipLibCheck": true,
     "paths": {
       "@api/*": ["./api/*"],
+      "@db/*": ["./db/*"],
       "@constants/*": ["./constants/*"],
       "@elements/*": ["./elements/*"],
       "@pages/*": ["./pages/*"],
