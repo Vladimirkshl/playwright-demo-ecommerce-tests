@@ -37,7 +37,11 @@ jobs:
           java-version: '17'
 
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --project=chromium
+
+      - name: Run Cleanup 
+        if: always()
+        run: npx playwright test --project=cleanup-db
 
       - name: Generate Allure Report
         if: always()
