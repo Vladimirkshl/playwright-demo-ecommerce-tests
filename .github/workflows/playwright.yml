@@ -73,7 +73,7 @@ jobs:
           path: allure-report/
 
   deploy:
-    if: always()
+    if: github.ref == 'refs/heads/main'
     needs: test
 
     permissions:
