@@ -72,8 +72,8 @@ jobs:
           name: allure-report
           path: allure-report/
 
-  deploy:
-    if: github.ref == 'refs/heads/main'
+  publish-report:
+    if: github.event_name == 'push'
     needs: test
 
     permissions:
