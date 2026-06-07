@@ -37,7 +37,7 @@ jobs:
           java-version: '17'
 
       - name: Run Playwright tests
-        run: npx playwright test --project=chromium
+        run: npx playwright test --project=setup --project=create-entities-main --project=chromium
 
       - name: Run Cleanup 
         if: always()
