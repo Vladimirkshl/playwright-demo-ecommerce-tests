@@ -105,7 +105,7 @@ export default defineConfig({
         testMatch: '**/global.setup.ts',
       },
       {
-        name: 'clean-db',
+        name: 'cleanup-db',
         testMatch: '**/db.cleanup.ts',
       },
     ];
