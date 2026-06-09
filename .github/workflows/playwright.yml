@@ -18,6 +18,9 @@ jobs:
     env:
       ENV: ${{ secrets.ENV }}
       PORTAL: ${{ secrets.PORTAL}}
+
+      BUILD_ID: 'CI_${{ github.run_number }}'
+
       SOLOMONO_AUTH_EMAIL: ${{ secrets.SOLOMONO_AUTH_EMAIL }}
       SOLOMONO_AUTH_PASSWORD: ${{ secrets.SOLOMONO_AUTH_PASSWORD }}
 
