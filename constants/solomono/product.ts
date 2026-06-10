@@ -65,6 +65,7 @@ interface IDescription {
 
 interface IQty {
   qty: number;
+  cartQty?: number;
 }
 
 export interface IReview {
@@ -193,8 +194,8 @@ export const DEMO_LAPTOP: IProduct = {
   price: '1247.15 ',
   currency: Currency.DOLLAR, 
   fullPrice: `${Currency.DOLLAR}1247.15 `,
-  qty: 1,
-  // TODO: add product qty for buying
+  qty: 10,
+  cartQty: 1,
   image: {
     name: 'logo',
     fileName: FileName.IMAGE_JPEG,
