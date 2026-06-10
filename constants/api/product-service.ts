@@ -2,6 +2,7 @@ const PRODUCT_SERVICE_ENDPOINT = '/productservice';
 const PRODUCTS = `${PRODUCT_SERVICE_ENDPOINT}/products`;
 const REVIEW_SERVICES = `${PRODUCT_SERVICE_ENDPOINT}/review`;
 const REVIEW_ID = (id: string) => `${PRODUCTS}/${id}`;
+const CART = (name: string) => `${PRODUCTS}/${name}/add-product`;
 
 export const PRODUCT_SERVICE_API = {
   products: `${PRODUCT_SERVICE_ENDPOINT}/product`,
@@ -11,5 +12,9 @@ export const PRODUCT_SERVICE_API = {
   files: {
     attachFile: (id: string) => `${REVIEW_ID(id)}/attach-file`,
     signedUrl: `${REVIEW_SERVICES}/files/signed-url`,
+  },
+
+  cart: {
+    add: (name: string) => `${CART(name)}`,
   },
 };

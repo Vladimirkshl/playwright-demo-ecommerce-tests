@@ -22,6 +22,7 @@ export const getFakeLaptop = (): IProduct => {
     currency: Currency.DOLLAR,
     fullPrice: `${Currency.DOLLAR}${price}`,
     qty: FakeSimple.number(1, 21),
+    cartQty: FakeSimple.number(1, 1),
     discount: FakeSimple.number(5, 20),
     image: getLogo(),
     label: Utils.getRandomValue(Label),

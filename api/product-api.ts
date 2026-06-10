@@ -126,6 +126,22 @@ export class ProductApi extends ApiBase {
       path: signedUrl.filePath,
     };
   }
+
+  async addToCart(product: IProduct) {
+    await Report.subStep('API: Add product to cart', async () => {
+      await this.POST({
+        resource: PRODUCT_SERVICE_API.cart.add(product.name),
+        data: {
+          name: product.name,
+          colorId: product.characteristics.color[0].id,
+          cartQty: product.cartQty,
+          category: product.category,
+          price: product.price,
+        },
+        name: `${this.apiName} / Add product to cart`,
+      });
+    });
+  }
 }
 
 interface ISignedUrl {
