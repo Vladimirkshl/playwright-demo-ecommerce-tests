@@ -3,6 +3,6 @@ import { Page } from '@playwright/test';
 
 export class Span extends SingleElement {
   constructor(page: Page, name: string, index: number) {
-    super(page, name, `//span[starts-with(., "${name}")]`, index);
+    super(page, name, `//span[contains(text(), "${name}")]`, index);
   }
 }

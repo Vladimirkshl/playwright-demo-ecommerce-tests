@@ -9,6 +9,7 @@ import { Div } from '@elements/simple/div';
 import { Span } from '@elements/simple/span';
 import { Toastify } from '@elements/simple/toastify';
 import { Dialog } from '@elements/simple/dialog';
+import { Field } from '@elements/simple/field';
 
 export class PageBase {
 
@@ -28,6 +29,8 @@ export class PageBase {
   h1 = (index?: number) => new H1(this.page, index);
 
   dialog = () => new Dialog(this.page);
+
+  field = (name: string) => new Field(this.page, name);
 
   div = (name: string) => new Div(this.page, name);
   hyperLink = (name: string, index?: number) => new Hyperlink(this.page, name, index);

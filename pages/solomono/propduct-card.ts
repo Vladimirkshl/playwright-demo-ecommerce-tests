@@ -1,7 +1,8 @@
 import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
-import { ShoppingCart } from './shopping-cart';
+import { ShoppingCart } from '@pages/solomono/shopping-cart';
+import { ProductDetails } from '@pages/solomono/product-details';
 
 export class ProductCard extends PageBase {
   
@@ -75,6 +76,14 @@ export class ProductCard extends PageBase {
     });
 
     return new ShoppingCart(this.page);
+  }
+
+  async getProductDetails(product: IProduct): Promise<ProductDetails> {
+    await Report.subStep(`Get [${product}] product details page`, async () => {
+      await this.name(product.name).click();
+    });
+    
+    return new ProductDetails(this.page);
   }
   
 }
