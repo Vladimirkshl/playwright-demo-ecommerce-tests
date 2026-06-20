@@ -1,4 +1,5 @@
 import { DEMO_LAPTOP } from '@constants/solomono/product';
+import { ProductDetails } from '@pages/solomono/product-details';
 import { ShoppingCart } from '@pages/solomono/shopping-cart';
 import { test } from '@test';
 import { Report } from '@utils/report';
@@ -67,4 +68,32 @@ test('Add product to cart > remove and add to cart', async ({ searchPage }) => {
   await Report.step(`Remove [${DEMO_LAPTOP.name}] from shopping cart`, async () => {
     await shoppingCart.removeProduct(DEMO_LAPTOP);
   });
+});
+
+test('Add product to cart from product details page', async ({ searchPage }) => {
+  const searchResult = await searchPage(DEMO_LAPTOP);
+
+  await Report.step(`Assert [${DEMO_LAPTOP.name}] details on Search page`, async () => {
+    await searchResult.assertHeader(DEMO_LAPTOP);    
+  });
+
+  await Report.step(`Assert [${DEMO_LAPTOP.name}] product card on Search page`, async () => {
+    await searchResult.assert(DEMO_LAPTOP);
+  });
+
+  await Report.step(`Assert hovered [${DEMO_LAPTOP.name}] product card on Search page`, async () => {
+    await searchResult.assertHovered(DEMO_LAPTOP);
+  });
+
+  let productDetails: ProductDetails;
+  await Report.step(`Open [${DEMO_LAPTOP.name}] product details page`, async () => {
+    productDetails = await searchResult.getProductDetails(DEMO_LAPTOP);
+  });
+
+  await Report.step(`Assert [${DEMO_LAPTOP.name}] on product details`, async () => {
+    await productDetails.assert(DEMO_LAPTOP);
+  });
+
+  // Add product to the cart
+  
 });
