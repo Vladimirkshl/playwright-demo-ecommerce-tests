@@ -10,6 +10,7 @@ import { Span } from '@elements/simple/span';
 import { Toastify } from '@elements/simple/toastify';
 import { Dialog } from '@elements/simple/dialog';
 import { Field } from '@elements/simple/field';
+import { InputImage } from '@elements/input/input-file/input-image';
 
 export class PageBase {
 
@@ -30,7 +31,10 @@ export class PageBase {
 
   dialog = () => new Dialog(this.page);
 
-  field = (name: string) => new Field(this.page, name);
+  input = (name: string, by?: By, index?: number) => new Input(this.page, name, by, index);
+  inputImage = (name: string, index?: number) => new InputImage(this.page, name, index);
+
+  field = (name: string, index?: number) => new Field(this.page, name, index);
 
   div = (name: string) => new Div(this.page, name);
   hyperLink = (name: string, index?: number) => new Hyperlink(this.page, name, index);
