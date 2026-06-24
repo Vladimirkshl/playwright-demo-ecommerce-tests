@@ -5,6 +5,10 @@ import { Utils } from '@utils/utils';
 
 const FILES_DIR = './constants/files';
 
+export enum FileExtension {
+  IMAGE = 'image/jpeg,image/png,image/gif,image/webp',
+}
+
 enum ImageExtension {
   PNG = 'png',
   JPEG = 'jpeg',

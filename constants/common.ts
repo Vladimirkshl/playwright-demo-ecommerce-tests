@@ -4,6 +4,27 @@ export enum By {
   PLACEHOLDER,
 }
 
+export enum ElementAttribute {
+  ACCEPT = 'accept',
+  ALT = 'alt',
+  ARIA_EXPANDED = 'aria-expanded',
+  ARIA_INVALID = 'aria-invalid',
+  ARIA_SELECTED = 'aria-selected',
+  ARIA_SORT = 'aria-sort',
+  CLASS = 'class',
+  DATA_ACTIVE = 'data-active',
+  DATA_DISABLED = 'data-disabled',
+  DATA_ICON = 'data-icon',
+  DATA_OPEN = 'data-open',
+  DATA_SORTABLE = 'data-sortable',
+  DATA_SELECTED = 'data-selected',
+  HREF = 'href',
+  PLACEHOLDER = 'placeholder',
+  SRC = 'src',
+  SCROLL_LEFT = 'scrollLeft',
+  SCROLL_TOP = 'scrollTop',
+}
+
 export enum ContentType {
   APPLICATION_JSON = 'application/json',
   APPLICATION_PROBLEM_JSON = 'application/problem+json',

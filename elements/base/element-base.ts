@@ -1,5 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { Report } from '@utils/report';
+import { ElementAttribute as Attribute } from '@constants/common';
 import config from '@playwrightConfig';
 
 export abstract class ElementBase {
@@ -85,5 +86,17 @@ export abstract class ElementBase {
     await Report.subStep(`Focus [${this.name}]`, async () => {
       await this.element().focus();
     });
+  }
+
+  /* ATTRIBUTES */
+
+  protected async assertAttribute(attrName: Attribute, attrValue?: string) {
+    await Report.subStep(`Assert [${this.name}]' @${attrName} is [${attrValue}]`, async () => {
+      await expect(this.element()).toHaveAttribute(attrName, attrValue);
+    });
+  }
+  
+  async assertAcceptedExtensions(accept: string) {
+    await this.assertAttribute(Attribute.ACCEPT, accept);
   }
 }

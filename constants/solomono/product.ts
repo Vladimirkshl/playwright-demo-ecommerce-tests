@@ -235,7 +235,7 @@ export const DEMO_LAPTOP: IProduct = {
     network: 'LAN / Wi-Fi / Bluetooth',
     processor: 'Intel Core Ultra 5 125H',
     volumeDrive: '500 GB',
-    warranty: '12 moths',
+    warranty: '12 months',
     os: 'Windows',
   },
   api: {
