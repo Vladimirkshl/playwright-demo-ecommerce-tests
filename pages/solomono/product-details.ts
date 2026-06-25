@@ -2,8 +2,6 @@ import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
 import { ShoppingCart } from '@pages/solomono/shopping-cart';
-import { By } from '@constants/common';
-import { FileExtension } from '@constants/files/files';
 
 export class ProductDetails extends PageBase {
 
@@ -78,6 +76,8 @@ export class ProductDetails extends PageBase {
     });
   }
 
+  // TODO: fix common button xpath locator
+  /*
   private async assertReviewForm(product: IProduct) {
     await Report.subStep('Assert default review', async () => {
       await this.button('Reviews').click();
@@ -88,6 +88,7 @@ export class ProductDetails extends PageBase {
       await this.button('Send').assertIsVisible();
     });
   }
+  **/
 
   /* ACTIONS */
 
