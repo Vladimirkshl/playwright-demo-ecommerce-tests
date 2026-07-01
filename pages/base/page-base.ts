@@ -11,6 +11,7 @@ import { Toastify } from '@elements/simple/toastify';
 import { Dialog } from '@elements/simple/dialog';
 import { Field } from '@elements/simple/field';
 import { InputImage } from '@elements/input/input-file/input-image';
+import { SingleElement } from '@elements/base/single-element';
 
 export class PageBase {
 
@@ -23,6 +24,8 @@ export class PageBase {
   assertTitle = (titleOrRegExp: string | RegExp) => this.utils().assertTitle(titleOrRegExp);
 
   /* ELEMENTS */
+
+  bySelector = (name: string, xpath: string, index?: number) => new SingleElement(this.page, name, xpath, index);
 
   toastify = () => new Toastify(this.page);
 
