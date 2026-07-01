@@ -5,6 +5,17 @@ import { ShoppingCart } from '@pages/solomono/shopping-cart';
 
 export class ProductDetails extends PageBase {
 
+  /* ELEMENTS */
+
+  // TODO: remove comment afeter fixing assertReview
+  /*
+  private review = (review: IReview) => this.div(review.comment).ancestor('div[contains(@class, "all_comments")]');
+  private author = (review: IReview) => this.review(review).innerElementWithoutParentIndex(review.name, `//span[.="${review.name}"]`);
+  private date = (review: IReview) => 
+    this.review(review).innerElementWithoutParentIndex(review.date.dateFormatted, `//span[.="${review.date.dateFormatted}"]`);
+  private comment = (review: IReview) => this.review(review).innerElementWithoutParentIndex(review.comment, `//div[.="${review.comment}"]`);
+  **/
+
   /* ASSERT */
 
   async assert(product: IProduct) {
@@ -21,14 +32,13 @@ export class ProductDetails extends PageBase {
       await this.assertWeight(product);
       await this.assertBrand(product);
       await this.field('Graphic adapter').assertText(product.characteristics.graphicAdapter);
-      // HACK: commented assert short descriptio and skipped description due to large uncontrolled string
+      // HACK: commented assert short description and skipped description due to large uncontrolled string
       /* await this.field('Short description').assertText(product.shortDescription); */
       // TODO: add assert Description after fixing uncontrolled strings of object
       await this.assertCharacteristics(product);
       // HACK: commented assertReview because of spaces in locator, need to investigate
+      /* await this.assertReview(product); */
       /* await this.assertReviewForm(product); */
-      // TODO: add assert review is not visible
-      // TODO: add assert exsited review
       // TODO: add assert Shipping details after fixing uncontrolled strings of object
     });
   }
@@ -86,6 +96,25 @@ export class ProductDetails extends PageBase {
       await this.input('Comment:', By.PLACEHOLDER).assertToHaveValue('');
       await this.inputImage('Choose Files').assertAcceptedExtensions(FileExtension.IMAGE);
       await this.button('Send').assertIsVisible();
+    });
+  }
+  **/
+
+  // TODO: fix common button xpath locator
+  /*
+  private async assertReview(product: IProduct) {
+    await Report.subStep('Assert review', async () => {
+      const reviewSection = this.bySelector('Review', '//div[contains(@class, "all_comments")]');
+
+      await this.button('Reviews').click();
+      if (!product.reviews) await reviewSection.assertIsHidden();
+      else {
+        for (const review of product.reviews) {
+          await this.author(review).assertIsVisible();
+          await this.date(review).assertIsVisible();
+          await this.comment(review).assertIsVisible();
+        };
+      };
     });
   }
   **/
