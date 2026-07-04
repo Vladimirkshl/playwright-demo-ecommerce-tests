@@ -130,7 +130,7 @@ export class ProductApi extends ApiBase {
   async addToCart(product: IProduct) {
     await Report.subStep('API: Add product to cart', async () => {
       await this.POST({
-        resource: PRODUCT_SERVICE_API.cart.add(product.name),
+        resource: PRODUCT_SERVICE_API.cart.add(product.api.id),
         data: {
           name: product.name,
           colorId: product.characteristics.color[0].id,
@@ -139,6 +139,19 @@ export class ProductApi extends ApiBase {
           price: product.price,
         },
         name: `${this.apiName} / Add product to cart`,
+      });
+    });
+  }
+
+  async removeFromCart(product: IProduct) {
+    await Report.subStep('API: Remove product from cart', async () => {
+      await this.POST({
+        resource: PRODUCT_SERVICE_API.cart.remove,
+        data: {
+          cartQuantity: product.cartQty,
+          productId: product.api.id,
+        },
+        name: `${this.apiName} / Remove product from cart`,
       });
     });
   }

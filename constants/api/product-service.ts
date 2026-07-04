@@ -2,7 +2,7 @@ const PRODUCT_SERVICE_ENDPOINT = '/productservice';
 const PRODUCTS = `${PRODUCT_SERVICE_ENDPOINT}/products`;
 const REVIEW_SERVICES = `${PRODUCT_SERVICE_ENDPOINT}/review`;
 const REVIEW_ID = (id: string) => `${PRODUCTS}/${id}`;
-const CART = (name: string) => `${PRODUCTS}/${name}/add-product`;
+const CART = (id: string) => `${PRODUCTS}/${id}/add-product`;
 
 export const PRODUCT_SERVICE_API = {
   products: `${PRODUCT_SERVICE_ENDPOINT}/product`,
@@ -15,6 +15,7 @@ export const PRODUCT_SERVICE_API = {
   },
 
   cart: {
-    add: (name: string) => `${CART(name)}`,
+    add: (id: string) => `${CART(id)}`,
+    remove: `${PRODUCTS}/remove-from-cart`,
   },
 };
