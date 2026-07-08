@@ -3,6 +3,7 @@ import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
 import { SearchProduct } from '@pages/solomono/search-product';
+import { MyAccount } from '@pages/solomono/my-account/my-account';
 
 export class SolomonoHome extends PageBase {
 
@@ -22,4 +23,13 @@ export class SolomonoHome extends PageBase {
 
     return new SearchProduct(this.page);
   }
+
+  async getMyAccount(): Promise<MyAccount> {
+    await Report.subStep('Get My Account page', async () => {
+      await this.strong('My account').click();
+    });
+
+    return new MyAccount(this.page);
+  }
+
 }

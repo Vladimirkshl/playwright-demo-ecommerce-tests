@@ -1,6 +1,6 @@
 import { IProduct } from '@constants/solomono/product';
 import { Report } from '@utils/report';
-import { ProductCard } from '@pages/solomono/propduct-card';
+import { ProductCard } from '@pages/solomono/product-card';
 
 export class SearchProduct extends ProductCard {
 

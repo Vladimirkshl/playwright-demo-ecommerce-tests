@@ -41,6 +41,7 @@ export enum ContentType {
 }
 
 export enum DateFormat {
+  dd_MM_yyyy = 'dd/MM/yyyy',
   yyyyMMdd_HHmmss = 'yyyyMMdd_HHmmss',
 }
 
@@ -54,7 +55,8 @@ export interface IDateTime extends IDateFormatted {
 }
 
 export interface IDateFormatted {
-  dateFormatted: string;
+  dateFormatted?: string;
+  formattedDateOfBirth?: string;
 }
 
 export const AUTO_TEST_PREFIX = `${process.env.BUILD_ID} AT`;
@@ -62,3 +64,5 @@ export const AUTO_TEST_PREFIX = `${process.env.BUILD_ID} AT`;
 export enum Placeholder {
   QUICK_FIND = 'Quick find',
 }
+
+export const FAKE_EMAIL_PROVIDER = `${process.env.PORTAL}.qatest`;
