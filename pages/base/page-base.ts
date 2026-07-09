@@ -12,6 +12,7 @@ import { Dialog } from '@elements/simple/dialog';
 import { Field } from '@elements/simple/field';
 import { InputImage } from '@elements/input/input-file/input-image';
 import { SingleElement } from '@elements/base/single-element';
+import { Strong } from '@elements/simple/strong';
 
 export class PageBase {
 
@@ -43,6 +44,7 @@ export class PageBase {
   hyperLink = (name: string, index?: number) => new Hyperlink(this.page, name, index);
   button = (name: string, index?: number) => new Button(this.page, name, index);
   span = (name: string, index?: number) => new Span(this.page, name, index);
+  strong = (text: string, index?: number) => new Strong(this.page, text, index);
 
   searchInput = () => new Input(this.page, Placeholder.QUICK_FIND, By.PLACEHOLDER);
 }

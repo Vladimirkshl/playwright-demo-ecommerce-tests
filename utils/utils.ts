@@ -16,13 +16,13 @@ export class Utils {
 
   /* DATE */
 
-  static formateDate = (
+  static formatDate = (
     date: Date | string,
-    timezone = 'Etc/UTC',
-    dateFormat = DateFormat.yyyyMMdd_HHmmss
+    dateFormat = DateFormat.yyyyMMdd_HHmmss,
+    timezone = 'Etc/UTC'
   ) => formatInTimeZone(date, timezone, dateFormat);
   
-  static getCurrentDateTime = () => this.formateDate(new Date());
+  static getCurrentDateTime = () => this.formatDate(new Date());
 
   /* COLLECTIONS */
 

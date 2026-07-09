@@ -63,6 +63,13 @@ export abstract class ElementBase {
     });
   }
 
+  async fill(text: string) {
+    await Report.subStep(`Fill [${this.name}]=[${text}]`, async () => {
+      await this.element().clear();
+      await this.element().fill(text);
+    });
+  }
+
   async fillSequentially(text: string) {
     await Report.subStep(`Fill sequentially [${this.name}]=[${text}]`, async () => {
       await this.element().clear();
