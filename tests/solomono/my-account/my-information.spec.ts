@@ -1,3 +1,4 @@
+import { ACCOUNT } from '@constants/solomono/my-account/account';
 import { test } from '@test';
 import { Report } from '@utils/report';
 
@@ -8,5 +9,21 @@ test('My information > edit', async ({ myAccountPage, accountFake }) => {
     await myAccount.fill(accountFake);
   });
   
-  // TODO: Add save changes action
+  await Report.step('Submit', async () => {
+    await myAccount.saveChanges();
+  });
+
+  await Report.step('Check My Account', async () => {
+    await myAccount.assert(accountFake);
+  });
+
+  // TODO: add POST api call to return original data
+  // HACK: data is returned by UI due to API limitation
+  await Report.step('Fill My Account with original user', async () => {
+    await myAccount.fill(ACCOUNT);
+  });
+
+  await Report.step('Submit', async () => {
+    await myAccount.saveChanges();
+  });
 });

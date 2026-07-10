@@ -13,6 +13,7 @@ import { Field } from '@elements/simple/field';
 import { InputImage } from '@elements/input/input-file/input-image';
 import { SingleElement } from '@elements/base/single-element';
 import { Strong } from '@elements/simple/strong';
+import { AlertDiv } from '@elements/alert-div';
 
 export class PageBase {
 
@@ -46,5 +47,6 @@ export class PageBase {
   span = (name: string, index?: number) => new Span(this.page, name, index);
   strong = (text: string, index?: number) => new Strong(this.page, text, index);
 
+  alertDiv = (name: string, index?: number) => new AlertDiv(this.page, name, index);
   searchInput = () => new Input(this.page, Placeholder.QUICK_FIND, By.PLACEHOLDER);
 }
