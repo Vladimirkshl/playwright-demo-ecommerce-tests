@@ -1,3 +1,4 @@
+import { AccountApi } from '@api/account-api';
 import { ProductApi } from '@api/product-api';
 import { ResponseFormat, ResponseFormatted } from '@constants/api/api';
 import { ContentType } from '@constants/common';
@@ -51,6 +52,7 @@ export class ApiUtils {
 
   static apis() {
     return {
+      accountApi: () => new AccountApi(),
       productApi: () => new ProductApi(),
     };
   }
