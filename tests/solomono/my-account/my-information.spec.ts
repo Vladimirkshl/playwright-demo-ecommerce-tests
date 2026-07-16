@@ -17,7 +17,6 @@ test('My information > edit', async ({ myAccountPage, accountFake }) => {
     await myAccount.assert(accountFake);
   });
 
-  // TODO: add POST api call to return original data
   // HACK: data is returned by UI due to API limitation
   await Report.step('Fill My Account with original user', async () => {
     await myAccount.fill(ACCOUNT);
