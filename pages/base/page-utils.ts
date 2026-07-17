@@ -9,6 +9,12 @@ export class PageUtils {
   }
 
   /* URL */
+
+  async reload() {
+    await Report.subStep('Reload page', async () => {
+      await this.page.reload({ waitUntil: 'networkidle' });
+    });
+  }
   
   async goTo(uri: string) {
     await Report.subStep(`Go to [${uri}]`, async () => {

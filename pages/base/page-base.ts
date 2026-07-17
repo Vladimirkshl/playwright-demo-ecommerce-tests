@@ -22,6 +22,7 @@ export class PageBase {
   /* ACTIONS */
 
   utils = () => new PageUtils(this.page);
+  reload = () => this.utils().reload();
   goTo = (uri: string) => this.utils().goTo(uri);
   assertTitle = (titleOrRegExp: string | RegExp) => this.utils().assertTitle(titleOrRegExp);
 

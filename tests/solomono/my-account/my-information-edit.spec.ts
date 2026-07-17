@@ -2,7 +2,7 @@ import { ACCOUNT } from '@constants/solomono/my-account/account';
 import { test } from '@test';
 import { Report } from '@utils/report';
 
-test('My information > edit', async ({ myAccountPage, accountFake }) => {
+test('Edit My information', async ({ myAccountPage, accountFake }) => {
   const myAccount = await myAccountPage.getMyInformationPage();
 
   await Report.step('Fill My Account', async () => {
@@ -24,5 +24,22 @@ test('My information > edit', async ({ myAccountPage, accountFake }) => {
 
   await Report.step('Submit', async () => {
     await myAccount.saveChanges();
+  });
+});
+
+test('Edit My information > Discard changes', async ({ myAccountPage, accountFake }) => {
+  const myAccount = await myAccountPage.getMyInformationPage();
+  
+  await Report.step('Fill My Account', async () => {
+    await myAccount.fill(accountFake);
+  });
+
+  // HACK: reload page due to sytem's limitation
+  await Report.step('Reload page', async () => {
+    await myAccount.reload();
+  });
+
+  await Report.step('Assert data is not saved', async () => {
+    await myAccount.assert(ACCOUNT);
   });
 });
