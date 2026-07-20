@@ -9,7 +9,10 @@ export class FakeSimple {
   static numeric = (format: string): string => format.replace(/#/g, () => faker.string.numeric(1));
   static numericString = (min = 1, max = 9, allowLeadingZeros = false): string =>
     faker.string.numeric({ length: { min, max }, allowLeadingZeros });
+  static symbolString = (min = 1, max = 9): string => faker.string.symbol({ min, max });
   static sentence = (): string => faker.lorem.sentence();
+
+  static dateInFuture = () => faker.date.future();
 
   static dateOfBirth = () => {
     let date: Date;

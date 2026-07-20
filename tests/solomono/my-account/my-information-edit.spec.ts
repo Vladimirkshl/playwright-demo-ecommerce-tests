@@ -43,3 +43,17 @@ test('Edit My information > Discard changes', async ({ myAccountPage, accountFak
     await myAccount.assert(ACCOUNT);
   });
 });
+
+test('Edit My information > Validation with invalid data', async ({ myAccountPage, accountFakeInvalid }) => {
+  const myAccount = await myAccountPage.getMyInformationPage();
+
+  await Report.step('Fill My Account', async () => {
+    await myAccount.fill(accountFakeInvalid);
+  });
+  
+  await Report.step('Trigger the validation errors', async () => {
+    await myAccount.triggerValidationErrors();
+  });
+
+  //TODO: add assert errors are visible after fixing behavior in system 
+});

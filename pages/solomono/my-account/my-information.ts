@@ -32,6 +32,16 @@ export class MyInformation extends PageBase {
     });
   }
 
+  /* VALIDATION */
+
+  async triggerValidationErrors() {
+    Report.subStep('Trigger validation errors by clicking h1 element', async () => {
+      await this.h1().click();
+    });
+  }
+
+  /* SUBMIT */
+
   async saveChanges() {
     await Report.subStep('Save changes', async () => {  
       await this.button('Continue').click();
