@@ -10,10 +10,10 @@ export class MyInformation extends PageBase {
     await Report.subStep('Assert my account', async () => {
       // TODO: investigate all allowed emails
       /* await this.field('Email').assertToHaveValue(account.email); */
-      await this.field('First Name:').assertToHaveValue(account.firstName);
-      await this.field('Last Name:').assertToHaveValue(account.lastName);
-      await this.field('Date of Birth:').assertToHaveValue(account.dateOfBirth.formattedDateOfBirth);
-      await this.field('Telephone Number:').assertToHaveValue(account.phoneNumber.numberWithCodeFormatted);
+      await this.field('First Name:').assertValue(account.firstName);
+      await this.field('Last Name:').assertValue(account.lastName);
+      await this.calendar('Date of Birth:').assert(account.dateOfBirth.formattedDateOfBirth);
+      await this.field('Telephone Number:').assertValue(account.phoneNumber.numberWithCodeFormatted);
     });
   }
 
@@ -25,9 +25,7 @@ export class MyInformation extends PageBase {
       /* await this.field('Email').fill(account.email); */
       await this.field('First Name:').fill(account.firstName);
       await this.field('Last Name:').fill(account.lastName);
-      // TODO: Add probability to select by calendar and fill
-      await this.field('Date of Birth:').fillSequentially(account.dateOfBirth.formattedDateOfBirth);
-      await this.button('Apply').click();
+      await this.calendar('Date of Birth:').select(account.dateOfBirth);
       await this.field('Telephone Number:').fill(account.phoneNumber.numberWithCodeFormatted);
     });
   }

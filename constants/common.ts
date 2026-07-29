@@ -1,3 +1,5 @@
+import { TimeZone } from './solomono/geo';
+
 export enum By {
   LABEL,
   ARIA_LABEL,
@@ -41,11 +43,13 @@ export enum ContentType {
 }
 
 export enum DateFormat {
+  MMMM_yyyy = 'MMMM yyyy',
   dd_MM_yyyy = 'dd/MM/yyyy',
   yyyyMMdd_HHmmss = 'yyyyMMdd_HHmmss',
+  HH_mm = 'HH:mm',
 }
 
-export interface IDateTime extends IDateFormatted {
+export interface IDateTime extends IDateFormatted, IDateTimezone {
   date: Date;
   day: string;
   month: string;
@@ -57,6 +61,10 @@ export interface IDateTime extends IDateFormatted {
 export interface IDateFormatted {
   dateFormatted?: string;
   formattedDateOfBirth?: string;
+}
+
+interface IDateTimezone {
+  timeZone?: TimeZone;
 }
 
 export const AUTO_TEST_PREFIX = `${process.env.BUILD_ID} AT`;

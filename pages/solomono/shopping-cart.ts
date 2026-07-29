@@ -22,7 +22,7 @@ export class ShoppingCart extends PageBase {
     await this.card(product.name).assertIsVisible();
     await this.image(product).assertIsVisible();
     await this.name(product.name).assertIsVisible();
-    await this.quantity(product).assertToHaveValue(product.cartQty.toString()); 
+    await this.quantity(product).assertValue(product.cartQty.toString()); 
     await this.price(product).assertIsVisible();
     await this.delete(product).assertIsVisible();
     await this.assertTotalPrice(product);

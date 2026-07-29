@@ -9,7 +9,7 @@ export const getFakeAccount = (): IAccount => {
     email: FakeSimple.email(),
     firstName: FakeSimple.firstName(),
     lastName: FakeSimple.lastName(),
-    dateOfBirth: { formattedDateOfBirth: Utils.formatDate(FakeSimple.dateOfBirth(), DateFormat.dd_MM_yyyy) },
+    dateOfBirth: Utils.getDateTimeFull(FakeSimple.dateOfBirth()),
     phoneNumber: FakeSimple.phoneNumber(),
   };
 };
