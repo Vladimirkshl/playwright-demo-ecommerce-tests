@@ -14,6 +14,7 @@ import { InputImage } from '@elements/input/input-file/input-image';
 import { SingleElement } from '@elements/base/single-element';
 import { Strong } from '@elements/simple/strong';
 import { AlertDiv } from '@elements/alert-div';
+import { Calendar } from '@elements/calendar';
 
 export class PageBase {
 
@@ -49,5 +50,6 @@ export class PageBase {
   strong = (text: string, index?: number) => new Strong(this.page, text, index);
 
   alertDiv = (name: string, index?: number) => new AlertDiv(this.page, name, index);
+  calendar = (label: string, index?: number) => new Calendar(this.page, label, index);
   searchInput = () => new Input(this.page, Placeholder.QUICK_FIND, By.PLACEHOLDER);
 }

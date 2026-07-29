@@ -1,7 +1,8 @@
 import _ from 'lodash';
 
-import { DateFormat } from '@constants/common';
-import { formatInTimeZone } from 'date-fns-tz';
+import { DateFormat, IDateTime } from '@constants/common';
+import { format, formatInTimeZone, FormatOptionsWithTZ } from 'date-fns-tz';
+import { TimeZone } from '@constants/solomono/geo';
 
 export class Utils {
 
@@ -16,6 +17,28 @@ export class Utils {
 
   /* DATE */
 
+  static getDateTimeFull = (date: Date): IDateTime => {
+    const dateFormatted = this.formatDate(date, DateFormat.dd_MM_yyyy);
+    const [day, month, year] = dateFormatted.split('/');
+    const time = Utils.formatDate(date, DateFormat.HH_mm);
+    const timeZone = Utils.getRandomValue(TimeZone);
+
+    return {
+      date: date,
+      dateFormatted: dateFormatted,
+      formattedDateOfBirth: dateFormatted,
+      day: Number(day).toString(),
+      month: month,
+      year: year,
+      time: time,
+      timeZone: timeZone,
+      fullDateTime: `${dateFormatted} ${time} ${timeZone}`,
+    };
+  };
+
+  static dateToString = (date: Date, formatString: DateFormat, options: FormatOptionsWithTZ = {}) => 
+    format(date, formatString, options);
+
   static formatDate = (
     date: Date | string,
     dateFormat = DateFormat.yyyyMMdd_HHmmss,
@@ -23,6 +46,13 @@ export class Utils {
   ) => formatInTimeZone(date, timezone, dateFormat);
   
   static getCurrentDateTime = () => this.formatDate(new Date());
+
+  static monthsDifference = (dateFrom: Date, dateTo: Date) => {
+    return (
+      (dateTo.getFullYear() - dateFrom.getFullYear()) * 12 +
+      (dateTo.getMonth() - dateFrom.getMonth())
+    );
+  };
 
   /* COLLECTIONS */
 

@@ -26,7 +26,7 @@ export abstract class ElementBase {
     });
   }
 
-  async assertToHaveValue(value: string) {
+  async assertValue(value: string) {
     await Report.subStep(`Assert [${this.name}]=[${value}]`, async () => {
       await expect(this.element()).toHaveValue(value);
     });
@@ -37,6 +37,20 @@ export abstract class ElementBase {
       await expect.soft(this.element()).toBeHidden({ timeout: timeoutInSeconds * 1000 || config.expect.timeout });
     });
   }
+  
+  async isHidden(): Promise<boolean> {
+    return Report.subStep(`Is [${this.name}] is hidden`, async () => {
+      return await this.element().isHidden();
+    }); 
+  }
+
+  async isOpened(): Promise<boolean> {
+    return Report.subStep(`Is [${this.name}] opened`, async () => {
+      if (await this.isHidden()) return false;
+      const style = await this.element().getAttribute('style');
+      return style?.includes('display: block') ?? false;
+    }); 
+  }
 
   /* CONTENT */
 
@@ -46,6 +60,14 @@ export abstract class ElementBase {
       await expect.soft(this.element()).toHaveText(text, {
         timeout: timeoutInSeconds * 1000 || config.expect.timeout,
       });
+    });
+  }
+
+  async getText() {
+    return Report.subStep(`Get text og [${this.name}]`, async () => {
+      const text = await this.element().textContent();
+      Report.logStep(`[${this.name}' text]=[${text}]`);
+      return text;
     });
   }
 
@@ -77,6 +99,14 @@ export abstract class ElementBase {
     });
   }
 
+  async open() {
+    await Report.subStep(`Open [${this.name}]`, async () => {
+      await this.scrollTo();
+      if (await this.isOpened()) Report.logStep('Already opened');
+      else await this.element().click();
+    });
+  }
+
   async hover() {
     await Report.subStep(`Hover [${this.name}]`, async () => {
       await this.element().hover();
@@ -86,6 +116,12 @@ export abstract class ElementBase {
   async unhover() {
     await Report.subStep(`Unhover [${this.name}]`, async () => {
       await this.page.mouse.move(0, 0);
+    });
+  }
+
+  async sleep(seconds: number) {
+    await Report.subStep(`Sleep ${seconds}s`, async () => {
+      await this.page.waitForTimeout(seconds * 1000);
     });
   }
 
@@ -105,5 +141,14 @@ export abstract class ElementBase {
   
   async assertAcceptedExtensions(accept: string) {
     await this.assertAttribute(Attribute.ACCEPT, accept);
+  }
+
+  /* SCROLL */
+
+  async scrollTo() {
+    Report.subStep(`Scroll to [${this.name}]`, async () => {
+      await this.element().scrollIntoViewIfNeeded();
+      await this.sleep(0.1);
+    });
   }
 }

@@ -38,9 +38,13 @@ export class SingleElement extends ElementBase {
 
     return clonedInstance;
   }
+  
+  protected sameElement() {
+    return new SingleElement(this.page, this.name, this.xpath, this.index);
+  }
 
   innerButton(name = '', index = 1) {
-    return this.innerElement(`Inner button [${name}]`, name ? `//button[.=${name}]` : '//button', index);
+    return this.innerElement(`Inner button [${name}]`, name ? `//button[.="${name}"]` : '//button', index);
   }
 
   followingSibling(xpath = '*') {

@@ -1,11 +1,12 @@
-import { IDateFormatted } from '@constants/common';
+import { IDateTime } from '@constants/common';
 import { IPhone } from '../contact';
+import { TimeZone } from '../geo';
 
 export interface IAccount {
   email: string;
   firstName: string;
   lastName: string;
-  dateOfBirth: IDateFormatted;
+  dateOfBirth: IDateTime;
   phoneNumber: IPhone;
 }
 
@@ -14,7 +15,17 @@ export const ACCOUNT: IAccount = {
   email: process.env.SOLOMONO_AUTH_EMAIL,
   firstName: 'Volod',
   lastName: 'Testd',
-  dateOfBirth: { formattedDateOfBirth: '02/02/2020' },
+  dateOfBirth: {
+    date: new Date('2020-02-02T00:00:00.000Z'),
+    dateFormatted: '02/02/2020',
+    formattedDateOfBirth: '02/02/2020',
+    day: '02',
+    month: '02',
+    year: '2020',
+    time: '00:00',
+    timeZone: TimeZone.MST,
+    fullDateTime: '02/02/2020 00:00 MST',
+  },
   phoneNumber: { 
     code: '+380',
     number: '000000000',
