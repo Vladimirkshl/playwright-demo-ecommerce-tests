@@ -4,7 +4,7 @@ import { FakeSimple } from '@fake/fake-simple';
 import { Page } from '@playwright/test';
 import { Report } from '@utils/report';
 import { Utils } from '@utils/utils';
-import { Select } from './dropdown/select/select';
+import { Select } from '@elements/dropdown/select/select';
 
 export class Calendar extends SingleElement {
   constructor(page: Page, label: string, index: number) {

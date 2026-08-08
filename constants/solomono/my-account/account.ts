@@ -1,6 +1,6 @@
 import { IDateTime } from '@constants/common';
-import { IPhone } from '../contact';
-import { TimeZone } from '../geo';
+import { IPhone } from '@constants/solomono/contact';
+import { TimeZone } from '@constants/solomono/geo';
 
 export interface IAccount {
   email: string;

@@ -1,4 +1,4 @@
-import { TimeZone } from './solomono/geo';
+import { TimeZone } from '@constants/solomono/geo';
 
 export enum By {
   LABEL,

@@ -1,6 +1,6 @@
 import { IPhone } from '@constants/solomono/contact';
 import { Utils } from '@utils/utils';
-import { FakeSimple } from './fake-simple';
+import { FakeSimple } from '@fake/fake-simple';
 
 const INVALID_EMAILS = [
   'email..email@example.com',

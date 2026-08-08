@@ -1,9 +1,9 @@
 import { attachment, logStep, step } from 'allure-js-commons';
 import playwrightConfig from '@playwrightConfig';
 import { ContentType } from '@constants/common';
-import { Utils } from './utils';
+import { Utils } from '@utils/utils';
 import { APIResponse } from '@playwright/test';
-import { ApiUtils } from './api-utils';
+import { ApiUtils } from '@utils/api-utils';
 
 const STEP_PREFIX = 'STEP ';
 const SUBSTEP_PREFIX = '|- ';
