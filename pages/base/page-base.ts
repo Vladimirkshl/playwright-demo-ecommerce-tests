@@ -15,6 +15,7 @@ import { SingleElement } from '@elements/base/single-element';
 import { Strong } from '@elements/simple/strong';
 import { AlertDiv } from '@elements/alert-div';
 import { Calendar } from '@elements/calendar';
+import { Select } from '@elements/dropdown/select/select';
 
 export class PageBase {
 
@@ -52,4 +53,5 @@ export class PageBase {
   alertDiv = (name: string, index?: number) => new AlertDiv(this.page, name, index);
   calendar = (label: string, index?: number) => new Calendar(this.page, label, index);
   searchInput = () => new Input(this.page, Placeholder.QUICK_FIND, By.PLACEHOLDER);
+  selectWithClass = (name: string, index = 1) => new Select(this.page, name, index);
 }

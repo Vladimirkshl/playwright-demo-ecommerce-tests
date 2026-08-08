@@ -119,6 +119,12 @@ export abstract class ElementBase {
     });
   }
 
+  async selectOption(option: string | string[]) {
+    await Report.subStep(`Select [${option}]`, async () => {
+      await this.element().selectOption(option);
+    });
+  }
+
   async sleep(seconds: number) {
     await Report.subStep(`Sleep ${seconds}s`, async () => {
       await this.page.waitForTimeout(seconds * 1000);

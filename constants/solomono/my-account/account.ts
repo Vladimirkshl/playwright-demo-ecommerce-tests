@@ -1,6 +1,6 @@
 import { IDateTime } from '@constants/common';
-import { IPhone } from '../contact';
-import { TimeZone } from '../geo';
+import { IPhone } from '@constants/solomono/contact';
+import { TimeZone } from '@constants/solomono/geo';
 
 export interface IAccount {
   email: string;
@@ -19,8 +19,9 @@ export const ACCOUNT: IAccount = {
     date: new Date('2020-02-02T00:00:00.000Z'),
     dateFormatted: '02/02/2020',
     formattedDateOfBirth: '02/02/2020',
-    day: '02',
+    day: '2',
     month: '02',
+    monthName: 'February',
     year: '2020',
     time: '00:00',
     timeZone: TimeZone.MST,
