@@ -53,6 +53,7 @@ export interface IDateTime extends IDateFormatted, IDateTimezone {
   date: Date;
   day: string;
   month: string;
+  monthName: string;
   year: string;
   time: string;
   fullDateTime: string;

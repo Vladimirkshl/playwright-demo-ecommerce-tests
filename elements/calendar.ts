@@ -4,6 +4,7 @@ import { FakeSimple } from '@fake/fake-simple';
 import { Page } from '@playwright/test';
 import { Report } from '@utils/report';
 import { Utils } from '@utils/utils';
+import { Select } from './dropdown/select/select';
 
 export class Calendar extends SingleElement {
   constructor(page: Page, label: string, index: number) {
@@ -32,7 +33,8 @@ export class Calendar extends SingleElement {
       if (FakeSimple.boolean(0.85)) {
         await this.fillSequentially(date.dateFormatted);
         await this.popover().applyButton().click();
-      } else await this.selectViaPopover(date);
+      } else if (FakeSimple.boolean()) await this.selectViaPopover(date);
+      else await this.selectViaPopoverSelects(date);
     });
   }
 
@@ -41,6 +43,16 @@ export class Calendar extends SingleElement {
     await this.popover().assertIsVisible();
     await this.popover().selectMonth(date);
     await this.sleep(0.5);
+    await this.popover().selectDay(date);
+    await this.popover().applyButton().click();
+    await this.popover().assertIsHidden();
+  }
+
+  private async selectViaPopoverSelects(date: IDateTime) {
+    await this.open();
+    await this.popover().assertIsVisible();
+    await this.popover().selectMonthViaSelect(date);
+    await this.popover().selectYearViaSelect(date);
     await this.popover().selectDay(date);
     await this.popover().applyButton().click();
     await this.popover().assertIsHidden();
@@ -62,11 +74,15 @@ class CalendarPopover extends SingleElement {
   }
 
   private day(day: string) {
-    return new SingleElement(
-      this.page,
-      `${this.name} day`,
-      `//td[.="${day}" and not(contains(@class, "ends"))]`
-    );
+    return new SingleElement(this.page, `${this.name} day`, `//td[.="${day}" and not(contains(@class, "ends"))]`);
+  }
+
+  private monthDropdown() {
+    return new Select(this.page, 'month');
+  }
+
+  private yearDropdown() {
+    return new Select(this.page, 'year');
   }
 
   private previousButton() {
@@ -106,6 +122,18 @@ class CalendarPopover extends SingleElement {
       }
 
       // TODO: add header assert
+    });
+  }
+
+  async selectMonthViaSelect(date: IDateTime) {
+    await Report.subStep(`Select month via dropdown [${this.name}]=[${date.month}]`, async () => {
+      await this.monthDropdown().selectOption(date.monthName);
+    });
+  }
+  
+  async selectYearViaSelect(date: IDateTime) {
+    await Report.subStep(`Select year via dropdown [${this.name}]=[${date.year}]`, async () => {
+      await this.yearDropdown().selectOption(date.year);
     });
   }
 }

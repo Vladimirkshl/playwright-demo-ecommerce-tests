@@ -20,6 +20,7 @@ export class Utils {
   static getDateTimeFull = (date: Date): IDateTime => {
     const dateFormatted = this.formatDate(date, DateFormat.dd_MM_yyyy);
     const [day, month, year] = dateFormatted.split('/');
+    const monthName = Utils.formatMonthName(date);
     const time = Utils.formatDate(date, DateFormat.HH_mm);
     const timeZone = Utils.getRandomValue(TimeZone);
 
@@ -29,6 +30,7 @@ export class Utils {
       formattedDateOfBirth: dateFormatted,
       day: Number(day).toString(),
       month: month,
+      monthName: monthName,
       year: year,
       time: time,
       timeZone: timeZone,
@@ -44,6 +46,8 @@ export class Utils {
     dateFormat = DateFormat.yyyyMMdd_HHmmss,
     timezone = 'Etc/UTC'
   ) => formatInTimeZone(date, timezone, dateFormat);
+
+  static formatMonthName = (date: Date) => new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
   
   static getCurrentDateTime = () => this.formatDate(new Date());
 
