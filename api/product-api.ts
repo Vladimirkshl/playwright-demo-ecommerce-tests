@@ -155,6 +155,17 @@ export class ProductApi extends ApiBase {
       });
     });
   }
+
+  async removeFromWishlist(product: IProduct) {
+    await Report.subStep('API: Remove product from wishlist', async () => {
+      await this.DELETE({
+        resource: PRODUCT_SERVICE_API.wishlist.remove(product.api.id),
+        name: `${this.apiName} / Remove product from wishlist`,
+      });
+    });
+
+    product.isInWishlist = false;
+  }
 }
 
 interface ISignedUrl {
