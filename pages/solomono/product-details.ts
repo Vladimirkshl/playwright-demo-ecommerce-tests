@@ -37,8 +37,10 @@ export class ProductDetails extends PageBase {
       // TODO: add assert Description after fixing uncontrolled strings of object
       await this.assertCharacteristics(product);
       // HACK: commented assertReview because of spaces in locator, need to investigate
-      /* await this.assertReview(product); */
-      /* await this.assertReviewForm(product); */
+      /* 
+      await this.assertReview(product);
+      await this.assertReviewForm(product); 
+      **/
       // TODO: add assert Shipping details after fixing uncontrolled strings of object
     });
   }
@@ -76,7 +78,7 @@ export class ProductDetails extends PageBase {
       await this.assertRam(product);
       await this.assertWeight(product);
       await this.assertBrand(product);
-      */
+      **/
       await this.field('Graphic adapter').assertText(product.characteristics.graphicAdapter);
       await this.field('Network').assertText(product.characteristics.network);
       await this.field('Processor').assertText(product.characteristics.processor);

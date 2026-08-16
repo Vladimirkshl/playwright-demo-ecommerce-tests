@@ -16,6 +16,7 @@ export const getFakeLaptop = (): IProduct => {
   return {
     name: name,
     status: ProductStatus.IN_STOCK,
+    isInWishlist: false,
     category: Category.LAPTOPS,
     code: FakeSimple.numericString(4, 4, true),
     price: price,

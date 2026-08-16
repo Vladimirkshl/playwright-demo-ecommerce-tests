@@ -22,6 +22,7 @@ interface IProductName {
 
 interface IProductStatus {
   status: ProductStatus;
+  isInWishlist: boolean;
 }
 
 interface IProductGeneralInfo {
@@ -189,6 +190,7 @@ export const DEMO_LAPTOP: IProduct = {
   name: 'Lenovo Yoga 7 2 in 1 14IML9 (83DJ00CMRA) Storm Grey',
   label: Label.NEW,
   status: ProductStatus.IN_STOCK,
+  isInWishlist: false,
   category: Category.LAPTOPS,
   code: 'kod5',
   price: '1247.15 ',
