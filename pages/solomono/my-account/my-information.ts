@@ -8,6 +8,7 @@ export class MyInformation extends PageBase {
 
   async assert(account: IAccount) {
     await Report.subStep('Assert my account', async () => {
+      await this.h1(2).assertText('My Account');
       // TODO: investigate all allowed emails
       /* await this.field('Email').assertToHaveValue(account.email); */
       await this.field('First Name:').assertValue(account.firstName);
