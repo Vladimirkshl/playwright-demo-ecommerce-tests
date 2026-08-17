@@ -35,7 +35,7 @@ test('Add product to cart', async ({ searchPage }) => {
   });
 });
 
-test('Add product to cart > remove and add to cart', async ({ searchPage }) => {
+test('Add product to cart > Remove and add to cart', async ({ searchPage }) => {
   // HACK: product is added to cart using UI due to API limitation
   const searchResult = await searchPage(DEMO_LAPTOP);
 
@@ -109,7 +109,7 @@ test('Add product to cart from product details page', async ({ searchPage }) => 
   });
 });
 
-test('Add product to cart from product details page > remove and add to cart', async ({ searchPage }) => {
+test('Add product to cart from product details page > Remove and add to cart', async ({ searchPage }) => {
   const searchResult = await searchPage(DEMO_LAPTOP);
 
   await Report.step(`Assert [${DEMO_LAPTOP.name}] details on Search page`, async () => {
