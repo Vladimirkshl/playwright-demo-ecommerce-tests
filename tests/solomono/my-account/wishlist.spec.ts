@@ -30,6 +30,7 @@ test('Add product to wishlist', async ({ searchPage }) => {
 });
 
 test('Add product to wishlist > Remove and add to wishlist', async ({ searchPage }) => {
+  // HACK: product is added to wishlist using UI due to API limitation
   let searchResult = await searchPage(DEMO_LAPTOP);
 
   await Report.step(`Assert [${DEMO_LAPTOP.name}] details on Search page`, async () => {
