@@ -34,6 +34,7 @@ export class WishlistDetails extends PageBase {
     await Report.subStep(`Remove [${product.name}] from shopping cart`, async () => {
       await this.delete(product).click();
       await this.div('No products are in your Wishlist.').assertIsVisible();
+      // TODO: add assert that block is not dispalyed as separate method or here
       
       product.isInWishlist = false;
     });

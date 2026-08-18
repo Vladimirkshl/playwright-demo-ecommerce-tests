@@ -143,6 +143,20 @@ export class ProductApi extends ApiBase {
     });
   }
 
+  async addToWishlist(product: IProduct) {
+    await Report.subStep('API: Add product to wishlist', async () => {
+      await this.POST({
+        resource: PRODUCT_SERVICE_API.wishlist.add,
+        data: {
+          productId: product.api.id,
+        },
+        name: `${this.apiName} / Add product to wishlist`,
+      });
+      
+      product.isInWishlist = true;
+    });
+  }
+
   async removeFromCart(product: IProduct) {
     await Report.subStep('API: Remove product from cart', async () => {
       await this.POST({
@@ -162,9 +176,9 @@ export class ProductApi extends ApiBase {
         resource: PRODUCT_SERVICE_API.wishlist.remove(product.api.id),
         name: `${this.apiName} / Remove product from wishlist`,
       });
-    });
 
-    product.isInWishlist = false;
+      product.isInWishlist = false;
+    });
   }
 }
 
