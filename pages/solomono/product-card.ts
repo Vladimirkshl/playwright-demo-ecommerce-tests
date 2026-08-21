@@ -12,7 +12,6 @@ export class ProductCard extends PageBase {
   private card = (name: string) => this.hyperLink(name).ancestor('div[@class="product "]');
   private label = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.label, `//div[starts-with(., "${product.label}")]`);
   private wishlistButton = (product: IProduct) => this.card(product.name).innerElement(product.name, '//label', 2);
-  private wishlistBlock = () => this.div('Wishlist:').innerElementWithoutParentIndex('Quantity', '/b[.="1 pc."]').ancestor('div[@class="wishlist_box2"]');
   private image = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.image.name, '//img');
   private name = (name: string) => this.hyperLink(name);
   private price = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.fullPrice, `//span[contains(., "${product.fullPrice}")]`);
@@ -85,17 +84,17 @@ export class ProductCard extends PageBase {
     await Report.subStep(`Add ${product.name} to wishlist`, async () => {
       await this.wishlistButton(product).click();
       await this.wishlistBlock().assertIsVisible();
-
       // TODO: add productsInWishlist: IProduct[] property to user's interface
       // TODO: add productsInWishlist.push(product)
       // TODO: add assert productsInWishlist.length on wishlistBlock
+      
       product.isInWishlist = true;
     });
   }
 
   async getWishlistDetails(): Promise<WishlistDetails> {
     await Report.subStep('Get wishlist details page', async () => {
-      await this.hyperLink('Wishlist:').click();
+      await this.wishlistBlock().hyperLink().click();
     });
 
     return new WishlistDetails(this.page);
