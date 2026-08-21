@@ -9,8 +9,10 @@ export class WishlistDetails extends PageBase {
   private card = (name: string) => this.hyperLink(name).ancestor('tr');
   private image = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.image.name, '//img');
   // TODO: remove comment after fixing price issue on wishlist details
-  /* private price = (product: IProduct) => 
-    this.card(product.name).innerElementWithoutParentIndex(product.fullPrice, `//td[contains(., "${product.fullPrice}")]`); */
+  /* 
+  private price = (product: IProduct) => 
+    this.card(product.name).innerElementWithoutParentIndex(product.fullPrice, `//td[contains(., "${product.fullPrice}")]`); 
+  **/
   private delete = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.name, '//a[starts-with(., "Delete")]');
   private buyButton = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex('Buy', '//button');
 
@@ -34,7 +36,7 @@ export class WishlistDetails extends PageBase {
     await Report.subStep(`Remove [${product.name}] from shopping cart`, async () => {
       await this.delete(product).click();
       await this.div('No products are in your Wishlist.').assertIsVisible();
-      // TODO: add assert that block is not dispalyed as separate method or here
+      await this.wishlistBlock().assertIsHidden();
       
       product.isInWishlist = false;
     });

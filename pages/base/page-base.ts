@@ -16,6 +16,7 @@ import { Strong } from '@elements/simple/strong';
 import { AlertDiv } from '@elements/alert-div';
 import { Calendar } from '@elements/calendar';
 import { Select } from '@elements/dropdown/select/select';
+import { WishlistBlock } from '@elements/wishlist-block';
 
 export class PageBase {
 
@@ -51,6 +52,8 @@ export class PageBase {
   strong = (text: string, index?: number) => new Strong(this.page, text, index);
 
   alertDiv = (name: string, index?: number) => new AlertDiv(this.page, name, index);
+  wishlistBlock = () => new WishlistBlock(this.page);
+
   calendar = (label: string, index?: number) => new Calendar(this.page, label, index);
   searchInput = () => new Input(this.page, Placeholder.QUICK_FIND, By.PLACEHOLDER);
   selectWithClass = (name: string, index = 1) => new Select(this.page, name, index);
