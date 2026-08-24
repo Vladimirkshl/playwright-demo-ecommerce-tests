@@ -2,6 +2,7 @@ import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
 import { ShoppingCart } from '@pages/solomono/shopping-cart';
+import { WishlistDetails } from '@pages/solomono/wishlist';
 
 export class ProductDetails extends PageBase {
 
@@ -123,7 +124,7 @@ export class ProductDetails extends PageBase {
 
   /* ACTIONS */
 
-  async addProduct(product: IProduct) {
+  async addProduct(product: IProduct): Promise<ShoppingCart> {
     await Report.subStep(`Add ${product.name} to cart`, async () => {
       await this.button('Buy', 1).click();
       await this.toastify().assertTextIsHidden('Product was successfully added to your cart!');
@@ -131,4 +132,21 @@ export class ProductDetails extends PageBase {
 
     return new ShoppingCart(this.page);
   }
+
+  async addProductToWishlist(product: IProduct) {
+    await Report.subStep(`Add ${product.name} to wishlist`, async () => {
+      await this.label('To Wishlist').click();
+      await this.wishlistBlock().assertIsVisible();
+
+      product.isInWishlist = true;
+    });
+  }
+
+  async getWishlistDetails(): Promise<WishlistDetails> {
+    await Report.subStep('Get wishlist details page', async () => {
+      await this.wishlistBlock().hyperLink().click();
+    });
+  
+    return new WishlistDetails(this.page);
+  } 
 }

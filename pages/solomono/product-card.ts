@@ -10,7 +10,7 @@ export class ProductCard extends PageBase {
   /* ELEMENTS */
   
   private card = (name: string) => this.hyperLink(name).ancestor('div[@class="product "]');
-  private label = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.label, `//div[starts-with(., "${product.label}")]`);
+  private labelBadge = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.label, `//div[starts-with(., "${product.label}")]`);
   private wishlistButton = (product: IProduct) => this.card(product.name).innerElement(product.name, '//label', 2);
   private image = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.image.name, '//img');
   private name = (name: string) => this.hyperLink(name);
@@ -22,7 +22,7 @@ export class ProductCard extends PageBase {
 
   async assert(product: IProduct) {
     await Report.subStep(`Assert ${product.name} card`, async () => {
-      await this.label(product).assertIsVisible();
+      await this.labelBadge(product).assertIsVisible();
       await this.image(product).assertIsVisible();
       await this.name(product.name).assertIsVisible();
       await this.price(product).assertIsVisible();
