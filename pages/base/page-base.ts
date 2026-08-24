@@ -17,6 +17,7 @@ import { AlertDiv } from '@elements/alert-div';
 import { Calendar } from '@elements/calendar';
 import { Select } from '@elements/dropdown/select/select';
 import { WishlistBlock } from '@elements/wishlist-block';
+import { Label } from '@elements/simple/label';
 
 export class PageBase {
 
@@ -44,6 +45,7 @@ export class PageBase {
   inputImage = (name: string, index?: number) => new InputImage(this.page, name, index);
 
   field = (name: string, index?: number) => new Field(this.page, name, index);
+  label = (name: string, index?: number) => new Label(this.page, name, index);
 
   div = (name: string) => new Div(this.page, name);
   hyperLink = (name: string, index?: number) => new Hyperlink(this.page, name, index);
