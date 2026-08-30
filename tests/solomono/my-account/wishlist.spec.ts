@@ -141,6 +141,7 @@ test('Add product to wishlist from product details page > Remove and add to wish
   await Report.step(`Remove [${DEMO_LAPTOP.name}] from wishlist`, async () => {
     await wishlistDetails.removeProduct(DEMO_LAPTOP);
   });
+  
   await Report.step(`Search [${DEMO_LAPTOP.name}]`, async () => {
     await searchPage(DEMO_LAPTOP);
   });
