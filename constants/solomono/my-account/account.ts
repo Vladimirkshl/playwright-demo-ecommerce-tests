@@ -1,13 +1,10 @@
 import { IDateTime } from '@constants/common';
-import { IPhone } from '@constants/solomono/contact';
-import { TimeZone } from '@constants/solomono/geo';
+import { TimeZone } from '@constants/geo/geo';
+import { IUser } from '@constants/solomono/user';
 
-export interface IAccount {
+export interface IAccount extends IUser {
   email: string;
-  firstName: string;
-  lastName: string;
   dateOfBirth: IDateTime;
-  phoneNumber: IPhone;
 }
 
 // HACK: User account is harcoded data due to limitations on demo website

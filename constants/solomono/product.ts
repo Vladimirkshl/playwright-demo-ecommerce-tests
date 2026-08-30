@@ -1,6 +1,6 @@
 import { ContentType, IDateTime } from '@constants/common';
 import { FileName, IFile } from '@constants/files/files';
-import { Currency } from '@constants/solomono/geo';
+import { Currency } from '@constants/geo/geo';
 
 export interface IProduct extends IProductName, IProductStatus,
   IPrice,

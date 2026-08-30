@@ -1,6 +1,6 @@
 import { FAKE_EMAIL_PROVIDER } from '@constants/common';
 import { IPhone } from '@constants/solomono/contact';
-import { PHONE_CODE } from '@constants/solomono/geo';
+import { PHONE_CODE } from '@constants/geo/geo';
 import { faker } from '@faker-js/faker';
 
 export class FakeSimple {

@@ -5,7 +5,7 @@ import { FakeSimple } from '@fake/fake-simple';
 import { Utils } from '@utils/utils';
 import { getFakeReview } from '@fake/admin/review';
 import { getFakeBrand, getFakeColor, getFakeRam, getFakeWeight } from '@fake/admin/characteristics';
-import { Currency } from '@constants/solomono/geo';
+import { Currency } from '@constants/geo/geo';
 
 export const getFakeLaptop = (): IProduct => {
   const uuid = FakeSimple.uuidShort();

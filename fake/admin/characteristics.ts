@@ -1,4 +1,4 @@
-import { Currency } from '@constants/solomono/geo';
+import { Currency } from '@constants/geo/geo';
 import { Brand, CARD_BRAND, CARD_COLOR, CARD_RAM, CARD_WEIGHT, Color, IBrand, IColor, IRam, IWeight, Ram, Weight } from '@constants/solomono/product';
 import { FakeSimple } from '@fake/fake-simple';
 import { Utils } from '@utils/utils';

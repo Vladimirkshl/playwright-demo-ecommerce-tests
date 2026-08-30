@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 import { DateFormat, IDateTime } from '@constants/common';
 import { format, formatInTimeZone, FormatOptionsWithTZ } from 'date-fns-tz';
-import { TimeZone } from '@constants/solomono/geo';
+import { TimeZone } from '@constants/geo/geo';
 
 export class Utils {
 
