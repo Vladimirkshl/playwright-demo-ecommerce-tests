@@ -46,4 +46,10 @@ export class FakeSimple {
       numberWithCodeFormatted: this.phoneCode() + phone,
     };
   };
+
+  static streetAddress = (useFullAddress = true): string => 
+    faker.location.streetAddress({ useFullAddress });
+  static state = (abbreviated = false): string => faker.location.state({ abbreviated });
+  static city = (): string => faker.location.city();
+  static zipCode = (): string => faker.location.zipCode();
 }

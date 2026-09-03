@@ -443,6 +443,12 @@ export enum UsState {
 
 export type TState = UkraineState | UkState | UsState;
 
+export const MAP_COUNTRY_STATE: Partial<Record<Country, TState[]>> = {
+  [Country.UKRAINE]: Object.values(UkraineState),
+  [Country.UNITED_KINGDOM]: Object.values(UkState),
+  [Country.UNITED_STATES]: Object.values(UsState),
+};
+
 export enum Currency {
   DOLLAR = '$',
 }

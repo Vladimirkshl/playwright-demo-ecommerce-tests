@@ -4,7 +4,7 @@ import { IUser } from '@constants/solomono/user';
 
 export interface IAccount extends IUser {
   email: string;
-  dateOfBirth: IDateTime;
+  dateOfBirth?: IDateTime;
 }
 
 // HACK: User account is harcoded data due to limitations on demo website

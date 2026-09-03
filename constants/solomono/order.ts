@@ -14,21 +14,21 @@ export interface IOrder {
   }
 }
 
-interface ICustomer extends IAccount {
+export interface ICustomer extends IAccount {
   address: IAddress;
 }
 
 export interface IShippingMethod {
   method: ShippingMethod;
   price: string;
-  // TODO: add new property to increse the product price
+  // TODO: add property to increse the product price
 }
 
 export interface IPaymentMetod {
   method: PaymentMethod;
 }
 
-enum ShippingMethod {
+export enum ShippingMethod {
   UKRPOSHTA = 'Ukrposhta',
   CUSTOM_SHIPPER = 'Custom Shipper',
   ELECTRONIC_PRODUCT = 'Electronic product',
@@ -39,16 +39,17 @@ enum ShippingMethod {
 }
 
 // @ts-ignore
-const SHIPPING_METHOD_PRICE = {
+export const SHIPPING_METHOD_PRICE = {
   [ShippingMethod.UKRPOSHTA]: 'По тарифам перевізника',
   [ShippingMethod.CUSTOM_SHIPPER]: `${Currency.DOLLAR}5.00`,
+  [ShippingMethod.ELECTRONIC_PRODUCT]: `${Currency.DOLLAR}5.00`,
   [ShippingMethod.BEST_WAY]: `${Currency.DOLLAR}13.00`,
   [ShippingMethod.NOVA_POST]: '',
   [ShippingMethod.FOR_ODESSA_CITIZENS]: `${Currency.DOLLAR}5.00`,
   [ShippingMethod.SELF_DELIVERY]: `${Currency.DOLLAR}5.00`,
 };
 
-enum PaymentMethod {
+export enum PaymentMethod {
   CASH_ON_DELIVERY = 'Cash on Delivery',
   BANK_TRANSFER = 'Bank Transfer',
   VISA_MASTERCARD_LIQPAY = 'Visa/Mastercard LiqPay',
@@ -63,7 +64,7 @@ interface IOrderGeneralInfo {
   comment: IComment
 }
 
-interface IComment {
+export interface IComment {
   enabled: boolean;
   text: string;
 }
