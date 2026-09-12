@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 import { PageUtils } from '@pages/base/page-utils';
 import { H1, Header } from '@elements/simple/header';
-import { By, Placeholder } from '@constants/common';
+import { By, Placeholder, SelectType } from '@constants/common';
 import { Input } from '@elements/input/input';
 import { Button } from '@elements/simple/button';
 import { Hyperlink } from '@elements/simple/hyper-link';
@@ -58,5 +58,6 @@ export class PageBase {
 
   calendar = (label: string, index?: number) => new Calendar(this.page, label, index);
   searchInput = () => new Input(this.page, Placeholder.QUICK_FIND, By.PLACEHOLDER);
-  selectWithClass = (name: string, index = 1) => new Select(this.page, name, index);
+  
+  selectWithSearch = (name: string, index?: number) => new Select(this.page, name, SelectType.SELECT_WITH_SEARCH, index);
 }

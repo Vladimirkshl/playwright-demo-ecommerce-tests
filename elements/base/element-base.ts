@@ -1,6 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { Report } from '@utils/report';
-import { ElementAttribute as Attribute } from '@constants/common';
+import { ElementAttribute as Attribute, KeyboardKey } from '@constants/common';
 import config from '@playwrightConfig';
 
 export abstract class ElementBase {
@@ -71,6 +71,16 @@ export abstract class ElementBase {
     });
   }
 
+  /* EXPECT */
+
+  async expectToEqual<T extends number | string | string[]>(actual: T, expected: T) {
+    await Report.subStep(`Expect [${actual}] toEqual [${expected}]`, async () => {
+      Report.logStep(`Actaul: [${actual}]`);
+      Report.logStep(`Expected: [${expect}]`);
+      expect.soft(actual).toEqual(expected);
+    });
+  }
+
   /* ACTIONS */
 
   async click() {
@@ -135,6 +145,12 @@ export abstract class ElementBase {
     await Report.subStep(`Focus [${this.name}]`, async () => {
       await this.element().focus();
     });
+  }
+
+  async press(key: KeyboardKey | string) {
+    await Report.subStep(`Press [${key}] on [${this.name}]`, async () => {
+      await this.element().press(key);
+    }); 
   }
 
   /* ATTRIBUTES */
