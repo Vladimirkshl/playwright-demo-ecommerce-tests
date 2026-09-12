@@ -1,6 +1,7 @@
 import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
+import { Checkout } from '@pages/solomono/checkout';
 
 export class ShoppingCart extends PageBase {
   
@@ -41,6 +42,14 @@ export class ShoppingCart extends PageBase {
       await this.delete(product).click();
       await this.header('Your Shopping Cart is empty!').inDialog().assertIsVisible();
     });
+  }
+
+  async getCheckout(): Promise<Checkout> {
+    await Report.subStep('Get checkout details page', async () => {
+      await this.hyperLink('Checkout', 2).click();
+    });
+
+    return new Checkout(this.page);
   }
 
   async close() {

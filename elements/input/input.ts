@@ -9,11 +9,11 @@ export class Input extends SingleElement {
         super(
           page,
           name,
-          `//*[label[starts-with(., "${name}")] or span[starts-with(., "${name}")]]//*[self::input or self::textarea]`,
+          `//*[label[starts-with(., "${name}")] or span[starts-with(., "${name}")]]//input`,
           index
         );
         break;
-      case By.PLACEHOLDER: 
+      case By.PLACEHOLDER:
         super(
           page,
           name,
@@ -21,7 +21,7 @@ export class Input extends SingleElement {
           index
         );
         break;
-      case By.ARIA_LABEL: 
+      case By.ARIA_LABEL:
         super(
           page,
           name,

@@ -49,6 +49,16 @@ export enum DateFormat {
   HH_mm = 'HH:mm',
 }
 
+export enum SelectType {
+  SELECT = 'SELECT',
+  SELECT_WITH_SEARCH = 'SELECT_WITH_SEARCH',
+}
+
+export enum KeyboardKey {
+  ESCAPE = 'Escape',
+  TAB = 'Tab',
+}
+
 export interface IDateTime extends IDateFormatted, IDateTimezone {
   date: Date;
   day: string;

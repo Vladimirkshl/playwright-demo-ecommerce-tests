@@ -1,4 +1,4 @@
-import { DateFormat, IDateTime } from '@constants/common';
+import { DateFormat, IDateTime, SelectType } from '@constants/common';
 import { SingleElement } from '@elements/base/single-element';
 import { FakeSimple } from '@fake/fake-simple';
 import { Page } from '@playwright/test';
@@ -78,11 +78,11 @@ class CalendarPopover extends SingleElement {
   }
 
   private monthDropdown() {
-    return new Select(this.page, 'month');
+    return new Select(this.page, 'month', SelectType.SELECT);
   }
 
   private yearDropdown() {
-    return new Select(this.page, 'year');
+    return new Select(this.page, 'year', SelectType.SELECT);
   }
 
   private previousButton() {
