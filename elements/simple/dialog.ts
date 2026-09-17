@@ -7,8 +7,8 @@ export class Dialog extends SingleElement {
     super(page, 'Dialog', '//*[@class="modal-dialog"]');
   }
 
-  private xButton = this.innerElement('[x] button', '//button[@class="close"]');
-  private backdrop = new SingleElement(this.page, '[Backdrop]', '//*[contains(@class, "valign-false")]');
+  xButton = this.innerElement('[x] button', '//button[@class="close"]');
+  private backdrop = new SingleElement(this.page, '[Backdrop]', '//*[contains(@class, "modal fade")]');
 
   async close() {
     if (FakeSimple.boolean()) await this.backdrop.clickCorner(true);

@@ -1,7 +1,8 @@
 import { IProduct } from '@constants/solomono/product';
 import { IAccount } from '@constants/solomono/my-account/account';
 import { IAddress } from '@constants/geo/address';
-import { Currency } from '@constants/geo/geo';
+import { Country, Currency, TimeZone } from '@constants/geo/geo';
+import { Utils } from '@utils/utils';
 
 export interface IOrder extends IPaymentMetod, IOrderGeneralInfo {}
 
@@ -16,6 +17,12 @@ export interface IOrder {
 
 export interface ICustomer extends IAccount {
   address: IAddress;
+  differentBillingAddress: IDifferentBillingAddress;
+}
+
+export interface IDifferentBillingAddress {
+  isDifferentBillingAddress: boolean;
+  address?: IAddress;
 }
 
 export interface IShippingMethod {
@@ -68,3 +75,38 @@ export interface IComment {
   enabled: boolean;
   text: string;
 }
+
+// HACK: Default customer is harcoded data due to limitations on demo website
+export const CUSTOMER: ICustomer = {
+  email: process.env.SOLOMONO_AUTH_EMAIL,
+  firstName: 'Volod',
+  lastName: 'Testd',
+  fullName: 'Volod Testd',
+  dateOfBirth: {
+    date: new Date('2020-02-02T00:00:00.000Z'),
+    dateFormatted: '02/02/2020',
+    formattedDateOfBirth: '02/02/2020',
+    day: '2',
+    month: '02',
+    monthName: 'February',
+    year: '2020',
+    time: '00:00',
+    timeZone: TimeZone.MST,
+    fullDateTime: '02/02/2020 00:00 MST',
+  },
+  phoneNumber: {
+    code: '+380',
+    number: '000000000',
+    numberWithCodeFormatted: '+380000000000',
+  },
+  address: Utils.createAddressFull({
+    streetAddress: 'Fake address',
+    city: 'Silent Hill',
+    state: 'Закарпатська область',
+    zipCode: '',
+    country: Country.UKRAINE,
+  }),
+  differentBillingAddress: {
+    isDifferentBillingAddress: false,
+  },
+};

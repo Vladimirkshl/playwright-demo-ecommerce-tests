@@ -12,6 +12,7 @@ export const ACCOUNT: IAccount = {
   email: process.env.SOLOMONO_AUTH_EMAIL,
   firstName: 'Volod',
   lastName: 'Testd',
+  fullName: 'Volod Testd',
   dateOfBirth: {
     date: new Date('2020-02-02T00:00:00.000Z'),
     dateFormatted: '02/02/2020',
