@@ -3,8 +3,22 @@ import _ from 'lodash';
 import { DateFormat, IDateTime } from '@constants/common';
 import { format, formatInTimeZone, FormatOptionsWithTZ } from 'date-fns-tz';
 import { TimeZone } from '@constants/geo/geo';
+import { IAddress } from '@constants/geo/address';
 
 export class Utils {
+
+  /* ADDRESS */
+
+  static createAddressFull(address: IAddress): IAddress {
+    return {
+      ...address,
+      addressFull: this.getAddressFull(address),
+    };
+  }
+
+  private static getAddressFull(address: IAddress): string {
+    return `${address.city} ${address.streetAddress}, ${address.state}, ${address.country}`;
+  }
 
   /* TEXT */
 

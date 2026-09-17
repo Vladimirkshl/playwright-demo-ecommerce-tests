@@ -6,4 +6,5 @@ export interface IAddress {
   state: TState | string;
   zipCode: string;
   country: Country;
+  addressFull?: string;
 }

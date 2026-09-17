@@ -18,6 +18,25 @@ export abstract class ElementBase {
 
   /* ASSERTS STATES */
 
+  async assertSelectionState(value: boolean) {
+    await Report.subStep(`Assert [${this.name}] selection state is [${value}]`, async () => {
+      if (value) await this.assertIsChecked();
+      else await this.asserIsUnchecked();
+    });
+  }
+
+  async assertIsChecked() {
+    await Report.subStep(`Assert [${this.name}] is checked`, async () => {
+      await expect(this.element()).toBeChecked();
+    });
+  }
+
+  async asserIsUnchecked() {
+    await Report.subStep(`Assert [${this.name}] is unchecked`, async () => {
+      await expect(this.element()).not.toBeChecked();
+    });
+  }
+
   async assertIsVisible(timeoutInSeconds?: number) {
     await Report.subStep(`Assert [${this.name}] is visible`, async () => {
       await expect.soft(this.element()).toBeVisible({
@@ -51,6 +70,12 @@ export abstract class ElementBase {
       return style?.includes('display: block') ?? false;
     }); 
   }
+
+  async isChecked(): Promise<boolean> {
+    return await Report.subStep(`Is [${this.name}] checked`, async () => {
+      return await this.element().isChecked();
+    });
+  } 
 
   /* CONTENT */
 
@@ -92,6 +117,16 @@ export abstract class ElementBase {
   async clickCorner(force = false) {
     await Report.subStep(`Click top-left corner [${this.name}]`, async () => {
       await this.element().click({ position: { x: 0, y: 0 }, force });
+    });
+  }
+
+  async check() {
+    await Report.subStep(`Check [${this.name}]`, async () => {
+      if (this.isChecked()) await Report.logStep('Already checked');
+      else {
+        await this.element().check();
+        await this.assertIsChecked();
+      }
     });
   }
 

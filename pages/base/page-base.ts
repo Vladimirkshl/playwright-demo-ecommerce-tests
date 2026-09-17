@@ -18,6 +18,8 @@ import { Calendar } from '@elements/calendar';
 import { Select } from '@elements/dropdown/select/select';
 import { WishlistBlock } from '@elements/wishlist-block';
 import { Label } from '@elements/simple/label';
+import { Checkbox } from '@elements/simple/checkbox';
+import { Bold } from '@elements/simple/bold';
 
 export class PageBase {
 
@@ -47,11 +49,15 @@ export class PageBase {
   field = (name: string, index?: number) => new Field(this.page, name, index);
   label = (name: string, index?: number) => new Label(this.page, name, index);
 
-  div = (name: string) => new Div(this.page, name);
+  bold = (name: string) => new Bold(this.page, name);
+  div = (name: string, index?: number) => new Div(this.page, name, index);
+  strong = (text: string, index?: number) => new Strong(this.page, text, index);
+
   hyperLink = (name: string, index?: number) => new Hyperlink(this.page, name, index);
   button = (name: string, index?: number) => new Button(this.page, name, index);
   span = (name: string, index?: number) => new Span(this.page, name, index);
-  strong = (text: string, index?: number) => new Strong(this.page, text, index);
+
+  checkbox = (name: string, index?: number) => new Checkbox(this.page, name, index);
 
   alertDiv = (name: string, index?: number) => new AlertDiv(this.page, name, index);
   wishlistBlock = () => new WishlistBlock(this.page);
