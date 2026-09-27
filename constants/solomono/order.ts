@@ -48,12 +48,22 @@ export enum ShippingMethod {
 // @ts-ignore
 export const SHIPPING_METHOD_PRICE = {
   [ShippingMethod.UKRPOSHTA]: 'По тарифам перевізника',
-  [ShippingMethod.CUSTOM_SHIPPER]: `${Currency.DOLLAR}5.00`,
+  [ShippingMethod.CUSTOM_SHIPPER]: 'According to carrier tariffs',
   [ShippingMethod.ELECTRONIC_PRODUCT]: `${Currency.DOLLAR}5.00`,
   [ShippingMethod.BEST_WAY]: `${Currency.DOLLAR}13.00`,
   [ShippingMethod.NOVA_POST]: '',
   [ShippingMethod.FOR_ODESSA_CITIZENS]: `${Currency.DOLLAR}5.00`,
   [ShippingMethod.SELF_DELIVERY]: `${Currency.DOLLAR}5.00`,
+};
+
+export const SHIPPING_METHOD_TOOLTIP_VALUE = {
+  [ShippingMethod.UKRPOSHTA]: 'For the delivery of documents, vantages and parcels. The biggest measure is in the whole of Ukraine.',
+  [ShippingMethod.CUSTOM_SHIPPER]: 'The ability to pick up the purchased goods at a convenient time on their own and at the same time save on delivery.',
+  [ShippingMethod.ELECTRONIC_PRODUCT]: '',
+  [ShippingMethod.BEST_WAY]: 'Calculation of terms and costs, also possible determination of the cost for transportation.',
+  [ShippingMethod.NOVA_POST]: 'Ukrainian international logistics group, the largest network of branches throughout Ukraine.',
+  [ShippingMethod.FOR_ODESSA_CITIZENS]: 'Delivery only for residents of Kyiv.',
+  [ShippingMethod.SELF_DELIVERY]: '',
 };
 
 export enum PaymentMethod {

@@ -45,6 +45,18 @@ export abstract class ElementBase {
     });
   }
 
+  async assertIsOpened() {
+    await Report.subStep(`Assert [${this.name}] is opened`, async () => {
+      expect(await this.isOpened(), `${this.xpath} is opened`).toBeTruthy();
+    });
+  }
+
+  async assertIsClosed() {
+    await Report.subStep(`Assert [${this.name}] is closed`, async () => {
+      expect(await this.isOpened()).toBeFalsy();
+    });
+  }
+
   async assertValue(value: string) {
     await Report.subStep(`Assert [${this.name}]=[${value}]`, async () => {
       await expect(this.element()).toHaveValue(value);
@@ -66,8 +78,10 @@ export abstract class ElementBase {
   async isOpened(): Promise<boolean> {
     return Report.subStep(`Is [${this.name}] opened`, async () => {
       if (await this.isHidden()) return false;
-      const style = await this.element().getAttribute('style');
-      return style?.includes('display: block') ?? false;
+      return (
+        (await this.element().getAttribute('style'))?.includes('display: block') === true ||
+        (await this.element().getAttribute('class'))?.includes('open') === true
+      );
     }); 
   }
 
