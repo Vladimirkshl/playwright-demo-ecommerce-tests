@@ -20,6 +20,8 @@ import { WishlistBlock } from '@elements/wishlist-block';
 import { Label } from '@elements/simple/label';
 import { Checkbox } from '@elements/simple/checkbox';
 import { Bold } from '@elements/simple/bold';
+import { AccordionOption } from '@elements/accordion-option';
+import { Tooltip } from '@elements/simple/tooltip';
 
 export class PageBase {
 
@@ -59,7 +61,10 @@ export class PageBase {
 
   checkbox = (name: string, index?: number) => new Checkbox(this.page, name, index);
 
+  tooltip = (index?: number) => new Tooltip(this.page, index);
+
   alertDiv = (name: string, index?: number) => new AlertDiv(this.page, name, index);
+  accordionOption = (name: string, index?: number) => new AccordionOption(this.page, name, index);
   wishlistBlock = () => new WishlistBlock(this.page);
 
   calendar = (label: string, index?: number) => new Calendar(this.page, label, index);
