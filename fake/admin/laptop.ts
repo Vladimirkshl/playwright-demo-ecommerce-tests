@@ -12,6 +12,8 @@ export const getFakeLaptop = (): IProduct => {
   const name = `Laptop ${AUTO_TEST_PREFIX} ${uuid}`;
   const review = FakeSimple.boolean() ? getFakeReview() : [];
   const price = FakeSimple.price();
+  const cartQty = FakeSimple.number(1, 1);
+  const totalPrice = Number(price) * cartQty;
 
   return {
     name: name,
@@ -22,8 +24,9 @@ export const getFakeLaptop = (): IProduct => {
     price: price,
     currency: Currency.DOLLAR,
     fullPrice: `${Currency.DOLLAR}${price}`,
+    totalPrice: `${Currency.DOLLAR}${totalPrice}`,
     qty: FakeSimple.number(1, 21),
-    cartQty: FakeSimple.number(1, 1),
+    cartQty,
     discount: FakeSimple.number(5, 20),
     image: getLogo(),
     label: Utils.getRandomValue(Label),

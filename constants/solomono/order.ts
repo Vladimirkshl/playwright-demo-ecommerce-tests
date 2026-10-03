@@ -1,4 +1,4 @@
-import { IProduct } from '@constants/solomono/product';
+import { DEMO_LAPTOP, IProduct } from '@constants/solomono/product';
 import { IAccount } from '@constants/solomono/my-account/account';
 import { IAddress } from '@constants/geo/address';
 import { Country, Currency, TimeZone } from '@constants/geo/geo';
@@ -75,6 +75,15 @@ export enum PaymentMethod {
   MONOBANK_VISA_MASTERCARD = 'Monobank Visa/Mastercard',
 }
 
+export const PAYMENT_METHOD_TOOLTIP_VALUE = {
+  [PaymentMethod.CASH_ON_DELIVERY]: 'Possibility to pay cash on delivery (cash upon receipt).',
+  [PaymentMethod.BANK_TRANSFER]: 'A form of payment in which cash is not used, funds are transferred from one bank account to another.',
+  [PaymentMethod.VISA_MASTERCARD_LIQPAY]: 'A payment service that allows you to accept payments and transfer money using a mobile phone, the Internet and payment cards.',
+  [PaymentMethod.PAYPAL]: '',
+  [PaymentMethod.BANK_CARD_PAYMENT]: 'Payment is made through the acquiring bank, (enter the card number).',
+  [PaymentMethod.MONOBANK_VISA_MASTERCARD]: 'Accepting payments from Visa and Mastercard, through Apple Pay, Google Pay wallets and the Monobank application.',
+};
+
 interface IOrderGeneralInfo {
   newsletter: boolean;
   callBack: boolean;
@@ -119,4 +128,19 @@ export const CUSTOMER: ICustomer = {
   differentBillingAddress: {
     isDifferentBillingAddress: false,
   },
+};
+
+// HACK: Default order is harcoded data due to limitations on demo website
+export const ORDER: IOrder = {
+  method: PaymentMethod.BANK_CARD_PAYMENT,
+  newsletter: false,
+  callBack: false,
+  comment: {
+    enabled: true,
+    text: 'Vulariter apud natus abduco provident capillus synagoga comminor vulgivagus.',
+  },
+  product: DEMO_LAPTOP,
+  shippingMethod: { method: ShippingMethod.BEST_WAY, price: 'According to carrier tariffs' },
+  customer: CUSTOMER,
+  api: { id: '' },
 };

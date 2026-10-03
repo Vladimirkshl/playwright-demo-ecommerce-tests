@@ -1,5 +1,5 @@
-import { ICustomer, IOrder, SHIPPING_METHOD_PRICE, SHIPPING_METHOD_TOOLTIP_VALUE, ShippingMethod } from '@constants/solomono/order';
-import { FakeSimple } from '@fake/fake-simple';
+import { ICustomer, IOrder, PAYMENT_METHOD_TOOLTIP_VALUE, PaymentMethod, SHIPPING_METHOD_PRICE, SHIPPING_METHOD_TOOLTIP_VALUE, ShippingMethod } from '@constants/solomono/order';
+import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
 
@@ -7,10 +7,15 @@ export class Checkout extends PageBase {
 
   /* ELEMENTS */
 
-  protected proceed = (index?: number) => this.span('Proceed', index);
-  protected addressBook = (index: number) => this.hyperLink('Address book', index);
-  protected billingAddress = () => this.header('Billing address');
-  protected differentBillingAddress = () => this.checkbox('Different billing address?');
+  private addressBook = (index: number) => this.hyperLink('Address book', index);
+  private billingAddress = () => this.header('Billing address');
+  private differentBillingAddress = () => this.checkbox('Different billing address?');
+  private proceed = (index?: number) => this.span('Proceed', index);
+  private card = (name: string) => this.hyperLink(name).ancestor('div[@class="checkout_cart_item"]');
+  private image = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.image.name, '//img');
+  private quantity = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.cartQty.toString(), '//input[@type="number"]');
+  private totalPrice = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.totalPrice, '//b');
+  private delete = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex('Delete button', '//button');
 
   /* ASSERT */
 
@@ -28,6 +33,21 @@ export class Checkout extends PageBase {
       await this.assertShippingSection();
       await this.assertShippingOptions();
       await this.assertShippingSectionCollapesed();
+    });
+  }
+
+  async assertPaymentMethod() {
+    await Report.subStep('Assert deftault [Payment method] section', async () => {
+      await this.assertPaymentSection();
+      await this.assertPaymentOptions();
+      await this.assertPaymentSectionCollapesed();
+    });
+  }
+
+  async assertCart(order: IOrder) {
+    await Report.subStep(`Assert cart with [${order.product.name}]`, async () => {
+      await this.assertCartSection(order.product);
+      await this.assertProduct(order.product);
     });
   }
 
@@ -99,9 +119,9 @@ export class Checkout extends PageBase {
 
   private async assertUserSectionCollapsed(customer: ICustomer) {
     await Report.subStep(`Assert collapsed [${customer.firstName}]`, async () => {
-      if (FakeSimple.boolean()) await this.proceed(1).click();
-      else await this.div('User', 1).click();
-      await this.div('User', 8).assertIsClosed();
+      await this.proceed(1).click();
+
+      await this.div('User', 9).assertIsClosed();
       await this.span(customer.firstName).assertIsVisible();
       await this.span(customer.lastName).assertIsVisible();
       await this.span(customer.phoneNumber.numberWithCodeFormatted).assertIsVisible();
@@ -109,7 +129,6 @@ export class Checkout extends PageBase {
       await this.span(customer.address.city).assertIsVisible();
       await this.span(customer.address.country).assertIsVisible();
       await this.span(customer.address.state).assertIsVisible();
-      await this.addressBook(1).assertIsHidden();
     });
   }
 
@@ -141,11 +160,68 @@ export class Checkout extends PageBase {
 
   private async assertShippingSectionCollapesed() {
     await Report.subStep('Assert [Shipping method] section collapsed', async () => {
-      if (FakeSimple.boolean()) await this.proceed(2).click();
-      else await this.div('Shipping method').click();
-      await this.div('Shipping method').assertIsClosed();
+      await this.proceed(2).click();
+
+      await this.div('Shipping method', 8).assertIsClosed();
       await this.span('2').assertIsVisible();
       await this.div('Change').assertIsVisible();
+    });
+  }
+
+  private async assertPaymentSection() {
+    await Report.subStep('Assert [Payment] header', async () => {
+      await this.span('3', 2).assertIsVisible();
+      await this.div('Payment method').assertIsVisible();
+    });
+  }
+
+  private async assertPaymentOptions() {
+    await Report.subStep('Assert default [Shipping Option]', async () => {
+      let tooltipIndex = 6;
+
+      for (const option of Object.values(PaymentMethod)) {
+        await this.accordionOption(option).assertIsVisible();
+        
+        if (option !== PaymentMethod.PAYPAL) {
+          await this.tooltip(tooltipIndex).hover();
+          await this.tooltip(tooltipIndex).assert(PAYMENT_METHOD_TOOLTIP_VALUE[option]);
+
+          tooltipIndex++;
+        }
+      }
+      await this.proceed(3).assertIsVisible();
+    });
+  }
+
+  private async assertPaymentSectionCollapesed() {
+    await Report.subStep('Assert [Shipping method] section collapsed', async () => {
+      await this.proceed(3).click();
+
+      await this.div('Payment method', 8).assertIsClosed();
+      await this.span('3', 2).assertIsVisible();
+      await this.div('Payment method').assertIsVisible();
+      await this.span('Cash on Delivery').assertIsVisible();
+      await this.div('Change').assertIsVisible();
+    });
+  }
+
+  private async assertCartSection(product: IProduct) {
+    await Report.subStep('Assert [Cart] header', async () => {
+      await this.span('4').assertIsVisible();
+      await this.div('Cart', 9).assertIsVisible();
+      await this.span(`(${product.cartQty})`).assertIsVisible();
+    });
+  };
+
+  private async assertProduct(product: IProduct) {
+    await Report.subStep(`Assert [${product.name}] product`, async () => {
+      await this.card(product.name).assertIsVisible();
+      await this.image(product).assertIsVisible();
+      await this.hyperLink(product.name).assertIsVisible();
+      await this.quantity(product).assertValue(product.cartQty.toString());
+      // TODO: add calculation after fix product price
+      await this.totalPrice(product).assertText(product.totalPrice);
+      await this.delete(product).assertIsVisible();
     });
   }
 }

@@ -3,7 +3,7 @@ import { Page } from '@playwright/test';
 
 export class Tooltip extends SingleElement {
   constructor(page: Page, index = 1) {
-    super(page, 'Tooltipe', '//*[@data-toggle="tooltip"]', index);
+    super(page, 'Tooltip', '//*[@data-toggle="tooltip"]', index);
   }
 
   private content() {
