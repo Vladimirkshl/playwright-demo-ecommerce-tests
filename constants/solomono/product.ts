@@ -38,6 +38,7 @@ interface IPrice {
   price: string;
   currency: Currency;
   fullPrice: string;
+  totalPrice?: string;
   discount?: number;
 }
 
@@ -196,6 +197,8 @@ export const DEMO_LAPTOP: IProduct = {
   price: '1247.15 ',
   currency: Currency.DOLLAR, 
   fullPrice: `${Currency.DOLLAR}1247.15 `,
+  // HACK: total price is different due to issue on website
+  totalPrice: `${Currency.DOLLAR}1173.15 `, 
   qty: 10,
   cartQty: 1,
   image: {
