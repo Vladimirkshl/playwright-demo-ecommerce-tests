@@ -1,3 +1,4 @@
+import { By } from '@constants/common';
 import { ICustomer, IOrder, PAYMENT_METHOD_TOOLTIP_VALUE, PaymentMethod, SHIPPING_METHOD_PRICE, SHIPPING_METHOD_TOOLTIP_VALUE, ShippingMethod } from '@constants/solomono/order';
 import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
@@ -8,14 +9,18 @@ export class Checkout extends PageBase {
   /* ELEMENTS */
 
   private addressBook = (index: number) => this.hyperLink('Address book', index);
+  private addComment = () => this.checkbox('Add a comment');
   private billingAddress = () => this.header('Billing address');
+  private comment = () => this.input('Comment', By.PLACEHOLDER);
+  private callMeBack = () => this.checkbox('Don\'t call me back. You can send the order right away.');
   private differentBillingAddress = () => this.checkbox('Different billing address?');
+  private newsletter = () => this.checkbox('Newsletter');
   private proceed = (index?: number) => this.span('Proceed', index);
   private card = (name: string) => this.hyperLink(name).ancestor('div[@class="checkout_cart_item"]');
   private image = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.image.name, '//img');
   private quantity = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.cartQty.toString(), '//input[@type="number"]');
   private totalPrice = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex(product.totalPrice, '//b');
-  private delete = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex('Delete button', '//button');
+  private remove = (product: IProduct) => this.card(product.name).innerElementWithoutParentIndex('Delete button', '//button');
 
   /* ASSERT */
 
@@ -51,6 +56,24 @@ export class Checkout extends PageBase {
     });
   }
 
+  async assertNewsletter(order: IOrder) {
+    await Report.subStep('Assert [Newsletter] section', async () => {
+      if (order.newsletter) await this.newsletter().assertIsChecked();
+      else await this.newsletter().assertIsUnchecked();
+      if (order.callBack) await this.callMeBack().assertIsChecked();
+      else await this.callMeBack().assertIsUnchecked();
+      if (order.comment.enabled) {
+        await this.addComment().assertIsChecked();
+        await this.comment().assertIsVisible();
+      } else {
+        await this.addComment().assertIsUnchecked();
+        await this.comment().assertIsHidden();
+      }
+    });
+  }
+
+  // TODO: add assert order totals method
+
   private async assertUserSection() {
     await Report.subStep('Assert [User] header', async () => {
       await this.span('1', 1).assertIsVisible();
@@ -82,7 +105,7 @@ export class Checkout extends PageBase {
   }
 
   private async assertAddress(customer: ICustomer) {
-    await Report.subStep(`Assert default [${customer.address.addressFull}] address`, async () => {
+    await Report.subStep(`Assert [${customer.address.addressFull}] address`, async () => {
       await this.input('First Name:').assertValue(customer.firstName);
       await this.input('Last Name:').assertValue(customer.lastName);
       await this.input('Phone number:').assertValue(customer.phoneNumber.numberWithCodeFormatted);
@@ -95,7 +118,7 @@ export class Checkout extends PageBase {
         await this.differentBillingAddress().assertIsChecked();
         await this.assertBillingAddress(customer);
       } else {
-        await this.differentBillingAddress().asserIsUnchecked();
+        await this.differentBillingAddress().assertIsUnchecked();
         await this.billingAddress().assertIsHidden();
       }   
 
@@ -104,7 +127,7 @@ export class Checkout extends PageBase {
   }
 
   private async assertBillingAddress(customer: ICustomer) {
-    await Report.subStep(`Assert default [${customer.fullName}] billing address`, async () => {
+    await Report.subStep(`Assert [${customer.fullName}] billing address`, async () => {
       await this.billingAddress().assertIsVisible();
       await this.addressBook(2).assertIsVisible();
       await this.input('First Name:').assertValue(customer.firstName);
@@ -219,9 +242,19 @@ export class Checkout extends PageBase {
       await this.image(product).assertIsVisible();
       await this.hyperLink(product.name).assertIsVisible();
       await this.quantity(product).assertValue(product.cartQty.toString());
-      // TODO: add calculation after fix product price
+      // TODO: add calculation after fixing product price
       await this.totalPrice(product).assertText(product.totalPrice);
-      await this.delete(product).assertIsVisible();
+      await this.remove(product).assertIsVisible();
     });
   }
+
+  /* ACTIONS */
+  
+  async removeProduct(product: IProduct) {
+    await Report.subStep(`Remove [${product.name}] from cart`, async () => {
+      await this.remove(product).click();
+      await this.card(product.name).assertIsHidden();
+    });
+  }
+
 }
