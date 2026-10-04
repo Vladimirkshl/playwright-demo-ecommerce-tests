@@ -133,7 +133,7 @@ export const CUSTOMER: ICustomer = {
 // HACK: Default order is harcoded data due to limitations on demo website
 export const ORDER: IOrder = {
   method: PaymentMethod.BANK_CARD_PAYMENT,
-  newsletter: false,
+  newsletter: true,
   callBack: false,
   comment: {
     enabled: true,

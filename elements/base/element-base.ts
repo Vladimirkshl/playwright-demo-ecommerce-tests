@@ -21,7 +21,7 @@ export abstract class ElementBase {
   async assertSelectionState(value: boolean) {
     await Report.subStep(`Assert [${this.name}] selection state is [${value}]`, async () => {
       if (value) await this.assertIsChecked();
-      else await this.asserIsUnchecked();
+      else await this.assertIsUnchecked();
     });
   }
 
@@ -31,7 +31,7 @@ export abstract class ElementBase {
     });
   }
 
-  async asserIsUnchecked() {
+  async assertIsUnchecked() {
     await Report.subStep(`Assert [${this.name}] is unchecked`, async () => {
       await expect(this.element()).not.toBeChecked();
     });
