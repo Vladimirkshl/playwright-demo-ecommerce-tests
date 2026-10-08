@@ -34,12 +34,12 @@ interface IProductGeneralInfo {
   reviews?: IReview[];
 }
 
-interface IPrice {
+export interface IPrice {
   price: string;
   currency: Currency;
-  fullPrice: string;
   totalPrice?: string;
   discount?: number;
+  fullPrice: string;
 }
 
 type IProductCharacteristics = ILaptopCharacteristics;

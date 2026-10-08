@@ -1,4 +1,4 @@
-import { DEMO_LAPTOP, IProduct } from '@constants/solomono/product';
+import { DEMO_LAPTOP, IPrice, IProduct } from '@constants/solomono/product';
 import { IAccount } from '@constants/solomono/my-account/account';
 import { IAddress } from '@constants/geo/address';
 import { Country, Currency, TimeZone } from '@constants/geo/geo';
@@ -9,7 +9,8 @@ export interface IOrder extends IPaymentMetod, IOrderGeneralInfo {}
 export interface IOrder {
   customer: ICustomer
   product: IProduct;
-  shippingMethod: IShippingMethod;
+  shipping: IShippingMethod;
+  total: IPrice;
   api?: {
     id: string;
   }
@@ -28,7 +29,6 @@ export interface IDifferentBillingAddress {
 export interface IShippingMethod {
   method: ShippingMethod;
   price: string;
-  // TODO: add property to increse the product price
 }
 
 export interface IPaymentMetod {
@@ -45,8 +45,28 @@ export enum ShippingMethod {
   SELF_DELIVERY = 'Self-delivery',
 }
 
+export const SHIPPING_METHOD_CART = {
+  [ShippingMethod.UKRPOSHTA]: `${ShippingMethod.UKRPOSHTA}: `,
+  [ShippingMethod.CUSTOM_SHIPPER]: `${ShippingMethod.CUSTOM_SHIPPER}: `,
+  [ShippingMethod.ELECTRONIC_PRODUCT]: `${ShippingMethod.ELECTRONIC_PRODUCT}: `,
+  [ShippingMethod.BEST_WAY]: `${ShippingMethod.BEST_WAY}: `,
+  [ShippingMethod.NOVA_POST]: `${ShippingMethod.NOVA_POST}: `,
+  [ShippingMethod.FOR_ODESSA_CITIZENS]: `${ShippingMethod.FOR_ODESSA_CITIZENS}: `,
+  [ShippingMethod.SELF_DELIVERY]: `${ShippingMethod.SELF_DELIVERY}: `,
+};
+
 // @ts-ignore
 export const SHIPPING_METHOD_PRICE = {
+  [ShippingMethod.UKRPOSHTA]: '0.00',
+  [ShippingMethod.CUSTOM_SHIPPER]: '0.00',
+  [ShippingMethod.ELECTRONIC_PRODUCT]: '5.00',
+  [ShippingMethod.BEST_WAY]: '13.00',
+  [ShippingMethod.NOVA_POST]: '5.00',
+  [ShippingMethod.FOR_ODESSA_CITIZENS]: '5.00',
+  [ShippingMethod.SELF_DELIVERY]: '5.00',
+};
+
+export const SHIPPING_METHOD_PRICE_CHECKOUT_VALUE = {
   [ShippingMethod.UKRPOSHTA]: 'По тарифам перевізника',
   [ShippingMethod.CUSTOM_SHIPPER]: 'According to carrier tariffs',
   [ShippingMethod.ELECTRONIC_PRODUCT]: `${Currency.DOLLAR}5.00`,
@@ -54,6 +74,16 @@ export const SHIPPING_METHOD_PRICE = {
   [ShippingMethod.NOVA_POST]: '',
   [ShippingMethod.FOR_ODESSA_CITIZENS]: `${Currency.DOLLAR}5.00`,
   [ShippingMethod.SELF_DELIVERY]: `${Currency.DOLLAR}5.00`,
+};
+
+export const SHIPPING_METHOD_TOTAL_PRICE_CHECKOUT_VALUE = {
+  [ShippingMethod.UKRPOSHTA]: `${Currency.DOLLAR}0.00 `,
+  [ShippingMethod.CUSTOM_SHIPPER]: `${Currency.DOLLAR}0.00 `,
+  [ShippingMethod.ELECTRONIC_PRODUCT]: `${Currency.DOLLAR}5.00 `,
+  [ShippingMethod.BEST_WAY]: `${Currency.DOLLAR}13.00 `,
+  [ShippingMethod.NOVA_POST]: `${Currency.DOLLAR}5.00 `,
+  [ShippingMethod.FOR_ODESSA_CITIZENS]: `${Currency.DOLLAR}5.00 `,
+  [ShippingMethod.SELF_DELIVERY]: `${Currency.DOLLAR}5.00 `,
 };
 
 export const SHIPPING_METHOD_TOOLTIP_VALUE = {
@@ -140,7 +170,8 @@ export const ORDER: IOrder = {
     text: 'Vulariter apud natus abduco provident capillus synagoga comminor vulgivagus.',
   },
   product: DEMO_LAPTOP,
-  shippingMethod: { method: ShippingMethod.BEST_WAY, price: 'According to carrier tariffs' },
+  shipping: { method: ShippingMethod.UKRPOSHTA, price: 'According to carrier tariffs' },
+  total: { price: '$1173.15 ', currency: Currency.DOLLAR, fullPrice: `${Currency.DOLLAR}1173.15 ` },
   customer: CUSTOMER,
   api: { id: '' },
 };
