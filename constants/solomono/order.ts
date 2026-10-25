@@ -198,7 +198,7 @@ export const ORDER: IOrder = {
   },
   product: DEMO_LAPTOP,
   shipping: {
-    method: ShippingMethod.NOVA_POST,
+    method: ShippingMethod.UKRPOSHTA,
     price: 'According to carrier tariffs',
     city: City.KYIV,
     branch: BRANCH[City.KYIV][0],

@@ -150,6 +150,16 @@ export abstract class ElementBase {
     });
   }
 
+  async uncheck() {
+    await Report.subStep(`Uncheck [${this.name}]`, async () => {
+      if (await this.isChecked()) {
+        await this.element().uncheck();
+        await this.assertIsUnchecked();
+      } 
+      else await Report.logStep('Already unchecked');
+    });
+  }
+
   async fill(text: string) {
     await Report.subStep(`Fill [${this.name}]=[${text}]`, async () => {
       await this.element().clear();
