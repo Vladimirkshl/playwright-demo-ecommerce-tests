@@ -43,3 +43,13 @@ export enum ResponseFormat {
   JSON = 'json',
   TEXT = 'text',
 }
+
+export enum ResponseEvent {
+  CHECKOUT,
+  DYNAMIC_SELECT,
+}
+
+export const RESPONSE_REGEXP_BY_EVENT = {
+  [ResponseEvent.CHECKOUT]: /checkout\.php/,
+  [ResponseEvent.DYNAMIC_SELECT]: /search\.php/,
+};

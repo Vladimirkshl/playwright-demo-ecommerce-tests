@@ -1,3 +1,4 @@
+import { RESPONSE_REGEXP_BY_EVENT, ResponseEvent } from '@constants/api/api';
 import { expect, Page } from '@playwright/test';
 import { Report } from '@utils/report';
 
@@ -31,4 +32,20 @@ export class PageUtils {
     });
   }
 
+  /* OTHER */
+  
+  async waitFor(event: ResponseEvent, trigger?: () => Promise<void>) {
+    const url = RESPONSE_REGEXP_BY_EVENT[event];
+    const responsePromise = this.page.waitForResponse((resp) => {
+      return resp.url().match(url) && resp.status() < 400;
+    });
+
+    if (trigger) await trigger();
+
+    await Report.subStep(`Wait for response from [${url}]`, async () => {
+      await this.page.waitForTimeout(250);
+      const response = await responsePromise;
+      await response.finished();
+    });
+  }
 }

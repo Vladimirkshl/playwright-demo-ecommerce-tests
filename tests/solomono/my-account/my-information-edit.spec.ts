@@ -2,11 +2,11 @@ import { ACCOUNT } from '@constants/solomono/my-account/account';
 import { test } from '@test';
 import { Report } from '@utils/report';
 
-test('Edit My information', async ({ myAccountPage, accountFake }) => {
+test('Edit My information', async ({ myAccountPage, accountFakeToEdit }) => {
   const myAccount = await myAccountPage.getMyInformationPage();
 
   await Report.step('Fill My Account', async () => {
-    await myAccount.fill(accountFake);
+    await myAccount.fill(accountFakeToEdit);
   });
   
   await Report.step('Submit', async () => {
@@ -14,7 +14,7 @@ test('Edit My information', async ({ myAccountPage, accountFake }) => {
   });
 
   await Report.step('Check My Account', async () => {
-    await myAccount.assert(accountFake);
+    await myAccount.assert(accountFakeToEdit);
   });
 
   // HACK: data is returned by UI due to API limitation
@@ -27,7 +27,7 @@ test('Edit My information', async ({ myAccountPage, accountFake }) => {
   });
 });
 
-test('Edit My information > Discard changes', async ({ myAccountPage, accountFake }) => {
+test('Edit My information > Discard changes', async ({ myAccountPage, accountFakeToEdit: accountFake }) => {
   const myAccount = await myAccountPage.getMyInformationPage();
   
   await Report.step('Fill My Account', async () => {

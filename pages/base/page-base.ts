@@ -22,6 +22,7 @@ import { Checkbox } from '@elements/simple/checkbox';
 import { Bold } from '@elements/simple/bold';
 import { AccordionOption } from '@elements/accordion-option';
 import { Tooltip } from '@elements/simple/tooltip';
+import { ResponseEvent } from '@constants/api/api';
 
 export class PageBase {
 
@@ -32,6 +33,7 @@ export class PageBase {
   utils = () => new PageUtils(this.page);
   reload = () => this.utils().reload();
   goTo = (uri: string) => this.utils().goTo(uri);
+  waitFor = (event: ResponseEvent, trigger?: () => Promise<void>) => this.utils().waitFor(event, trigger); 
   assertTitle = (titleOrRegExp: string | RegExp) => this.utils().assertTitle(titleOrRegExp);
 
   /* ELEMENTS */
@@ -70,5 +72,8 @@ export class PageBase {
   calendar = (label: string, index?: number) => new Calendar(this.page, label, index);
   searchInput = () => new Input(this.page, Placeholder.QUICK_FIND, By.PLACEHOLDER);
   
-  selectWithSearch = (name: string, index?: number) => new Select(this.page, name, SelectType.SELECT_WITH_SEARCH, index);
+  selectWithSearch = (name: string, index?: number) => new Select(this.page, name, SelectType.SELECT_WITH_SEARCH, null, index);
+
+  dynamicAutocomplete = (name: string, index?: number) => 
+    new Select(this.page, name, SelectType.DYNAMIC_AUTOCOMPLETE, ResponseEvent.DYNAMIC_SELECT, index);
 }

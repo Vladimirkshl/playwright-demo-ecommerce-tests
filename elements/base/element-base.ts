@@ -2,6 +2,8 @@ import { expect, Locator, Page } from '@playwright/test';
 import { Report } from '@utils/report';
 import { ElementAttribute as Attribute, KeyboardKey } from '@constants/common';
 import config from '@playwrightConfig';
+import { ResponseEvent } from '@constants/api/api';
+import { PageUtils } from '@pages/base/page-utils';
 
 export abstract class ElementBase {
   readonly page: Page;
@@ -15,6 +17,10 @@ export abstract class ElementBase {
   }
 
   protected abstract element(): Locator;
+
+  protected async waitFor(event: ResponseEvent, trigger?: () => Promise<void>) {
+    return new PageUtils(this.page).waitFor(event, trigger);
+  } 
 
   /* ASSERTS STATES */
 
@@ -136,7 +142,7 @@ export abstract class ElementBase {
 
   async check() {
     await Report.subStep(`Check [${this.name}]`, async () => {
-      if (this.isChecked()) await Report.logStep('Already checked');
+      if (await this.isChecked()) await Report.logStep('Already checked');
       else {
         await this.element().check();
         await this.assertIsChecked();
@@ -151,10 +157,13 @@ export abstract class ElementBase {
     });
   }
 
-  async fillSequentially(text: string) {
+  async fillSequentially(text: string, responseEvent: ResponseEvent = null) {
     await Report.subStep(`Fill sequentially [${this.name}]=[${text}]`, async () => {
       await this.element().clear();
       await this.element().pressSequentially(text, { delay: 25 });
+
+      if (responseEvent) await this.waitFor(responseEvent);
+      else await this.sleep(0.5);
     });
   }
 

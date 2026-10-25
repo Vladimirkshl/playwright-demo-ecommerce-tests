@@ -9,7 +9,7 @@ export class ListItems extends MultiElements {
 }
 
 export class ListItem extends SingleElement {
-  constructor(page: Page, text: string, xpath = `//div[starts-with(., "${text}")]`) {
-    super(page, text, xpath);
+  constructor(page: Page, text: string, index = 1) {
+    super(page, text, `//div[(.="${text}") and contains(@class, "option")]`, index);
   }
 }

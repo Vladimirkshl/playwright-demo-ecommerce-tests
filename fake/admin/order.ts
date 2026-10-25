@@ -10,7 +10,8 @@ import { Currency } from '@constants/geo/geo';
 export const getFakeOrder = (product: IProduct): IOrder => {
   const comment: IComment = FakeSimple.boolean() 
     ? { enabled: true, text: FakeSimple.sentence() } : { enabled: false, text: '' };
-  const shippingMethod: IShippingMethod = getFakeShippingMethod();
+  const customer = getFakeCustomer();
+  const shippingMethod: IShippingMethod = getFakeShippingMethod(customer.address.country);
   const price = (Number(product.totalPrice) 
     + Number(shippingMethod.price)).toString();
   const totalPrice: IPrice = { 
@@ -27,7 +28,7 @@ export const getFakeOrder = (product: IProduct): IOrder => {
     product,
     shipping: shippingMethod,
     total: totalPrice, 
-    customer: getFakeCustomer(),
+    customer,
     api: {
       id: '',
     },

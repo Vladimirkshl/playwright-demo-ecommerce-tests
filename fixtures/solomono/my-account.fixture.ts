@@ -4,17 +4,17 @@ import { test as base } from '@playwright/test';
 import { Report } from '@utils/report';
 
 interface AccountFixtures {
-  accountFake: IAccount;
+  accountFakeToEdit: IAccount;
   accountFakeInvalid: IAccount; 
 }
 
 export const test = base.extend<AccountFixtures>({
-  accountFake: async ({}, use) => {
+  accountFakeToEdit: async ({}, use) => {
     const fake = Fake.account();
     Report.attachJson('Fake Account', fake);
     await use(fake);
   },
-  accountFakeInvalid: async ({ accountFake }, use) => {
+  accountFakeInvalid: async ({ accountFakeToEdit: accountFake }, use) => {
     const fakeInvalid = Fake.accountInvalid(accountFake);
     Report.attachJson('Fake Account Invalid', fakeInvalid);
     await use(fakeInvalid);

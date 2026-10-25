@@ -24,11 +24,14 @@ export interface ICustomer extends IAccount {
 export interface IDifferentBillingAddress {
   isDifferentBillingAddress: boolean;
   address?: IAddress;
+  customer?: IAccount;
 }
 
 export interface IShippingMethod {
   method: ShippingMethod;
   price: string;
+  city: string;
+  branch: string;
 }
 
 export interface IPaymentMetod {
@@ -114,6 +117,30 @@ export const PAYMENT_METHOD_TOOLTIP_VALUE = {
   [PaymentMethod.MONOBANK_VISA_MASTERCARD]: 'Accepting payments from Visa and Mastercard, through Apple Pay, Google Pay wallets and the Monobank application.',
 };
 
+enum City {
+  KYIV_REGION = 'Київ region, Київ district, Київ',
+  KHARKIV_REGION = 'Харківська region, Харківський district, Харків',
+  KYIV = 'Київ',
+  KHARKIV = 'Харків',
+}
+
+export const CITY_BRANCHES: Record<ShippingMethod, (City | '')[]> = {
+  [ShippingMethod.UKRPOSHTA]: [City.KYIV_REGION, City.KHARKIV_REGION],
+  [ShippingMethod.CUSTOM_SHIPPER]: [''],
+  [ShippingMethod.ELECTRONIC_PRODUCT]: [''],
+  [ShippingMethod.BEST_WAY]: [''],
+  [ShippingMethod.NOVA_POST]: [City.KYIV, City.KHARKIV],
+  [ShippingMethod.FOR_ODESSA_CITIZENS]: [''],
+  [ShippingMethod.SELF_DELIVERY]: [''],
+};
+
+export const BRANCH: Partial<Record<City, string[]>> = {
+  [City.KYIV_REGION]: ['02163 вул. Лісківська, 5 ', '02090 вул. Празька, 31 ', '03083 просп. Науки, 63 '],
+  [City.KHARKIV_REGION]: ['61057 вул. Гоголя, 13 ', '61106 вул. Миру, 82 ', '61177 просп. Слави, 5 '],
+  [City.KYIV]: ['Відділення №21 (до 30 кг): вул. Дмитра Луценко, 8', 'Відділення №35 (до 30 кг): вул. Фучіка, 3 (ЦСКА)', 'Відділення №12: вул. Якутська, 8'],
+  [City.KHARKIV]: ['Відділення №153: вул. Свістуна, 12', 'Поштомат "Нова Пошта" №45452: вул. Іллінська, 57', 'Поштомат "Нова Пошта" №25642: вул. Свободи, 11/13'],
+};
+
 interface IOrderGeneralInfo {
   newsletter: boolean;
   callBack: boolean;
@@ -170,7 +197,12 @@ export const ORDER: IOrder = {
     text: 'Vulariter apud natus abduco provident capillus synagoga comminor vulgivagus.',
   },
   product: DEMO_LAPTOP,
-  shipping: { method: ShippingMethod.UKRPOSHTA, price: 'According to carrier tariffs' },
+  shipping: {
+    method: ShippingMethod.NOVA_POST,
+    price: 'According to carrier tariffs',
+    city: City.KYIV,
+    branch: BRANCH[City.KYIV][0],
+  },
   total: { price: '$1173.15 ', currency: Currency.DOLLAR, fullPrice: `${Currency.DOLLAR}1173.15 ` },
   customer: CUSTOMER,
   api: { id: '' },
