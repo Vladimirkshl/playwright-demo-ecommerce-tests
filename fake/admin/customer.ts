@@ -2,15 +2,19 @@ import { IAddress } from '@constants/geo/address';
 import { Country, MAP_COUNTRY_STATE } from '@constants/geo/geo';
 import { ICustomer, IDifferentBillingAddress } from '@constants/solomono/order';
 import { FakeSimple } from '@fake/fake-simple';
+import { getFakeAccount } from '@fake/solomono/account';
 import { Utils } from '@utils/utils';
 
 export const getFakeCustomer = (): ICustomer => {
   const firstName = FakeSimple.firstName();
   const lastName = FakeSimple.lastName();
-  const differentBillingAddress: IDifferentBillingAddress = 
-    FakeSimple.boolean() ? { isDifferentBillingAddress: true, address: Utils.createAddressFull(getFakeAddress()) } : 
-      { isDifferentBillingAddress: false }; 
-
+  const differentBillingAddress: IDifferentBillingAddress = FakeSimple.boolean()
+    ? {
+      isDifferentBillingAddress: true,
+      address: Utils.createAddressFull(getFakeAddress()),
+      customer: getFakeAccount(),
+    } : { isDifferentBillingAddress: false };
+    
   return {
     firstName,
     lastName,
@@ -22,7 +26,7 @@ export const getFakeCustomer = (): ICustomer => {
   };
 };
 
-// TODO: replace the function
+// TODO: replace the functions
 const getFakeAddress = (): IAddress => {
   const country = Utils.getRandomValue(Country);
   const states = MAP_COUNTRY_STATE[country];

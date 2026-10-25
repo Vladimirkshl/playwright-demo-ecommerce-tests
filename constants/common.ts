@@ -52,6 +52,7 @@ export enum DateFormat {
 export enum SelectType {
   SELECT = 'SELECT',
   SELECT_WITH_SEARCH = 'SELECT_WITH_SEARCH',
+  DYNAMIC_AUTOCOMPLETE = 'DYNAMIC_AUTOCOMPLETE',
 }
 
 export enum KeyboardKey {

@@ -1,12 +1,17 @@
 import { SelectType } from '@constants/common';
-import { Input } from '@elements/input/input';
 import { ListItem } from '@elements/simple/list-item';
 import { Report } from '@utils/report';
 import { DropdownBase } from '@elements/dropdown/dropdown-base';
 import { Utils } from '@utils/utils';
+import { ResponseEvent } from '@constants/api/api';
 
 export abstract class SelectBase extends DropdownBase {
   protected selectType: SelectType;
+  protected responseEvent: ResponseEvent | null;
+
+  private get isAutocomplete() {
+    return this.selectType === SelectType.DYNAMIC_AUTOCOMPLETE;
+  }
   
   private get isWithSearch() {
     return this.selectType === SelectType.SELECT_WITH_SEARCH;
@@ -14,16 +19,17 @@ export abstract class SelectBase extends DropdownBase {
 
   /* CONTENT */
 
-  private searchInput = new Input(this.page, 'Please select a state from the States pull down menu.', 1);
+  private searchInput = this.innerElement('input', '//input[@type="select-one"]');
 
   private value = this.innerElement('Value', '//div[@class="item"]');
 
   private option(name: string) {
-    return new ListItem(this.page, name);
+    return new ListItem(this.page, name, this.index);
   }
 
   private async getValue() {
-    return this.value.getText();
+    if (await this.value.isHidden()) return '';
+    return (await this.value.getText()) ?? '';
   }
 
   /* ASSERT */
@@ -68,7 +74,7 @@ export abstract class SelectBase extends DropdownBase {
     await Report.subStep(`Select option [${option}] for [${this.name}]`, async () => {
       if (await this.isOptionSelected(option, withMultipleOptions)) Report.logStep(`Option [${option}] already selected`);
       else {
-        if (this.isWithSearch) await this._fill(option);
+        if (this.isAutocomplete || this.isWithSearch) await this._fill(option);
         else {
           await this.open();
           await this.assertIsOpened();
@@ -92,8 +98,7 @@ export abstract class SelectBase extends DropdownBase {
       if (this.isWithSearch) {
         await this.open();
         await this.searchInput.fillSequentially(option);
-      } 
-      // TODO: add else for input which is without search
+      } else await this.searchInput.fillSequentially(option, this.responseEvent);
     });
   }
 }

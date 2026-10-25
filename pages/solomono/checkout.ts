@@ -1,3 +1,4 @@
+import { ResponseEvent } from '@constants/api/api';
 import { By } from '@constants/common';
 import { ICustomer, IOrder, PAYMENT_METHOD_TOOLTIP_VALUE, PaymentMethod, 
   SHIPPING_METHOD_CART, SHIPPING_METHOD_PRICE_CHECKOUT_VALUE, 
@@ -254,6 +255,64 @@ export class Checkout extends PageBase {
       // TODO: add calculation after fixing product price
       await this.totalPrice(product).assertText(product.totalPrice);
       await this.remove(product).assertIsVisible();
+    });
+  }
+
+  /* FILL */
+
+  async fillUser(order: IOrder) {
+    await Report.subStep(`Fill [${order.customer.fullName}]`, async () => {
+      await this.input('First Name:').fill(order.customer.firstName);
+      await this.input('Last Name:').fill(order.customer.lastName);
+      await this.input('Phone number').fill(order.customer.phoneNumber.numberWithCodeFormatted);
+      await this.input('Street Address:').fill(order.customer.address.streetAddress);
+      await this.input('City').fill(order.customer.address.city);
+      await this.selectWithSearch('Country:').select(order.customer.address.country);
+      await this.input('Zip Code:').fill(order.customer.address.zipCode);
+      
+      if (order.customer.differentBillingAddress.isDifferentBillingAddress) {
+        await this.label('Different billing address?').click();
+        await this.fillBillingAddress(order);
+      }
+
+      await this.proceed().click();
+    });
+  }
+
+  async fillBillingAddress(order: IOrder) {
+    await Report.subStep('Fill [Billing address] section', async () => {
+      await this.input('First Name:', By.LABEL, 2).fill(order.customer.differentBillingAddress.customer.firstName);
+      await this.input('Last Name:', By.LABEL, 2).fill(order.customer.differentBillingAddress.customer.lastName);
+      await this.input('Street Address:', By.LABEL, 3).fill(order.customer.differentBillingAddress.address.streetAddress);
+      await this.input('City', By.LABEL, 2).fill(order.customer.differentBillingAddress.address.city);
+      await this.selectWithSearch('Country:', 2).select(order.customer.differentBillingAddress.address.country);
+      await this.input('State/Province:', By.LABEL, 3).fill(order.customer.differentBillingAddress.address.state);
+      await this.input('Zip Code:', By.LABEL, 2).fill(order.customer.differentBillingAddress.address.zipCode);
+    });
+  }
+
+  async fillShippingMethod(order: IOrder) {
+    await Report.subStep(`Fill [${order.shipping.method}]`, async () => {
+      await this.accordionOption(order.shipping.method).click();
+
+      if (order.shipping.method === ShippingMethod.UKRPOSHTA) {
+        await this.waitFor(ResponseEvent.CHECKOUT, () => this.dynamicAutocomplete('City of delivery').select(order.shipping.city));
+        await this.waitFor(ResponseEvent.CHECKOUT, () => this.selectWithSearch('Branch address').select(order.shipping.branch));
+      }
+      if (order.shipping.method === ShippingMethod.NOVA_POST) {
+        await this.waitFor(ResponseEvent.CHECKOUT, () => this.selectWithSearch('City of delivery').select(order.shipping.city));
+        await this.waitFor(ResponseEvent.CHECKOUT, () => this.selectWithSearch('Branch address').select(order.shipping.branch));
+      };
+      
+      await this.proceed(2).click();
+    });
+  }
+
+  async fillPaymentMethod(order: IOrder) {
+    await Report.subStep(`Fill [${order.method}]`, async () => {
+      await this.accordionOption(order.method).click();
+
+      await this.proceed(3).click();
     });
   }
 

@@ -6,7 +6,7 @@ import { test } from '@test';
 import { Report } from '@utils/report';
 
 // HACK: hardcoded ORDER const is used instead of order fixture due to limitations with product API
-test('Assert checkout', async ({ searchPage }) => {
+test('Assert default checkout', async ({ searchPage }) => {
   // HACK: product is added to cart using UI due to API limitation
   const searchResult = await searchPage(DEMO_LAPTOP);
   
