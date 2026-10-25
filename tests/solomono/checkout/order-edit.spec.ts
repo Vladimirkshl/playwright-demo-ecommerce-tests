@@ -29,6 +29,16 @@ test('Edit order', async ({ searchPage, orderFakeToEdit }) => {
     await checkout.fillPaymentMethod(orderFakeToEdit);
   });
 
+  await Report.step(`Fill [${orderFakeToEdit.product.name}] product`, async () => {
+    await checkout.fillProduct(orderFakeToEdit);
+  });
+
+  await Report.step('Fill [Newsletter]', async () => {
+    await checkout.fillNewsletter(orderFakeToEdit);
+  });
+
+  // TODO: add asserts to edited data
+
   // HACK: product is removed via UI due to API limitation
   await Report.step(`Remove [${orderFakeToEdit.product.name}] from checkout`, async () => {
     await checkout.removeProduct(orderFakeToEdit.product);

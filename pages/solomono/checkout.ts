@@ -271,7 +271,7 @@ export class Checkout extends PageBase {
       await this.input('Zip Code:').fill(order.customer.address.zipCode);
       
       if (order.customer.differentBillingAddress.isDifferentBillingAddress) {
-        await this.label('Different billing address?').click();
+        await this.label('Different billing address?').check();
         await this.fillBillingAddress(order);
       }
 
@@ -313,6 +313,25 @@ export class Checkout extends PageBase {
       await this.accordionOption(order.method).click();
 
       await this.proceed(3).click();
+    });
+  }
+
+  async fillProduct(order: IOrder) {
+    await Report.subStep(`Fill [${order.product.name}]`, async () => {
+      await this.quantity(order.product).fill(order.product.cartQty.toString());
+    });
+  }
+
+  async fillNewsletter(order: IOrder) {
+    await Report.subStep('Fill [Newsletter] section', async () => {
+      if (order.newsletter) await this.label('Newsletter').check();
+      else await this.label('Newsletter').uncheck();
+      if (order.callBack) await this.label('Don\'t call me back. You can send the order right away.').check();
+      else await this.label('Don\'t call me back. You can send the order right away.').uncheck();
+      if (order.comment.enabled) {
+        await this.label('Add a comment').check();
+        await this.comment().fill(order.comment.text);
+      } else await this.label('Add a comment').uncheck();
     });
   }
 
