@@ -2,8 +2,8 @@ import { ResponseEvent } from '@constants/api/api';
 import { By } from '@constants/common';
 import { Country } from '@constants/geo/geo';
 import { ICustomer, IOrder, PAYMENT_METHOD_TOOLTIP_VALUE, PaymentMethod, 
-  SHIPPING_METHOD_CART, SHIPPING_METHOD_PRICE_CHECKOUT_VALUE, 
-  SHIPPING_METHOD_TOOLTIP_VALUE, SHIPPING_METHOD_TOTAL_PRICE_CHECKOUT_VALUE, ShippingMethod } from '@constants/solomono/order';
+  SHIPPING_METHOD_PRICE_CHECKOUT_VALUE, 
+  SHIPPING_METHOD_TOOLTIP_VALUE, ShippingMethod } from '@constants/solomono/order';
 import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
