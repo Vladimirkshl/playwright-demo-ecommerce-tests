@@ -37,7 +37,29 @@ test('Edit order', async ({ searchPage, orderFakeToEdit }) => {
     await checkout.fillNewsletter(orderFakeToEdit);
   });
 
-  // TODO: add asserts to edited data
+  await Report.step(`Assert collapsed [${orderFakeToEdit.customer.firstName}] user section`, async () => {
+    await checkout.assertUserSectionCollapsed(orderFakeToEdit.customer);
+  });
+
+  await Report.step('Assert collapsed [Shipping method] section', async () => {
+    await checkout.assertShippingSectionCollapsed(orderFakeToEdit);
+  });
+
+  await Report.step('Assert collapsed [Payment method] section', async () => {
+    await checkout.assertPaymentSectionCollapsed(orderFakeToEdit);
+  });
+
+  await Report.step('Assert [Cart] section', async () => {
+    await checkout.assertCart(orderFakeToEdit);
+  });
+
+  await Report.step('Assert [Newsletter] section', async () => {
+    await checkout.assertNewsletter(orderFakeToEdit);
+  });
+
+  await Report.step('Assert [Order totals] section', async () => {
+    await checkout.assertOrderTotals(orderFakeToEdit);
+  });
 
   // HACK: product is removed via UI due to API limitation
   await Report.step(`Remove [${orderFakeToEdit.product.name}] from checkout`, async () => {

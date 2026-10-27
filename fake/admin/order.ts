@@ -12,8 +12,7 @@ export const getFakeOrder = (product: IProduct): IOrder => {
     ? { enabled: true, text: FakeSimple.sentence() } : { enabled: false, text: '' };
   const customer = getFakeCustomer();
   const shippingMethod: IShippingMethod = getFakeShippingMethod(customer.address.country);
-  const price = (Number(product.totalPrice) 
-    + Number(shippingMethod.price)).toString();
+  const price = (Number(product.price) + Number(shippingMethod.price)).toString();
   const totalPrice: IPrice = { 
     price, 
     currency: Currency.DOLLAR, 

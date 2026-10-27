@@ -29,7 +29,7 @@ test('Assert default checkout', async ({ searchPage }) => {
   });
 
   await Report.step('Assert default [Payment method] section', async () => {
-    await checkout.assertPaymentMethod();
+    await checkout.assertPaymentMethod(ORDER);
   });
 
   await Report.step(`Assert [${ORDER.product.name}] cart section`, async () => {
