@@ -37,7 +37,7 @@ test('Edit order', async ({ searchPage, orderFakeToEdit }) => {
     await checkout.fillNewsletter(orderFakeToEdit);
   });
 
-  await Report.step(`Assert collapsed [${orderFakeToEdit.customer.firstName}] user section`, async () => {
+  await Report.step('Assert collapsed [User] section', async () => {
     await checkout.assertUserSectionCollapsed(orderFakeToEdit.customer);
   });
 

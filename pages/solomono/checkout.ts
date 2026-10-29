@@ -168,12 +168,20 @@ export class Checkout extends PageBase {
       await this.span(customer.address.city).assertIsVisible();
       await this.span(customer.address.country).assertIsVisible();
       if (customer.address.country === Country.UKRAINE) await this.span(customer.address.state).assertIsVisible();
+      if (customer.differentBillingAddress.isDifferentBillingAddress) {
+        await this.span(customer.differentBillingAddress.customer.firstName).assertIsVisible();
+        await this.span(customer.differentBillingAddress.customer.lastName).assertIsVisible();
+        await this.span(customer.differentBillingAddress.address.streetAddress).assertIsVisible();
+        await this.span(customer.differentBillingAddress.address.city).assertIsVisible();
+        await this.span(customer.differentBillingAddress.address.country).assertIsVisible();
+      }
     });
   }
 
   private async assertShippingSection() {
     await Report.subStep('Assert [Shipping Method] header', async () => {
-      await this.span('2', 1).assertIsVisible();
+      // TODO: replace with another element since it takers user's phone number
+      await this.span('2').assertIsVisible();
       await this.div('Shipping method', 1).assertIsVisible();
     });
   }
@@ -203,9 +211,9 @@ export class Checkout extends PageBase {
       await this.div('Shipping method', 8).assertIsClosed();
       if (order) {
         await this.span(order.shipping.method).assertIsVisible();
-        await this.span(order.shipping.price).assertIsVisible();
+        await this.span(SHIPPING_METHOD_PRICE_CHECKOUT_VALUE[order.shipping.method]).assertIsVisible();
       };
-      await this.div('Change').assertIsVisible();
+      await this.div('Change', 11).assertIsVisible();
     });
   }
 
@@ -240,7 +248,7 @@ export class Checkout extends PageBase {
       await this.span('3', 2).assertIsVisible();
       await this.div('Payment method').assertIsVisible();
       await this.span(order.method).assertIsVisible();
-      await this.div('Change').assertIsVisible();
+      await this.div('Change', 15).assertIsVisible();
     });
   }
 
