@@ -17,7 +17,7 @@ export class Utils {
   }
 
   private static getAddressFull(address: IAddress): string {
-    return `${address.city} ${address.streetAddress}, ${address.state}, ${address.country}`;
+    return `${address.city} ${address.street}, ${address.state}, ${address.country}`;
   }
 
   /* TEXT */

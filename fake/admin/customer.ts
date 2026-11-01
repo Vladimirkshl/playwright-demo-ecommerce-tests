@@ -32,7 +32,7 @@ const getFakeAddress = (): IAddress => {
   const states = MAP_COUNTRY_STATE[country];
 
   return {
-    streetAddress: FakeSimple.streetAddress(),
+    street: FakeSimple.streetAddress(),
     city: FakeSimple.city(),
     state: states ? Utils.getRandomMember(states) : FakeSimple.state(),
     zipCode: FakeSimple.zipCode(),

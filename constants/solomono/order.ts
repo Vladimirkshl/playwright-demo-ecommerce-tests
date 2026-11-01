@@ -35,7 +35,7 @@ export interface IShippingMethod {
 }
 
 export interface IPaymentMetod {
-  method: PaymentMethod;
+  paymentMethod: PaymentMethod;
 }
 
 export enum ShippingMethod {
@@ -176,7 +176,7 @@ export const CUSTOMER: ICustomer = {
     numberWithCodeFormatted: '+380000000000',
   },
   address: Utils.createAddressFull({
-    streetAddress: 'Fake address',
+    street: 'Fake address',
     city: 'Silent Hill',
     state: 'Закарпатська область',
     zipCode: '',
@@ -189,7 +189,7 @@ export const CUSTOMER: ICustomer = {
 
 // HACK: Default order is harcoded data due to limitations on demo website
 export const ORDER: IOrder = {
-  method: PaymentMethod.BANK_CARD_PAYMENT,
+  paymentMethod: PaymentMethod.BANK_CARD_PAYMENT,
   newsletter: true,
   callBack: false,
   comment: {

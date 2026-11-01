@@ -20,7 +20,7 @@ export const getFakeOrder = (product: IProduct): IOrder => {
   };
 
   return {
-    method: Utils.getRandomValue(PaymentMethod),
+    paymentMethod: Utils.getRandomValue(PaymentMethod),
     newsletter: FakeSimple.boolean(),
     callBack: FakeSimple.boolean(),
     comment,
