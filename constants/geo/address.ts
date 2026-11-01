@@ -1,7 +1,7 @@
 import { Country, TState } from '@constants/geo/geo';
 
 export interface IAddress {
-  streetAddress: string;
+  street: string;
   city: string;
   state: TState | string;
   zipCode: string;

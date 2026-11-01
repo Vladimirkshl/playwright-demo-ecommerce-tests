@@ -25,7 +25,7 @@ test('Edit order', async ({ searchPage, orderFakeToEdit }) => {
     await checkout.fillShippingMethod(orderFakeToEdit);
   });
 
-  await Report.step(`Fill [${orderFakeToEdit.method}] payment method`, async () => {
+  await Report.step(`Fill [${orderFakeToEdit.paymentMethod}] payment method`, async () => {
     await checkout.fillPaymentMethod(orderFakeToEdit);
   });
 

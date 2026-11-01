@@ -7,6 +7,7 @@ import { ICustomer, IOrder, PAYMENT_METHOD_TOOLTIP_VALUE, PaymentMethod,
 import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
+import { OrderConfirmation } from '@pages/solomono/order-confirmation';
 
 export class Checkout extends PageBase {
 
@@ -47,12 +48,12 @@ export class Checkout extends PageBase {
     });
   }
 
-  async assertPaymentMethod(order: IOrder) {
+  async assertPaymentMethod() {
     await Report.subStep('Assert deftault [Payment method] section', async () => {
       await this.assertPaymentSection();
       await this.assertPaymentOptions();
       await this.submitSection(3);
-      await this.assertPaymentSectionCollapsed(order);
+      await this.assertPaymentSectionCollapsed();
     });
   }
 
@@ -127,7 +128,7 @@ export class Checkout extends PageBase {
       await this.input('First Name:').assertValue(customer.firstName);
       await this.input('Last Name:').assertValue(customer.lastName);
       await this.input('Phone number:').assertValue(customer.phoneNumber.numberWithCodeFormatted);
-      await this.input('Street Address:').assertValue(customer.address.streetAddress);
+      await this.input('Street Address:').assertValue(customer.address.street);
       await this.input('City').assertValue(customer.address.city);
       await this.selectWithSearch('State/Province:').assertValue(customer.address.state);
       await this.input('Zip Code:').assertValue(customer.address.zipCode);
@@ -150,7 +151,7 @@ export class Checkout extends PageBase {
       await this.addressBook(2).assertIsVisible();
       await this.input('First Name:').assertValue(customer.firstName);
       await this.input('Last Name:').assertValue(customer.lastName);
-      await this.input('Street Address:').assertValue(customer.address.streetAddress);
+      await this.input('Street Address:').assertValue(customer.address.street);
       await this.input('City').assertValue(customer.address.city);
       await this.selectWithSearch('State/Province:').assertValue(customer.address.state);
       await this.input('Zip Code:').assertValue(customer.address.zipCode);
@@ -164,14 +165,14 @@ export class Checkout extends PageBase {
       await this.span(customer.firstName).assertIsVisible();
       await this.span(customer.lastName).assertIsVisible();
       await this.span(customer.phoneNumber.numberWithCodeFormatted).assertIsVisible();
-      await this.span(customer.address.streetAddress).assertIsVisible();
+      await this.span(customer.address.street).assertIsVisible();
       await this.span(customer.address.city).assertIsVisible();
       await this.span(customer.address.country).assertIsVisible();
       if (customer.address.country === Country.UKRAINE) await this.span(customer.address.state).assertIsVisible();
       if (customer.differentBillingAddress.isDifferentBillingAddress) {
         await this.span(customer.differentBillingAddress.customer.firstName).assertIsVisible();
         await this.span(customer.differentBillingAddress.customer.lastName).assertIsVisible();
-        await this.span(customer.differentBillingAddress.address.streetAddress).assertIsVisible();
+        await this.span(customer.differentBillingAddress.address.street).assertIsVisible();
         await this.span(customer.differentBillingAddress.address.city).assertIsVisible();
         await this.span(customer.differentBillingAddress.address.country).assertIsVisible();
       }
@@ -242,12 +243,12 @@ export class Checkout extends PageBase {
     });
   }
 
-  async assertPaymentSectionCollapsed(order: IOrder) {
+  async assertPaymentSectionCollapsed(order?: IOrder) {
     await Report.subStep('Assert [Shipping method] section collapsed', async () => {
       await this.div('Payment method', 8).assertIsClosed();
       await this.span('3', 2).assertIsVisible();
       await this.div('Payment method').assertIsVisible();
-      await this.span(order.method).assertIsVisible();
+      if (order) await this.span(order.paymentMethod).assertIsVisible();
       await this.div('Change', 15).assertIsVisible();
     });
   }
@@ -279,7 +280,7 @@ export class Checkout extends PageBase {
       await this.input('First Name:').fill(order.customer.firstName);
       await this.input('Last Name:').fill(order.customer.lastName);
       await this.input('Phone number').fill(order.customer.phoneNumber.numberWithCodeFormatted);
-      await this.input('Street Address:').fill(order.customer.address.streetAddress);
+      await this.input('Street Address:').fill(order.customer.address.street);
       await this.input('City').fill(order.customer.address.city);
       await this.selectWithSearch('Country:').select(order.customer.address.country);
       await this.input('Zip Code:').fill(order.customer.address.zipCode);
@@ -297,7 +298,7 @@ export class Checkout extends PageBase {
     await Report.subStep('Fill [Billing address] section', async () => {
       await this.input('First Name:', By.LABEL, 2).fill(order.customer.differentBillingAddress.customer.firstName);
       await this.input('Last Name:', By.LABEL, 2).fill(order.customer.differentBillingAddress.customer.lastName);
-      await this.input('Street Address:', By.LABEL, 3).fill(order.customer.differentBillingAddress.address.streetAddress);
+      await this.input('Street Address:', By.LABEL, 3).fill(order.customer.differentBillingAddress.address.street);
       await this.input('City', By.LABEL, 2).fill(order.customer.differentBillingAddress.address.city);
       await this.selectWithSearch('Country:', 2).select(order.customer.differentBillingAddress.address.country);
       await this.input('State/Province:', By.LABEL, 3).fill(order.customer.differentBillingAddress.address.state);
@@ -323,8 +324,8 @@ export class Checkout extends PageBase {
   }
 
   async fillPaymentMethod(order: IOrder) {
-    await Report.subStep(`Fill [${order.method}]`, async () => {
-      await this.accordionOption(order.method).click();
+    await Report.subStep(`Fill [${order.paymentMethod}]`, async () => {
+      await this.accordionOption(order.paymentMethod).click();
 
       await this.proceed(3).click();
     });
@@ -364,4 +365,13 @@ export class Checkout extends PageBase {
     });
   }
 
+  /* SUBMIT */
+
+  async submit() {
+    await Report.subStep('Submit order', async () => {
+      await this.span('Checkout').click();
+    });
+
+    return new OrderConfirmation(this.page);
+  }
 }

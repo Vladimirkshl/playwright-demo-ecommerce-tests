@@ -23,6 +23,7 @@ import { Bold } from '@elements/simple/bold';
 import { AccordionOption } from '@elements/accordion-option';
 import { Tooltip } from '@elements/simple/tooltip';
 import { ResponseEvent } from '@constants/api/api';
+import { P } from '@elements/simple/p';
 
 export class PageBase {
 
@@ -56,6 +57,7 @@ export class PageBase {
   bold = (name: string) => new Bold(this.page, name);
   div = (name: string, index?: number) => new Div(this.page, name, index);
   strong = (text: string, index?: number) => new Strong(this.page, text, index);
+  p = (text: string, index?: number) => new P(this.page, text, index);
 
   hyperLink = (name: string, index?: number) => new Hyperlink(this.page, name, index);
   button = (name: string, index?: number) => new Button(this.page, name, index);
