@@ -13,6 +13,7 @@ export interface IOrder {
   total: IPrice;
   api?: {
     id: string;
+    prefix?: string;
   }
 }
 

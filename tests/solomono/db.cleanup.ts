@@ -12,3 +12,8 @@ test.skip('Clean ./TEMP folder with fixture data', async ({}) => {
 test.skip('Cleanup Product DB records', async ({ productServiceDb }) => {
   await productServiceDb.cleanup();
 });
+
+// HACK: dummy database setup as example
+test.skip('Cleanup Order DB records', async ({ orderServiceDb }) => {
+  await orderServiceDb.cleanup();
+});
