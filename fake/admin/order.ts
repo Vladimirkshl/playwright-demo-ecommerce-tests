@@ -6,6 +6,7 @@ import { Utils } from '@utils/utils';
 import { getFakeShippingMethod } from '@fake/admin/shipping-method';
 import { getFakeCustomer } from '@fake/admin/customer';
 import { Currency } from '@constants/geo/geo';
+import { AUTO_TEST_PREFIX } from '@constants/common';
 
 export const getFakeOrder = (product: IProduct): IOrder => {
   const comment: IComment = FakeSimple.boolean() 
@@ -30,6 +31,7 @@ export const getFakeOrder = (product: IProduct): IOrder => {
     customer,
     api: {
       id: '',
+      prefix: AUTO_TEST_PREFIX,
     },
   };
 };
