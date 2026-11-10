@@ -54,5 +54,4 @@ export class MyInformation extends PageBase {
       await this.alertDiv('Your account has been successfully updated.').assertIsVisible();
     });
   }
-
 }
