@@ -3,7 +3,7 @@ import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
 import { SearchProduct } from '@pages/solomono/search-product';
-import { MyAccount } from '@pages/solomono/my-account/my-account';
+import { MyAccount } from '@pages/solomono/my-account/account';
 
 export class SolomonoHome extends PageBase {
 
