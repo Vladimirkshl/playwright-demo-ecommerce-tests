@@ -1,4 +1,4 @@
-import { IOrder, SHIPPING_METHOD_CART } from '@constants/solomono/order';
+import { IOrder, OrderStatus, SHIPPING_METHOD_CART } from '@constants/solomono/order';
 import { IProduct } from '@constants/solomono/product';
 import { PageBase } from '@pages/base/page-base';
 import { Report } from '@utils/report';
@@ -64,9 +64,13 @@ export class OrderConfirmation extends PageBase {
 
   /* SUBMIT */
 
-  async submit() {
+  async submit(order?: IOrder) {
     await Report.subStep('Submit order', async () => {
+      order.api.id = await this.getOrderId();
+      order.status = OrderStatus.AWAITING_FOR_REVIEW;
       await this.button('Continue').click();
     });
+
+    return order;
   }
 }
