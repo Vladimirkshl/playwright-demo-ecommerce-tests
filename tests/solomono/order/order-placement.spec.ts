@@ -51,6 +51,6 @@ test.skip('Place order', async ({ searchPage, orderFakeToEdit }) => {
   });
 
   await Report.step('Submit [Order placement]', async () => {
-    await orderConfirmation.submit();
+    await orderConfirmation.submit(orderFakeToEdit);
   });
 });

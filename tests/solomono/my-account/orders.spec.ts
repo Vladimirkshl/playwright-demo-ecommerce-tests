@@ -1,11 +1,12 @@
 import { Checkout } from '@pages/solomono/checkout';
+import { MyOrderHistory } from '@pages/solomono/my-account/order-history';
 import { OrderConfirmation } from '@pages/solomono/order-confirmation';
 import { ShoppingCart } from '@pages/solomono/shopping-cart';
 import { test } from '@test';
 import { Report } from '@utils/report';
 
 // HACK: test is skipped due to limeted qty of products on website
-test.skip('Place order', async ({ searchPage, orderFakeToEdit }) => {
+test.skip('Place order > assert order history', async ({ searchPage, myOrderHistoryPage, orderFakeToEdit }) => {
   const searchResult = await searchPage(orderFakeToEdit.product);
 
   let shoppingCart: ShoppingCart;
@@ -44,14 +45,16 @@ test.skip('Place order', async ({ searchPage, orderFakeToEdit }) => {
   });
 
   await Report.step('Submit [Order placement]', async () => {
-    await orderConfirmation.submit();
+    orderFakeToEdit = await orderConfirmation.submit(orderFakeToEdit);
   });
 
-  // TODO: continue add test
-  /*  
   let orderHistory: MyOrderHistory;
   await Report.step('Open [Order history] page', async () => {
     orderHistory = await myOrderHistoryPage();
   });
-  **/
+
+  await Report.step('Assert [Order] on Oder history page', async () => {
+    await orderHistory.assertHeader();
+    await orderHistory.assert(orderFakeToEdit);
+  });
 });

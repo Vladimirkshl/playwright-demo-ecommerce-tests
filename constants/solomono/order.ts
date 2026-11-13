@@ -10,6 +10,7 @@ export interface IOrder {
   customer: ICustomer
   product: IProduct;
   shipping: IShippingMethod;
+  status?: string;
   total: IPrice;
   api?: {
     id: string;
@@ -141,6 +142,10 @@ export const BRANCH: Partial<Record<City, string[]>> = {
   [City.KYIV]: ['Відділення №21 (до 30 кг): вул. Дмитра Луценко, 8', 'Відділення №35 (до 30 кг): вул. Фучіка, 3 (ЦСКА)', 'Відділення №12: вул. Якутська, 8'],
   [City.KHARKIV]: ['Відділення №153: вул. Свістуна, 12', 'Поштомат "Нова Пошта" №45452: вул. Іллінська, 57', 'Поштомат "Нова Пошта" №25642: вул. Свободи, 11/13'],
 };
+
+export enum OrderStatus {
+  AWAITING_FOR_REVIEW = 'Awaiting for review',
+}
 
 interface IOrderGeneralInfo {
   newsletter: boolean;
